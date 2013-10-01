@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="css/jquerymobile-min.css" rel="stylesheet"/>
+        <title>FreeVlcRemote</title>
+    </head>
+    <body>
+
+        <!-- PLAYER !-->
+        <section id="player" data-role="page" data-pagination="1" data-theme="a">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Player</h1>
+            </div>
+            <div data-role="content">
+                <div id="controls-left">
+                    <a href="#" class="repeat" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">Repeat</a>
+                    <a href="#" class="repeat-all" data-role="button" data-icon="refresh" data-iconpos="notext" data-theme="c" data-inline="true">Repeat-all</a>
+                    <a href="#" class="random" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Random</a>                    
+                </div>
+                <div id="cover">
+                    
+                </div>
+                <div id="controls-right">
+                    <a href="#" id="volume-up" data-role="button" data-icon="arrow-u" data-iconpos="notext" data-theme="c" data-inline="true">Up</a>
+                    <p id="volume">Vol</p>
+                    <a href="#" id="volume-down" data-role="button" data-icon="arrow-d" data-iconpos="notext" data-theme="c" data-inline="true">own</a>
+                </div>
+                <div id="position">
+                    <input id="positionSlider" class="ui-hidden-accessible" type="range" name="slider-mini" id="slider-mini" value="0" min="0" max="100" data-highlight="true" data-mini="true" />
+                    <p id="currentTime">00:00:00</p><p id="totalTime">00:00:00</p>
+                </div>
+                <div id="details">
+                    <table>
+                        <tr>
+                            <td>
+                                <h2>Title:</h2>
+                            </td>
+                            <td>
+                                <p id="title"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h2>Artist:</h2>
+                            </td>
+                            <td>
+                                <p id="artist"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h2>Album:</h2>
+                            </td>
+                            <td>
+                                <p id="album"></p>
+                            </td>
+                        </tr>
+                            <td>
+                                <h2>Year:</h2>
+                            </td>
+                            <td>
+                                <p id="year"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
+                <a href="#" id="previous" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-theme="c" data-inline="true">Back</a>
+                <a href="#" id="playpause" class="play" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">PlayPause</a>
+                <a href="#" id="stop" class="stop" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Stop</a>
+                <a href="#" id="forward" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-theme="c" data-inline="true">Forward</a>
+
+            </div>
+        </section>
+
+        <!-- PLAYLIST !-->
+        <section id="playlist" data-role="page" data-pagination="2" data-theme="a">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#" id="home" data-role="button" data-icon="home" data-iconpos="notext" data-theme="c" data-inline="true">Home</a>
+                <h1>Playlist</h1><a href="#" id="options" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">Options</a>
+            </div>
+            <div data-role="content">
+                <div id="playlistPopup">
+                    <a href="#" id="clearPlaylist" data-theme="c" data-role="button" data-icon="delete" data-iconpos="top">Clear Playlist</a> 
+                </div>
+                <ul id="playlistfiles" data-role="listview">
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
+                <a href="#" id="previous" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-theme="c" data-inline="true">Back</a>
+                <a href="#" id="playpause" class="play" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">PlayPause</a>
+                <a href="#" id="stop" class="stop" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Stop</a>
+                <a href="#" id="forward" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-theme="c" data-inline="true">Forward</a>
+
+            </div>
+        </section>
+
+        <!-- LIBRARY !-->
+        <section id="library" data-role="page" data-pagination="3" data-theme="a">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="home" data-role="button" data-icon="home" data-iconpos="notext" data-theme="c" data-inline="true">home</a>
+                <h1>Library</h1>
+            </div>
+            <div data-role="content">
+                <div id="itemPopup">
+                    <h3 id="playallLocation"></h3>
+                    <a href="#" id="playAll" data-theme="c" data-role="button">Play All</a> 
+                </div>
+                <ul id="filelist" data-role="listview">
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
+                <a href="#" id="previous" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-theme="c" data-inline="true">Back</a>
+                <a href="#" id="playpause" class="play" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">PlayPause</a>
+                <a href="#" id="stop" class="stop" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Stop</a>
+                <a href="#" id="forward" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-theme="c" data-inline="true">Forward</a>
+
+            </div>
+        </section>
+
+        <!-- Settings !-->
+        <section id="settings" data-role="page" data-pagination="4" data-theme="a">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="home" data-role="button" data-icon="home" data-iconpos="notext" data-theme="c" data-inline="true">home</a>
+                <h1>Settings</h1>
+            </div>
+            <div data-role="content">
+                <form id="settings">
+                    <label for="ip">IP-Address</label>
+                        <input type="text" id="ip" placeholder="192.168.0.1">
+                    <label for="port">Port</label>
+                        <input type="text" id="port" placeholder="8080">
+                    <label for="saveSettings">Save</label>
+                        <input type="submit" id="saveSettings" value="Save" data-theme="c">
+                </form>
+                <div id="faq">
+                    blablabla
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
+                <a href="#" id="previous" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-theme="c" data-inline="true">Back</a>
+                <a href="#" id="playpause" class="play" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">PlayPause</a>
+                <a href="#" id="stop" class="stop" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Stop</a>
+                <a href="#" id="forward" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-theme="c" data-inline="true">Forward</a>
+
+            </div>
+        </section>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/jQuery/jquery.js"></script>
+        <script type="text/javascript" src="js/jQueryMobile/jquerymobile.js"></script>
+        <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/setupUi.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>

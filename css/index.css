@@ -1,0 +1,174 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+div[data-role="header"]{
+    text-align: center;
+    height: 8%;
+}
+
+div[data-role="header"] h1{
+    font-size: 150% !important;
+    margin-top: 2% !important;
+}
+
+#playlist #options{
+    margin-left: 85%;
+}
+
+div[data-role="content"]{
+    font-size: 120%;
+}
+
+#controls-left{
+    margin-top: 5%;
+    float: left;
+    width: 15%;
+}
+
+#controls-left a[data-role=button]{
+    display: block;
+    margin-top: 15%;
+}
+
+a.random{
+    background-image: url(../images/random.png);
+    background-position: -3px;
+    background-size: 120%;
+}
+
+
+#cover{
+    height: 150px;
+    width: 60%;
+
+    margin: auto;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+    background-color: black;
+    outline: none;
+    border-color: white;
+    box-shadow: 0 0 15px white;
+
+    float: left;
+}
+
+#controls-right{
+    margin-top: 5%;
+    float: right;
+    width: 15%;
+}
+
+#controls-left, #controls-right a[role=button]{
+    display: block;
+}
+
+#position{
+    clear: both;
+    padding-top: 5%;
+    margin-left: -18%;
+}
+
+#positon div.ui-slider{
+    margin-left: -18% !important;
+}
+
+#position #currentTime{
+    margin-left: 18%;
+    display: inline;
+}
+
+#position #totalTime{
+    margin-left: 39%;
+    display: inline;
+}
+
+#details{
+    display: block;
+    padding-top: 10%;
+}
+
+#details table tr td h2{
+    font-size: 100%;
+    margin: 0;
+    margin-right: 20px;
+}
+
+#details p{
+    display: inline;
+}
+
+#playlistPopup, #itemPopup{
+    z-index: 999;
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+    width: 90%;
+    height: 90%;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+    display: none;
+    text-align: center;
+}
+
+#playlistPopup a[data-role=button]{
+    width: 80%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 5%;
+}
+
+#faq{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-color: white;
+    border-width: 1px;
+
+    width: 80%;
+    height: 100%;
+
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    margin-top: 10%;
+
+    overflow: hidden;
+}
+
+div[data-role="footer"]{
+    text-align: center;
+    height: 10%;
+    padding: 0;
+}
+
+a[data-role="button"]:not(:last-child){
+    margin-right: 10% !important;
+}
+
+a.play{
+    background-image: url(../images/play.png);
+    background-position: -3px;
+    background-size: 120%;
+}
+
+a.stop{
+    background-image: url(../images/stop.png);
+    background-position: -3px;
+    background-size: 120%;
+}
+
+a.pause{
+    background-image: url(../images/pause.png);
+    background-position: -3px;
+    background-size: 120%;
+}
