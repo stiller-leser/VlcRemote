@@ -92,6 +92,7 @@ Player.prototype.jumpTo = function(value){
 
 Player.prototype.clearPlaylist = function(){
 	this.sendCommand({'command':'pl_empty'});
+	$("#playlist #playlistfiles li").remove();
 };
 
 /*
@@ -146,7 +147,7 @@ Player.prototype.updateDetails = function(){
 				//If vlc is already playing, change button
 				$(this).find("state").each(function(){
 					if($(this).text() === "playing"){
-						$("#playpause").removeClass("play").addClass("pause");
+						$(".play").removeClass("play").addClass("pause");
 					};
 				});
 			});
@@ -230,13 +231,18 @@ Player.prototype.loadFiles = function(dir) {
 						player.sendCommand('command='+command); //and play
 					} 
 				}).bind("taphold", {path : 'file://'+$(this).attr("path")}, function(event){ //bind taphold event
+					var path = event.data.path;
 					$("#itemPopup").css("display","block"); //show popup
-					$("#playallLocation").text(event.data.path); //set headline to current file-uri
+					$("#playallLocation").text(path); //set headline to current file-uri
 
-				    $("body").on("click", "#playAll", function(){ //set up the button behaviour
+					$("#playAll").remove();
+					var button = '<a href="#" id="playAll" data-theme="c" data-role="button">Play All</a>';
+					$(button).bind("click", {path: path}, function(){
 				        event.preventDefault();
-				        player.playAll(event.data.path); //if user wants to play all, call playAll and send path
-				    });
+						player.playAll(event.data.path); //if user wants to play all, call playAll and send path
+					}).appendTo("#itemPopup");
+					$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+
 				}).appendTo("#filelist");
 			});
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
@@ -253,6 +259,7 @@ Player.prototype.loadFiles = function(dir) {
 * Function gets called from loadFiles if a certain item is clicked, adds all files from thereon to the playlist
 */
 Player.prototype.playAll = function(dir){
+	console.log("DIR: " + dir)
 	console.log(rawurlencode(dir));
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',

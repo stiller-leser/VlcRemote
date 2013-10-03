@@ -98,14 +98,14 @@
 
         <!-- PLAYLIST !-->
         <section id="playlist" data-role="page" data-pagination="2" data-theme="a">
+            <div id="playlistPopup">
+                    <a href="#" id="clearPlaylist" data-theme="c" data-role="button" data-icon="delete" data-iconpos="top">Clear Playlist</a> 
+            </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
                 <a href="#" id="home" data-role="button" data-icon="home" data-iconpos="notext" data-theme="c" data-inline="true">Home</a>
                 <h1>Playlist</h1><a href="#" id="options" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">Options</a>
             </div>
             <div data-role="content">
-                <div id="playlistPopup">
-                    <a href="#" id="clearPlaylist" data-theme="c" data-role="button" data-icon="delete" data-iconpos="top">Clear Playlist</a> 
-                </div>
                 <ul id="playlistfiles" data-role="listview">
                 </ul>
             </div>
@@ -127,7 +127,6 @@
             <div data-role="content">
                 <div id="itemPopup">
                     <h3 id="playallLocation"></h3>
-                    <a href="#" id="playAll" data-theme="c" data-role="button">Play All</a> 
                 </div>
                 <ul id="filelist" data-role="listview">
                 </ul>
@@ -157,7 +156,17 @@
                         <input type="submit" id="saveSettings" value="Save" data-theme="c">
                 </form>
                 <div id="faq">
-                    blablabla
+                    <h1>How to use?</h1>
+                    Enter the IP and the Port of your VLC-server above. If you
+                    run the app for the first time, the default port (8080), is
+                    shown, but not set!
+
+                    <h1>About me</h1>
+                    I'm a student and free software enthusiast. That's why the app
+                    is free. I feel like software for an open project like the VLC
+                    should be free aswell.<br>
+                    However if you feel that my effort should be rewarded, you can
+                    buy me a coffee.
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">

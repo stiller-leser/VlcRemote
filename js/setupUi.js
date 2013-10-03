@@ -9,7 +9,9 @@ function setupUi(){
             var nextpage = $.mobile.activePage.next('section[data-role="page"]');
             // swipe using id of next page if exists
             if (nextpage.length > 0) {
-                $.mobile.changePage(nextpage, {transition: "slide", reverse: false}, true, true);
+                $.mobile.changePage(nextpage, "slide", true, true);
+            } else  {
+                $.mobile.changePage("#player","slide", true, true);
             }
             event.handled = true;
         }
@@ -21,7 +23,9 @@ function setupUi(){
         {      
             var prevpage = $.mobile.activePage.prev('section');
             if (prevpage.length > 0) {
-                $.mobile.changePage(prevpage, {transition: "slide", reverse: true}, true, true);
+                $.mobile.changePage(prevpage, "slide", true, true);
+            }  else  {
+                $.mobile.changePage("#settings","slide", true, true);
             }
             event.handled = true;
         }
