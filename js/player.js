@@ -178,7 +178,6 @@ Player.prototype.updateDetails = function(){
 			});
 		},
 		error: function (jqXHR, status, error) {
-			alert(error);
 		}
 	});
 };
@@ -203,7 +202,6 @@ Player.prototype.loadPlaylist = function(dir) {
 			//Necessary to make sure the list elements look are styled in the jqm-styles
 		},
 		error: function (jqXHR, status, error) {
-			alert("fail")
 		}
 	});
 }; 
@@ -249,7 +247,6 @@ Player.prototype.loadFiles = function(dir) {
 			//Necessary to make sure the list elements look are styled in the jqm-styles		
 		},
 		error: function (jqXHR, status, error) {
-			alert(error)
 		}
 	});
 	data.lastDir = dir;

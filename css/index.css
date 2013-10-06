@@ -9,6 +9,27 @@ div[data-role="header"]{
     z-index: 998;
 }
 
+a[data-role="cus-button"]{
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    
+    display: inline-block !important;
+    height: 64%;
+    width: 8%;
+    
+    border: 0;
+    border-radius: 0 !important;
+}
+
+a#home{
+    background-image: url(../images/home.svg); ;
+}
+
+a#options{
+    background-image: url(../images/options.svg); ;
+}
+
 div[data-role="header"] h1{
     font-size: 150% !important;
     margin-top: 2% !important;
@@ -26,6 +47,10 @@ div[data-role="content"]{
     margin-top: 5%;
     float: left;
     width: 15%;
+
+    border: 1px;
+    border-color: red;
+    border-style: solid;
 }
 
 #controls-left a[data-role=button]{
@@ -42,7 +67,7 @@ a.random{
 
 #cover{
     height: 150px;
-    width: 60%;
+    width: 58%;
 
     margin: auto;
     margin-top: 5%;
@@ -58,9 +83,16 @@ a.random{
 }
 
 #controls-right{
+    display: block;
     margin-top: 5%;
     float: right;
     width: 15%;
+
+    padding-bottom: 12%;
+
+    border: 1px;
+    border-color: red;
+    border-style: solid;
 }
 
 #controls-left, #controls-right a[role=button]{
@@ -68,27 +100,31 @@ a.random{
 }
 
 #position{
+    position: relative;
+    display: block;
     clear: both;
-    padding-top: 5%;
-    margin-left: -18%;
+
+        border: 1px;
+    border-color: red;
+    border-style: solid;
 }
 
-#positon div.ui-slider{
-    margin-left: -18% !important;
+#position .ui-slider{
 }
 
 #position #currentTime{
-    margin-left: 18%;
     display: inline;
+    float: left;
 }
 
 #position #totalTime{
-    margin-left: 39%;
     display: inline;
+    float: right;
 }
 
 #details{
     display: block;
+    clear: both;
     padding-top: 10%;
 }
 
@@ -155,24 +191,70 @@ div[data-role="footer"]{
     z-index: 998;
 }
 
-a[data-role="button"]:not(:last-child){
-    margin-right: 10% !important;
+div[data-role="footer"] a[data-role="cus-button"]:not(:last-child){
+    margin-right: 10% !important;    
+}
+
+div[data-role="footer"] a[data-role="cus-button"]{
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    
+    display: inline-block !important;
+    height: 62%;
+    width: 10%;
+    margin-top: 2% !important;
+    
+    border: 0;
+    border-radius: 0 !important;
+}
+
+a#previous{
+    background-image: url(../images/previous.svg);    
 }
 
 a.play{
-    background-image: url(../images/play.png);
-    background-position: -3px;
-    background-size: 120%;
-}
-
-a.stop{
-    background-image: url(../images/stop.png);
-    background-position: -3px;
-    background-size: 120%;
+    background-image: url(../images/play.svg);
 }
 
 a.pause{
-    background-image: url(../images/pause.png);
-    background-position: -3px;
-    background-size: 120%;
+    background-image: url(../images/pause.svg);
+}
+
+a.stop{
+    background-image: url(../images/stop.svg);
+}
+
+a#forward{
+    background-image: url(../images/forward.svg);    
+}
+
+div#controls-right a[data-role="cus-button"]{
+    position: absolute;
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    
+    display: block !important;
+    height: 8%;
+    width: 10%;
+    
+    border: 0;
+    border-radius: 0 !important;
+
+    text-decoration: none;
+    margin-bottom: 50px;
+}
+
+p#volume{
+    margin-top: 140% !important;
+    margin-bottom: 70%;
+}
+
+a#volume-down{
+    background-image: url(../images/volume-down.svg);    
+}
+
+a#volume-up{
+    background-image: url(../images/volume-up.svg);    
 }

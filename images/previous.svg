@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg3778"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   inkscape:export-filename="/home/cyrix/workspace/FreeVlcRemote/VLCRemoteButtons/Play.png"
+   inkscape:export-xdpi="84.462257"
+   inkscape:export-ydpi="84.462257"
+   sodipodi:docname="forward.svg">
+  <defs
+     id="defs3780" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#0000ff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.31372549"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="-69.014602"
+     inkscape:cy="7.1656994"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="716"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4310"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       color="#ffff00"
+       opacity="1"
+       empcolor="#ffff00"
+       empopacity="1" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3783">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#ffffff;stroke-width:2.40093803;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path4306"
+       sodipodi:cx="34.454544"
+       sodipodi:cy="22.545454"
+       sodipodi:rx="28.636364"
+       sodipodi:ry="21.636364"
+       d="m 63.090908,22.545454 a 28.636364,21.636364 0 1 1 -57.2727279,0 28.636364,21.636364 0 1 1 57.2727279,0 z"
+       transform="matrix(1.0327365,0,0,1.3671197,-3.5938315,1.1833453)"
+       inkscape:export-filename="/home/cyrix/workspace/FreeVlcRemote/VLCRemoteButtons/Play.png"
+       inkscape:export-xdpi="85.68"
+       inkscape:export-ydpi="85.68" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.05112183px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 48.476833,10.672008 0,42.390819 -21.893422,-23.21402 z"
+       id="path3786"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.15073824px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 31.007608,11.096185 0,42.291203 L 4.7059955,30.22792 z"
+       id="path3786-4"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
