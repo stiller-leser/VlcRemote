@@ -135,6 +135,11 @@ function setupUi(){
         $("#playlistPopup").css("display","none");
     });
 
+    $("body").on("click", "#playlistItemPopup", function(event){
+        event.preventDefault();
+        $("#playlistItemPopup").css("display","none");
+    });
+
     $("body").on("click", "#clearPlaylist", function(event){
         event.preventDefault();
         player.clearPlaylist();

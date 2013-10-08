@@ -196,7 +196,7 @@ a#volume-up{
     display: inline;
 }
 
-#playlistPopup, #itemPopup{
+#playlistPopup, #playlistItemPopup, #itemPopup{
     z-index: 999;
     position: fixed;
     background-color: rgba(0,0,0,0.8);

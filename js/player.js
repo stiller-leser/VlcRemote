@@ -252,9 +252,25 @@ Player.prototype.loadPlaylist = function(dir) {
 		success: function (data, status, jqXHR) {
 			$("li.item").remove();
 			$(data).find("leaf").each(function(){
+				var id = $(this).attr("id");
 				var li = '<li class="item" data-type=' +$(this).attr("type")+' data-path="file://'+$(this).attr("path")+'" data-id="'+$(this).attr("id")+'">' + $(this).attr('name') + "</li>";
-				$(li).bind("click", {id : $(this).attr("id")}, function(event){ //bind the id of the file to the object, to be able
+				$(li).bind("click", {id : id}, function(event){ //bind the id of the file to the object, to be able
 					player.sendCommand('command=pl_play&id='+event.data.id); 	//to play it
+				}).bind("taphold", {id : id}, function(event){
+					$("#playlistItemPopup").css("display","block");
+					var itemId = event.data.id;					
+
+					//Configure the removeItem button, append it and add class for design
+					$("#removeItem").remove();
+					var button = '<a href="#" id="removeItem" data-theme="c" data-role="button" data-icon="delete" data-iconpos="top">Remove Item</a>';
+					$(button).bind("click", {id : itemId}, function(event){
+				        event.preventDefault();
+				        var command = "pl_delete&id=" + event.data.id;
+						player.sendCommand('command='+command); //call removeItem and hand over id
+						player.loadPlaylist(); //and reload the playlist
+					}).appendTo("#playlistItemPopup");
+					$("#removeItem").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+
 				}).appendTo("#playlistfiles");
 			});			
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
@@ -264,6 +280,10 @@ Player.prototype.loadPlaylist = function(dir) {
 		}
 	});
 }; 
+
+/*
+* Remove a single Item from the playlist
+*/
 
 /*
 * Function which loads the files and defines events for click and taphold
