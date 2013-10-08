@@ -20,10 +20,26 @@ function format_time(s) {
 	return hours + ":" + minutes + ":" + seconds;
 }; 
 
+//Small helper function to set connection status
+function connected(con){
+	data.connected = con;
+}
+
+//Small helper function to figure out, if dir exists
+function foundDir(dir){
+	data.foundDir = dir;
+}
+
+//Personal namespace
 var data = {
 	ip: '',
 	port: '',
+	location: '',
 	lastDir: undefined,
+	startLocation: 'none',
+	connected: false,
+	foundDir: false,
+	updaterStarted: false,
 	allowedTypes: new Array("3ga", "a52", "aac", "ac3", "ape", "awb", "dts", "flac", "it",
 							"m4a", "m4p", "mka", "mlp", "mod", "mp1", "mp2", "mp3",
 							"oga", "ogg", "oma", "s3m", "spx", "thd", "tta","wav", "wma",
@@ -41,6 +57,49 @@ var data = {
 
 function returnNamespace(){ //To be able to access data-namespace in ajax-functions
 	return data;
+};
+
+/*
+* Check the connection, will check folder seprately, to give better feedback
+*/
+Player.prototype.checkConnection = function(){
+	//test user settings
+	$.ajax({
+		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
+		success: function (data, status, jqXHR) {
+			connected(true);
+		},
+		error: function(data){
+			connected(false);
+		}
+	});
+};
+
+/*
+* Check the folder
+*/
+Player.prototype.checkFolder= function(){
+	$.ajax({
+		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
+		data: "uri=" + rawurlencode(data.location),
+		success: function (data, status, jqXHR) {
+			if($(data).find("element").length > 0){
+				foundDir(true);
+			} else {
+				foundDir(false);
+			}
+		},
+		error: function(data){
+			foundDir(false);
+		}
+	});
+};
+
+/*
+* Display error message
+*/
+Player.prototype.showError = function(error){
+	alert(error);
 };
 
 Player.prototype.play = function(){
@@ -210,7 +269,7 @@ Player.prototype.loadPlaylist = function(dir) {
 * Function which loads the files and defines events for click and taphold
 */
 Player.prototype.loadFiles = function(dir) {
-	dir = dir == undefined ? 'file://~' : dir;
+	dir = dir == undefined ? data.location : dir;
 	$("li.item").remove();
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
@@ -233,6 +292,7 @@ Player.prototype.loadFiles = function(dir) {
 					$("#itemPopup").css("display","block"); //show popup
 					$("#playallLocation").text(path); //set headline to current file-uri
 
+					//Configure the play all button, append it and add class for design
 					$("#playAll").remove();
 					var button = '<a href="#" id="playAll" data-theme="c" data-role="button">Play All</a>';
 					$(button).bind("click", {path: path}, function(){
@@ -241,23 +301,44 @@ Player.prototype.loadFiles = function(dir) {
 					}).appendTo("#itemPopup");
 					$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
+					//Configure the play all button, append it and add class for design
+					$("#setHome").remove();
+					var button = '<a href="#" id="setHome" data-theme="c" data-role="button">Set marked folder as home</a>';
+					$(button).bind("click", {path: path}, function(){
+				        event.preventDefault();
+						player.setHome(event.data.path); //if user wants to set the marked folder as home, call function and set home
+					}).appendTo("#itemPopup");
+					$("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+
 				}).appendTo("#filelist");
 			});
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
 			//Necessary to make sure the list elements look are styled in the jqm-styles		
 		},
 		error: function (jqXHR, status, error) {
+			console.log("Error" + status)
 		}
 	});
 	data.lastDir = dir;
 };
 
 /*
+* Set marked folder as home
+*/
+Player.prototype.setHome = function(dir){
+	console.log("here");
+	window.localStorage.setItem("location",dir);
+	this.checkFolder(dir);
+	if(data.foundDir == true){
+		alert("Success, needs restart");
+		data.foundDir = false;
+	}
+};
+
+/*
 * Function gets called from loadFiles if a certain item is clicked, adds all files from thereon to the playlist
 */
 Player.prototype.playAll = function(dir){
-	console.log("DIR: " + dir)
-	console.log(rawurlencode(dir));
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
 		data: 'uri=' + rawurlencode(dir),
@@ -290,20 +371,26 @@ Player.prototype.playAll = function(dir){
 };
 
 /*
-* Function which loads the few settings there are
+* Function which get the settings if they have been changed and save them, needed to prevent bug
 */
-Player.prototype.loadSettings = function(){
+Player.prototype.getSettings = function(){
 	try{
-		var ip = window.localStorage.getItem("vlcip"); 
-		var port = window.localStorage.getItem("vlcport");
+		data.ip = $("#ip").val();
+		data.port = $("#port").val();
+		data.location = $("#location").val();
+		
+		//check connection and set data.connected accordingly		
+		this.checkConnection();	
 
-		if(ip !== null && port !== null){
-			$("#settings #ip").val(ip);
-			$("#settings #port").val(port);
-
-			data.ip = ip;
-			data.port = port;
+		if(data.location !== ""){ //If the user has set a directory
+			//check folder and set data.foundDir accordingly
+			this.checkFolder();		
+		} else {
+			console.log("hui")
+			data.location = "file://~";
+			foundDir(true);
 		}
+		setTimeout("player.saveSettings()", 500) //Save settings but wait 5 seconds for the requests to complete
 	}catch(err){
 		console.log(err)
 	}
@@ -311,14 +398,85 @@ Player.prototype.loadSettings = function(){
 };
 
 /*
-* Function which saves settings if they have been changed
+* Function which saves the settings
 */
 Player.prototype.saveSettings = function(){
-	try{
-		window.localStorage.setItem("vlcip",$("#ip").val());
-		window.localStorage.setItem("vlcport",$("#port").val());
-	}catch(err){
-		console.log(err)
+	if(data.connected !== true){
+		this.showError("Couldn't find VLC, please check IP and Port");
+	} else if (data.connected === true && data.foundDir !== true){
+		this.showError("Connected, but could find choosen directory");
+	} else if(data.connected === true && data.foundDir === true){
+		alert("Settings saved");
+		window.localStorage.setItem("vlcip",data.ip);
+		window.localStorage.setItem("vlcport",data.port);
+		window.localStorage.setItem("location",data.location);
+
+		window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
+
+		$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+
+		this.loadHelper();
+
+	    data.connected = false;
+	    data.foundDir = false;
+	}
+};
+
+/*
+* Function which loads the few settings there are
+*/
+Player.prototype.loadHelper = function(){
+	var firstRun = window.localStorage.getItem("notFirstRun");
+	if(firstRun !== null && firstRun.indexOf("true") > -1){
+		try{
+			data.ip = window.localStorage.getItem("vlcip"); 
+			data.port = window.localStorage.getItem("vlcport");
+			data.location = window.localStorage.getItem("location");
+			//check connection and set data.connected accordingly		
+			this.checkConnection();	
+			//check folder and set data.foundDir accordingly
+			this.checkFolder();	
+			setTimeout("player.loadSettings()", 500) //Save settings but wait 5 seconds for the requests to complete
+		}catch(err){
+			console.log("err");
+		}
+	} else {
+		alert("Please set settings");
+		$.mobile.changePage("#settings", "slide", true, true);
 	}
 
+};
+
+/*
+* Function which loads the few settings there are
+*/
+Player.prototype.loadSettings = function(){
+	$("#settings #ip").val(data.ip);
+	$("#settings #port").val(data.port);
+	$("#settings #location").val(data.location);
+
+	if(data.connected !== true){
+		this.showError("Couldn't find VLC, please check IP and Port");
+	} else if (data.connected === true && data.foundDir !== true){
+		this.showError("Connected, but could find choosen directory");
+	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
+		console.log("here");
+		data.updaterStarted = true;
+		window.setInterval("player.updateDetails();",1000);
+	}
+}
+
+/*
+* Function that clears the settings
+*/
+Player.prototype.clearSettings = function(){
+	window.localStorage.setItem("vlcip","");
+	window.localStorage.setItem("vlcport","");
+	window.localStorage.setItem("location","");
+	window.localStorage.setItem("notFirstRun",null);
+	$("#settings #ip").val(null);
+	$("#settings #port").val(null);
+	$("#settings #location").val(null);
+	alert("Settings cleared");
+	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 };

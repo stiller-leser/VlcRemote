@@ -35,9 +35,9 @@
             </div>
             <div data-role="content">
                 <div id="controls-left">
-                    <a href="#" class="repeat" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">Repeat</a>
-                    <a href="#" class="repeat-all" data-role="button" data-icon="refresh" data-iconpos="notext" data-theme="c" data-inline="true">Repeat-all</a>
-                    <a href="#" class="random" data-role="button" data-iconpos="notext" data-theme="c" data-inline="true">Random</a>                    
+                    <a href="#" id="repeat" class="repeat" data-role="cus-button">&nbsp;</a>
+                    <a href="#" id="repeat-all" class="repeat-all" data-role="cus-button">&nbsp;</a>
+                    <a href="#" id="random" class="random" data-role="cus-button">&nbsp;</a>                    
                 </div>
                 <div id="cover">
                     
@@ -149,21 +149,41 @@
                         <input type="text" id="ip" placeholder="192.168.0.1">
                     <label for="port">Port</label>
                         <input type="text" id="port" placeholder="8080">
+                    <label for="location">Home-Folder</label>
+                        <input type="text" id="location" placeholder="/home/name/music">
                     <label for="saveSettings">Save</label>
                         <input type="submit" id="saveSettings" value="Save" data-theme="c">
+                    <label for="clearSettings">Clear Settings</label>
+                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="c">
                 </form>
                 <div id="faq">
                     <h1>How to use?</h1>
                     Enter the IP and the Port of your VLC-server above. If you
-                    run the app for the first time, the default port (8080), is
-                    shown, but not set!
+                    run the app for the first time you have to set your connection
+                    details (ip, port). Furthermore you can set a home-folder, but
+                    that is optional.<br>
+                    Sometime there are more options hidden behinde a long tap!
+
+
+                    <h1>The icons explained</h1>
+                    <i>I'm not a grafic designer ;)</i>
+                    <ul>
+                    <li><img src="images/home.svg" height="30px" width="30px" alt="home-button"> Brings you back to the player</li>
+                    <li><img src="images/repeat-once.svg" height="30px" width="30px" alt="repeat-once"> Repeats the file once</li>
+                    <li><img src="images/repeat-all.svg" height="30px" width="30px" alt="repeat-all"> Repeats all the files</li>
+                    <li><img src="images/shuffle.svg" height="30px" width="30px" alt="repeat-all"> Shuffles through playlist</li>
+                    </ul>
 
                     <h1>About me</h1>
                     I'm a student and free software enthusiast. That's why the app
                     is free. I feel like software for an open project like the VLC
                     should be free aswell.<br>
-                    However if you feel that my effort should be rewarded, you can
-                    buy me a coffee.
+                    Due to the market restrictions I can't use a donation button.
+
+                    <h1>Contact</h1>
+                    Twitter: <a href="https://twitter.com/stiller_leser" target="_blank">@stiller_leser</a><br>
+                    GitHub: <a href="https://github.com/stiller-leser" target="_blank">stiller-leser</a>
+
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">

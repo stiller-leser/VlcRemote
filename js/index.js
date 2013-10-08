@@ -34,10 +34,6 @@ var app = {
 function init(){
     player = new Player;
 
-    window.setInterval(function(){
-        player.updateDetails();
-    }, 1000);
-
     $( document ).bind( "mobileinit", function() {
         // Make your jQuery Mobile framework configuration changes here!
         $.support.cors = true;
@@ -46,7 +42,7 @@ function init(){
 
     setupUi();
     setupButtonUi();
-    player.loadSettings();
+    player.loadHelper();
 
     $("#playlist").on("pagebeforeshow", function(event){
         $("#playlistPopup").css("display","none");
@@ -59,6 +55,6 @@ function init(){
     });
 
     $("#settings").on("pagebeforeshow", function(event){
-        player.loadSettings();
+        player.loadHelper();
     });
 }

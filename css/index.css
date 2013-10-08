@@ -44,26 +44,65 @@ div[data-role="content"]{
 }
 
 #controls-left{
+    display: block;
     margin-top: 5%;
     float: left;
     width: 15%;
-
-    border: 1px;
-    border-color: red;
-    border-style: solid;
 }
 
-#controls-left a[data-role=button]{
-    display: block;
-    margin-top: 15%;
+#controls-left a[data-role="cus-button"]:not(:first-child){
+    margin-top: 10px;
+}
+
+#controls-left a[data-role="cus-button"]{
+    position: relative;
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    display: block !important;
+    height: 40px;
+    width: 40px;
+
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    border: 0;
+    border-radius: 0 !important;
+
+    text-decoration: none;
+}
+
+a.repeat{
+    background-image: url(../images/repeat-once.svg);
+    background-size: 100% !important;
+}
+
+a.re-active{ /*Otherwise indexOf will make trouble*/
+    background-image: url(../images/repeat-once-active.svg);
+    background-size: 100% !important;
+}
+
+a.repeat-all{
+    background-image: url(../images/repeat-all.svg);
+    background-size: 100% !important;    
+}
+
+a.re-all-active{ /*Otherwise indexOf will make trouble*/
+    background-image: url(../images/repeat-all-active.svg);
+    background-size: 100% !important;    
 }
 
 a.random{
-    background-image: url(../images/random.png);
-    background-position: -3px;
-    background-size: 120%;
+    background-image: url(../images/shuffle.svg);
+    background-size: 100% !important;
 }
 
+a.ra-active{ /*Otherwise indexOf will make trouble*/
+    background-image: url(../images/shuffle-active.svg);
+    background-size: 100% !important;
+}
 
 #cover{
     height: 150px;
@@ -85,31 +124,50 @@ a.random{
 #controls-right{
     display: block;
     margin-top: 5%;
-    float: right;
+    float: left;
     width: 15%;
-
-    padding-bottom: 12%;
-
-    border: 1px;
-    border-color: red;
-    border-style: solid;
 }
 
-#controls-left, #controls-right a[role=button]{
-    display: block;
+div#controls-right a[data-role="cus-button"]{
+    position: relative;
+    background-size: 100% !important;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    
+    display: block !important;
+    height: 40px;
+    width: 40px;
+
+    left: 0;
+    right: 0;
+    margin: auto;
+    
+    border: 0;
+    border-radius: 0 !important;
+
+    text-decoration: none;
+}
+
+p#volume{
+    text-align: center;
+}
+
+a#volume-down{
+    background-image: url(../images/volume-down.svg);    
+}
+
+a#volume-up{
+    background-image: url(../images/volume-up.svg);    
 }
 
 #position{
     position: relative;
     display: block;
     clear: both;
-
-        border: 1px;
-    border-color: red;
-    border-style: solid;
 }
 
 #position .ui-slider{
+    margin-left: -50px;
 }
 
 #position #currentTime{
@@ -227,34 +285,4 @@ a.stop{
 
 a#forward{
     background-image: url(../images/forward.svg);    
-}
-
-div#controls-right a[data-role="cus-button"]{
-    position: absolute;
-    background-size: 100% !important;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    
-    display: block !important;
-    height: 8%;
-    width: 10%;
-    
-    border: 0;
-    border-radius: 0 !important;
-
-    text-decoration: none;
-    margin-bottom: 50px;
-}
-
-p#volume{
-    margin-top: 140% !important;
-    margin-bottom: 70%;
-}
-
-a#volume-down{
-    background-image: url(../images/volume-down.svg);    
-}
-
-a#volume-up{
-    background-image: url(../images/volume-up.svg);    
 }
