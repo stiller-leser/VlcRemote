@@ -22,10 +22,10 @@
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
     <icon src="icons/icon.png" />
-    <icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="xhdpi" />
     <icon src="icons/winphone/icon.png" gap:platform="winphone" />
     <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
     <access origin="http://127.0.0.1*" />
