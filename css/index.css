@@ -23,11 +23,11 @@ a[data-role="cus-button"]{
 }
 
 a#home{
-    background-image: url(../images/home.svg); ;
+    background-image: url(../images/home.png); ;
 }
 
 a#options{
-    background-image: url(../images/options.svg); ;
+    background-image: url(../images/options.png); ;
 }
 
 div[data-role="header"] h1{
@@ -45,7 +45,7 @@ div[data-role="content"]{
 
 #controls-left{
     display: block;
-    margin-top: 5%;
+    margin-top: 6%;
     float: left;
     width: 15%;
 }
@@ -75,32 +75,32 @@ div[data-role="content"]{
 }
 
 a.repeat{
-    background-image: url(../images/repeat-once.svg);
+    background-image: url(../images/repeat-once.png);
     background-size: 100% !important;
 }
 
 a.re-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/repeat-once-active.svg);
+    background-image: url(../images/repeat-once-active.png);
     background-size: 100% !important;
 }
 
 a.repeat-all{
-    background-image: url(../images/repeat-all.svg);
+    background-image: url(../images/repeat-all.png);
     background-size: 100% !important;    
 }
 
 a.re-all-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/repeat-all-active.svg);
+    background-image: url(../images/repeat-all-active.png);
     background-size: 100% !important;    
 }
 
 a.random{
-    background-image: url(../images/shuffle.svg);
+    background-image: url(../images/shuffle.png);
     background-size: 100% !important;
 }
 
 a.ra-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/shuffle-active.svg);
+    background-image: url(../images/shuffle-active.png);
     background-size: 100% !important;
 }
 
@@ -123,7 +123,7 @@ a.ra-active{ /*Otherwise indexOf will make trouble*/
 
 #controls-right{
     display: block;
-    margin-top: 5%;
+    margin-top: 7%;
     float: left;
     width: 15%;
 }
@@ -153,17 +153,18 @@ p#volume{
 }
 
 a#volume-down{
-    background-image: url(../images/volume-down.svg);    
+    background-image: url(../images/volume-down.png);    
 }
 
 a#volume-up{
-    background-image: url(../images/volume-up.svg);    
+    background-image: url(../images/volume-up.png);    
 }
 
 #position{
     position: relative;
     display: block;
     clear: both;
+    margin-top: 200px;
 }
 
 #position .ui-slider{
@@ -268,21 +269,21 @@ div[data-role="footer"] a[data-role="cus-button"]{
 }
 
 a#previous{
-    background-image: url(../images/previous.svg);    
+    background-image: url(../images/previous.png);    
 }
 
 a.play{
-    background-image: url(../images/play.svg);
+    background-image: url(../images/play.png);
 }
 
 a.pause{
-    background-image: url(../images/pause.svg);
+    background-image: url(../images/pause.png);
 }
 
 a.stop{
-    background-image: url(../images/stop.svg);
+    background-image: url(../images/stop.png);
 }
 
 a#forward{
-    background-image: url(../images/forward.svg);    
+    background-image: url(../images/forward.png);    
 }

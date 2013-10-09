@@ -21,6 +21,11 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
+
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.Notification" />
+    </feature>
+
     <icon src="icons/icon.png" />
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="mdpi" />
@@ -28,6 +33,7 @@
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="xhdpi" />
     <icon src="icons/winphone/icon.png" gap:platform="winphone" />
     <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
+    <gap:splash src="icons/splashscreen.png" gap:platform="winphone" width="480" height="800" />
     <access origin="http://127.0.0.1*" />
     <access origin="http://192.168.0.1*" />
 

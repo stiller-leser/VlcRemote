@@ -59,6 +59,10 @@ function returnNamespace(){ //To be able to access data-namespace in ajax-functi
 	return data;
 };
 
+function messageCallback(){
+
+};
+
 /*
 * Check the connection, will check folder seprately, to give better feedback
 */
@@ -99,7 +103,14 @@ Player.prototype.checkFolder= function(){
 * Display error message
 */
 Player.prototype.showError = function(error){
-	alert(error);
+	navigator.notification.alert(error, messageCallback, "Error", "Ok");
+};
+
+/*
+* Display a message
+*/
+Player.prototype.showMessage = function(message){
+	navigator.notification.alert(message, messageCallback, "Message", "Ok");
 };
 
 Player.prototype.play = function(){
@@ -350,7 +361,7 @@ Player.prototype.setHome = function(dir){
 	window.localStorage.setItem("location",dir);
 	this.checkFolder(dir);
 	if(data.foundDir == true){
-		alert("Success, needs restart");
+		this.showMessage("Success, needs restart");
 		data.foundDir = false;
 	}
 };
@@ -426,7 +437,7 @@ Player.prototype.saveSettings = function(){
 	} else if (data.connected === true && data.foundDir !== true){
 		this.showError("Connected, but could find choosen directory");
 	} else if(data.connected === true && data.foundDir === true){
-		alert("Settings saved");
+		this.showMessage("Settings saved");
 		window.localStorage.setItem("vlcip",data.ip);
 		window.localStorage.setItem("vlcport",data.port);
 		window.localStorage.setItem("location",data.location);
@@ -461,7 +472,7 @@ Player.prototype.loadHelper = function(){
 			console.log("err");
 		}
 	} else {
-		alert("Please set settings");
+		this.showMessage("Please set settings");
 		$.mobile.changePage("#settings", "slide", true, true);
 	}
 
@@ -497,6 +508,6 @@ Player.prototype.clearSettings = function(){
 	$("#settings #ip").val(null);
 	$("#settings #port").val(null);
 	$("#settings #location").val(null);
-	alert("Settings cleared");
+	this.showMessage("Settings cleared");
 	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 };
