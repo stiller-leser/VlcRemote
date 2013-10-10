@@ -7,12 +7,17 @@
     <author email="kajmossi@yahoo.de" href="https://github.com/stiller-leser">
         stiller-leser
     </author>
+    <gap:platform name="android" />
+    <gap:platform name="webos" />
+    <gap:platform name="winphone" />
+
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/notification" />
     <feature name="http://api.phonegap.com/1.0/network" />
     <preference name="phonegap-version" value="2.9.0" /> 
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
+    <preference name="orientation" value="portrait" />
     <preference name="webviewbounce" value="true" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
