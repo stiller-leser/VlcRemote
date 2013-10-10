@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.freevlcremote" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.freevlcremote" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>FreeVlcRemote</name>
     <description>
         This is a basic remote for the Video Lan Client, short VLC. You can do all the basic things with it, not much more.
@@ -8,15 +8,16 @@
         stiller-leser
     </author>
     <feature name="http://api.phonegap.com/1.0/device" />
-    <preference name="permissions" value="none" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <preference name="phonegap-version" value="3.0.0" /> 
     <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="false" />
+    <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
     <preference name="detect-data-types" value="true" />
     <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
@@ -33,7 +34,7 @@
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="xhdpi" />
     <icon src="icons/winphone/icon.png" gap:platform="winphone" />
     <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
-    <gap:splash src="icons/splashscreen.png" gap:platform="winphone" width="480" height="800" />
+    <gap:splash src="icons/winphone/splashscreen.png" gap:platform="winphone" width="480" height="800" />
     <access origin="http://127.0.0.1*" />
     <access origin="http://192.168.0.1*" />
 
