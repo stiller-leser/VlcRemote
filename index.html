@@ -21,9 +21,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" rel="stylesheet"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerymobile-min.css" rel="stylesheet"/>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width,  target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquerymobile-min.css"/>
         <title>FreeVlcRemote</title>
     </head>
     <body>
@@ -35,63 +35,64 @@
             </div>
             <div data-role="content">
                 <div id="controls-left">
-                    <a href="#" id="repeat" class="repeat" data-role="cus-button">&nbsp;</a>
-                    <a href="#" id="repeat-all" class="repeat-all" data-role="cus-button">&nbsp;</a>
-                    <a href="#" id="random" class="random" data-role="cus-button">&nbsp;</a>                    
+                    <a href="#" id="repeat" class="repeat" data-role="cus-button"></a>
+                    <a href="#" id="repeat-all" class="repeat-all" data-role="cus-button"></a>
+                    <a href="#" id="random" class="random" data-role="cus-button"></a>                    
                 </div>
                 <div id="cover">
                     
                 </div>
                 <div id="controls-right">
-                    <a href="#" id="volume-up" data-role="cus-button">&nbsp;</a>
+                    <a href="#" id="volume-up" data-role="cus-button"></a>
                     <p id="volume">Vol</p>
-                    <a href="#" id="volume-down" data-role="cus-button">&nbsp;</a>
+                    <a href="#" id="volume-down" data-role="cus-button"></a>
                 </div>
                 <div id="position">
-                    <input id="positionSlider" class="ui-hidden-accessible" type="range" name="slider-mini" id="slider-mini" value="0" min="0" max="100" data-highlight="true" data-mini="true" />
+                    <input id="positionSlider" class="ui-hidden-accessible" type="range" name="slider-mini" value="0" min="0" max="100" data-highlight="true" data-mini="true" />
                     <p id="currentTime">00:00:00</p><p id="totalTime">00:00:00</p>
                 </div>
                 <div id="details">
-                    <table>
-                        <tr>
-                            <td>
-                                <h2>Title:</h2>
-                            </td>
-                            <td>
-                                <p id="title"></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h2>Artist:</h2>
-                            </td>
-                            <td>
-                                <p id="artist"></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h2>Album:</h2>
-                            </td>
-                            <td>
-                                <p id="album"></p>
-                            </td>
-                        </tr>
-                            <td>
-                                <h2>Year:</h2>
-                            </td>
-                            <td>
-                                <p id="year"></p>
-                            </td>
-                        </tr>
-                    </table>
+                  <table>
+                    <tr>
+                      <td>
+                        <h2>Title:</h2>
+                      </td>
+                      <td>
+                        <p id="title"></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h2>Artist:</h2>
+                      </td>
+                      <td>
+                        <p id="artist"></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h2>Album:</h2>
+                      </td>
+                      <td>
+                        <p id="album"></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h2>Year:</h2>
+                      </td>
+                      <td>
+                        <p id="year"></p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
-                <a href="#" id="previous" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="playpause" class="play" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="stop" class="stop" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="forward" data-role="cus-button">&nbsp;</a>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#" id="previous" data-role="cus-button"></a>
+                <a href="#" id="playpause" class="play" data-role="cus-button"></a>
+                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
+                <a href="#" id="forward" data-role="cus-button"></a>
             </div>
         </section>
 
@@ -105,17 +106,17 @@
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
                 <a href="#" id="home" data-role="cus-button"></a>
-                <h1>Playlist</h1><a href="#" id="options" data-role="cus-button">&nbsp;</a>
+                <h1>Playlist</h1><a href="#" id="options" data-role="cus-button"></a>
             </div>
             <div data-role="content">
                 <ul id="playlistfiles" data-role="listview">
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
-                <a href="#" id="previous" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="playpause" class="play" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="stop" class="stop" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="forward" data-role="cus-button">&nbsp;</a>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#" id="previous" data-role="cus-button"></a>
+                <a href="#" id="playpause" class="play" data-role="cus-button"></a>
+                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
+                <a href="#" id="forward" data-role="cus-button"></a>
             </div>
         </section>
 
@@ -132,11 +133,11 @@
                 <ul id="filelist" data-role="listview">
                 </ul>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
-                <a href="#" id="previous" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="playpause" class="play" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="stop" class="stop" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="forward" data-role="cus-button">&nbsp;</a>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#" id="previous" data-role="cus-button"></a>
+                <a href="#" id="playpause" class="play" data-role="cus-button"></a>
+                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
+                <a href="#" id="forward" data-role="cus-button"></a>
             </div>
         </section>
 
@@ -149,15 +150,15 @@
             <div data-role="content">
                 <form id="settings">
                     <label for="ip">IP-Address</label>
-                        <input type="text" id="ip" placeholder="192.168.0.1">
+                        <input type="text" id="ip" placeholder="192.168.0.1"></input>
                     <label for="port">Port</label>
-                        <input type="text" id="port" placeholder="8080">
+                        <input type="text" id="port" placeholder="8080"></input>
                     <label for="location">Home-Folder</label>
-                        <input type="text" id="location" placeholder="/home/name/music">
+                        <input type="text" id="location" placeholder="/home/name/music"></input>
                     <label for="saveSettings">Save</label>
-                        <input type="submit" id="saveSettings" value="Save" data-theme="c">
+                        <input type="submit" id="saveSettings" value="Save" data-theme="c"></input>
                     <label for="clearSettings">Clear Settings</label>
-                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="c">
+                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="c"></input>
                 </form>
                 <div id="faq">
                     <h1>How to use?</h1>
@@ -165,38 +166,38 @@
                     run the app for the first time you have to set your connection
                     details (ip, port). Furthermore you can set a home-folder, but
                     that is optional.<br>
-                    Sometime there are more options hidden behinde a long tap!
+                    Sometime there are more options hidden behinde a 2 second tap!
 
 
                     <h1>The icons explained</h1>
                     <i>I'm not a grafic designer ;)</i>
                     <ul>
-                    <li><img src="images/home.png" height="30px" width="30px" alt="home-button"> Brings you back to the player</li>
-                    <li><img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once"> Repeats the file once</li>
-                    <li><img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all"> Repeats all the files</li>
-                    <li><img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all"> Shuffles through playlist</li>
+                    <li>
+                      <img src="images/home.png" height="30px" width="30px" alt="home-button"> Brings you back to the player</img></li>
+                    <li><img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once"> Repeats the file once</img></li>
+                    <li><img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all"> Repeats all the files</img></li>
+                    <li><img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all"> Shuffles through playlist</img></li>
                     </ul>
 
                     <h1>About me</h1>
                     I'm a student and free software enthusiast. That's why the app
                     is free. I feel like software for an open project like the VLC
-                    should be free aswell.<br>
+                    should be free aswell.</br>
                     Due to the market restrictions I can't use a donation button.
 
                     <h1>Contact</h1>
-                    Twitter: <a href="https://twitter.com/stiller_leser" target="_blank">@stiller_leser</a><br>
+                    Twitter: <a href="https://twitter.com/stiller_leser" target="_blank">@stiller_leser</a><br></br>
                     GitHub: <a href="https://github.com/stiller-leser" target="_blank">stiller-leser</a>
-
                 </div>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" data-tap-toggle="false">
-                <a href="#" id="previous" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="playpause" class="play" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="stop" class="stop" data-role="cus-button">&nbsp;</a>
-                <a href="#" id="forward" data-role="cus-button">&nbsp;</a>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#" id="previous" data-role="cus-button"></a>
+                <a href="#" id="playpause" class="play" data-role="cus-button"></a>
+                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
+                <a href="#" id="forward" data-role="cus-button"></a>
             </div>
         </section>
-        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jQuery/jquery.js"></script>
         <script type="text/javascript" src="js/jQueryMobile/jquerymobile.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
