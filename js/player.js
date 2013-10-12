@@ -37,6 +37,8 @@ var data = {
 	location: '',
 	lastDir: undefined,
 	startLocation: 'none',
+	currentVolume: 0,
+	volumeBeforeMuted: 0,
 	connected: false,
 	foundDir: false,
 	updaterStarted: false,
@@ -103,14 +105,14 @@ Player.prototype.checkFolder= function(){
 * Display error message
 */
 Player.prototype.showError = function(error){
-	navigator.notification.alert(error, messageCallback, "Error", "Ok");
+	alert(error, messageCallback, "Error", "Ok");
 };
 
 /*
 * Display a message
 */
 Player.prototype.showMessage = function(message){
-	navigator.notification.alert(message, messageCallback, "Message", "Ok");
+	alert(message, messageCallback, "Message", "Ok");
 };
 
 Player.prototype.play = function(){
@@ -146,7 +148,7 @@ Player.prototype.random = function(){
 };
 
 Player.prototype.volume = function(value){
-	var current = $("#volume").text()
+	var current = $("#volume").text();
 	current = current.substring(0, current.length -1);
 	var volume = Math.round((Number(current) * 5.12)+value*(5.12*2)); //Just do some weird calculations here
 	//100% Volume seems to be 256 for vlc
@@ -154,6 +156,19 @@ Player.prototype.volume = function(value){
 	this.sendCommand('command=volume&val='+volume);
 	$("#volume").text(Math.round(volume / 5.12) * 2 + "%");
 };
+
+Player.prototype.mute = function(){
+	if($("#volume").text() !== "0%"){
+		data.volumeBeforeMuted = data.currentVolume;
+		this.sendCommand('command=volume&val=0');
+		$("#volume").css("color","grey");
+		this.updateDetails();
+	} else {
+		this.sendCommand('command=volume&val='+data.volumeBeforeMuted);
+		$("#volume").css("color","white");
+		this.updateDetails();
+	}
+}
 
 Player.prototype.jumpTo = function(value){
 	this.sendCommand('command=seek&val='+value);
@@ -191,13 +206,41 @@ Player.prototype.updateDetails = function(){
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
 		dataType: "xml",
-		success: function (data, status, jqXHR) {
-			$(data).find('root').each(function(){
+		success: function (requestData, status, jqXHR) {
+			$(requestData).find('root').each(function(){
 				//Set variables for the position slider
 				var time = 0;
 				var length = 0;
 				$(this).find('volume').each(function(){
 					$("#volume").text(Math.round(Number($(this).text()) / 5.12) * 2 + "%"); //Get current volume, devide it and round it
+					
+					if($(this).text() !== "0"){ //If the player isn't muted
+						data = returnNamespace(); //Have to get namespace before I can set it
+						data.currentVolume = $(this).text();
+					}
+				});
+
+				//Highlight or disable controls-left
+				$(this).find('repeat').each(function(){
+					if($(this).text() === "true"){
+						$("#repeat").removeClass("repeat").addClass("re-active");
+					} else {
+						$("#repeat").removeClass("re-active").addClass("repeat");
+					}
+				});
+				$(this).find('loop').each(function(){
+					if($(this).text() === "true"){
+						$("#repeat-all").removeClass("repeat-all").addClass("re-all-active");
+					} else {
+						$("#repeat-all").removeClass("re-all-active").addClass("repeat-all");
+					}
+				});
+				$(this).find('random').each(function(){
+					if($(this).text() === "true"){
+						$("#random").removeClass("random").addClass("ra-active");
+					} else {
+						$("#random").removeClass("ra-active").addClass("random");
+					}
 				});
 
 				//Get the current position (time)
@@ -222,7 +265,7 @@ Player.prototype.updateDetails = function(){
 				});
 			});
 
-			$(data).find('information').each(function(){
+			$(requestData).find('information').each(function(){
 				$(this).find("category").each(function(){
 					if($(this).attr('name') === "meta"){
 						$(this).find("info").each(function(){
@@ -265,9 +308,9 @@ Player.prototype.loadPlaylist = function(dir) {
 			$(data).find("leaf").each(function(){
 				var id = $(this).attr("id");
 				var li = '<li class="item" data-type=' +$(this).attr("type")+' data-path="file://'+$(this).attr("path")+'" data-id="'+$(this).attr("id")+'">' + $(this).attr('name') + "</li>";
-				$(li).bind("click", {id : id}, function(event){ //bind the id of the file to the object, to be able
+				$(li).hammer().bind("tap", {id : id}, function(event){ //bind the id of the file to the object, to be able
 					player.sendCommand('command=pl_play&id='+event.data.id); 	//to play it
-				}).bind("taphold", {id : id}, function(event){
+				}).bind("hold", {id : id}, function(event){
 					$("#playlistItemPopup").css("display","block");
 					var itemId = event.data.id;					
 
@@ -309,7 +352,7 @@ Player.prototype.loadFiles = function(dir) {
 		success: function (data, status, jqXHR) {
 			$(data).find("element").each(function(){
 				var li = '<li class="item" data-type=' +$(this).attr("type")+' data-path="file://'+$(this).attr("path")+'">' + $(this).attr('name') + "</li>";
-				$(li).bind("click", {type : $(this).attr("type"), //bind click event
+				$(li).hammer().bind("tap", {type : $(this).attr("type"), //bind click event
 									 path : 'file://'+$(this).attr("path")}, function(event){
 					if(event.data.type === "dir"){
 						player.loadFiles(event.data.path);
@@ -318,7 +361,7 @@ Player.prototype.loadFiles = function(dir) {
 						var command = 'in_play&input=' + file; //add current file to playlist 
 						player.sendCommand('command='+command); //and play
 					} 
-				}).bind("taphold", {path : 'file://'+$(this).attr("path")}, function(event){ //bind taphold event
+				}).bind("hold", {path : 'file://'+$(this).attr("path")}, function(event){ //bind taphold event
 					var path = event.data.path;
 					$("#itemPopup").css("display","block"); //show popup
 					$("#playallLocation").text(path); //set headline to current file-uri
@@ -421,7 +464,7 @@ Player.prototype.getSettings = function(){
 			data.location = "file://~";
 			foundDir(true);
 		}
-		setTimeout("player.saveSettings()", 500) //Save settings but wait 5 seconds for the requests to complete
+		setTimeout("player.saveSettings()", 2000) //Save settings but wait 5 seconds for the requests to complete
 	}catch(err){
 		console.log(err)
 	}
@@ -467,14 +510,17 @@ Player.prototype.loadHelper = function(){
 			this.checkConnection();	
 			//check folder and set data.foundDir accordingly
 			this.checkFolder();	
-			setTimeout("player.loadSettings()", 500) //Save settings but wait 5 seconds for the requests to complete
+			setTimeout("player.loadSettings()", 2000) //Save settings but wait 5 seconds for the requests to complete
+			if(data.updaterStarted === false){
+				$("#playerPopup").css("display","block");
+			}
 		}catch(err){
 			console.log("err");
 		}
 	} else {
 		this.showMessage("Please set settings");
 		$.mobile.changePage("#settings", "slide", true, true);
-	}
+	} 
 
 };
 
@@ -491,9 +537,9 @@ Player.prototype.loadSettings = function(){
 	} else if (data.connected === true && data.foundDir !== true){
 		this.showError("Connected, but could find choosen directory");
 	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
-		console.log("here");
 		data.updaterStarted = true;
 		window.setInterval("player.updateDetails();",1000);
+		$("#playerPopup").css("display","none");
 	}
 }
 
@@ -501,10 +547,7 @@ Player.prototype.loadSettings = function(){
 * Function that clears the settings
 */
 Player.prototype.clearSettings = function(){
-	window.localStorage.setItem("vlcip","");
-	window.localStorage.setItem("vlcport","");
-	window.localStorage.setItem("location","");
-	window.localStorage.setItem("notFirstRun",null);
+	window.localStorage.clear();
 	$("#settings #ip").val(null);
 	$("#settings #port").val(null);
 	$("#settings #location").val(null);

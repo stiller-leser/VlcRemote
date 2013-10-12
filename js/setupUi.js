@@ -1,4 +1,5 @@
 function setupUi(){
+
 	/*
     * Configure swipe events for the menu
     */
@@ -31,7 +32,7 @@ function setupUi(){
         }
         return false;            
     });
- }
+ };
 
  function setupButtonUi(){
 
@@ -107,6 +108,11 @@ function setupUi(){
         event.preventDefault();
         player.volume(1);
     });
+
+	$("body").on("click", "#volume", function(event){
+		event.preventDefault();
+		player.mute();
+	});
 
     $("body").on("click", "#volume-down", function(event){
         event.preventDefault();

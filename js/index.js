@@ -34,12 +34,7 @@ var app = {
 function init(){
     player = new Player;
 
-    $.event.special.tap.tapholdThreshold = 2000,
-    $.event.special.swipe.durationThreshold = 500;
-
     $( document ).bind( "mobileinit", function() {
-        console.log("minit");
-
         // Make your jQuery Mobile framework configuration changes here!
         $.support.cors = true;
         $.mobile.allowCrossDomainPages = true;
@@ -49,17 +44,28 @@ function init(){
     setupButtonUi();
     player.loadHelper();
 
-    $("#playlist").on("pagebeforeshow", function(event){
+    $("#player").on("pageshow", function(event){
+        $(".dot-active").removeClass("dot-active");
+        $(".playerDot").addClass("dot-active");
+    });
+
+    $("#playlist").on("pageshow", function(event){
         $("#playlistPopup").css("display","none");
+        $(".dot-active").removeClass("dot-active");
+        $(".playlistDot").addClass("dot-active");
         player.loadPlaylist();
     });
 
-    $("#library").on("pagebeforeshow", function(event){
+    $("#library").on("pageshow", function(event){
+        $(".dot-active").removeClass("dot-active");
+        $(".libraryDot").addClass("dot-active");
         $("#libraryPopup").css("display","none");
         player.loadFiles(data.lastDir);
     });
 
-    $("#settings").on("pagebeforeshow", function(event){
+    $("#settings").on("pageshow", function(event){
+        $(".dot-active").removeClass("dot-active");
+        $(".settingsDot").addClass("dot-active");
         player.loadHelper();
     });
 }

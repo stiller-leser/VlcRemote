@@ -32,6 +32,13 @@
         <section id="player" data-role="page" data-pagination="1" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1>Player</h1>
+                <span class="dot playerDot dot-active"></span> <!--needs to active when app starts !-->
+                <span class="dot playlistDot"></span>
+                <span class="dot libraryDot"></span>
+                <span class="dot settingsDot"></span>
+            </div>
+            <div id="playerPopup">
+                <h3>Connecting to vlc</h3>
             </div>
             <div data-role="content">
                 <div id="controls-left">
@@ -107,6 +114,10 @@
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
                 <a href="#" id="home" data-role="cus-button"></a>
                 <h1>Playlist</h1><a href="#" id="options" data-role="cus-button"></a>
+                <span class="dot playerDot"></span>
+                <span class="dot playlistDot"></span>
+                <span class="dot libraryDot"></span>
+                <span class="dot settingsDot"></span>
             </div>
             <div data-role="content">
                 <ul id="playlistfiles" data-role="listview">
@@ -125,6 +136,10 @@
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <a href="#" id="home" data-role="cus-button"></a>
                 <h1>Library</h1>
+                <span class="dot playerDot"></span>
+                <span class="dot playlistDot"></span>
+                <span class="dot libraryDot"></span>
+                <span class="dot settingsDot"></span>
             </div>
             <div data-role="content">
                 <div id="itemPopup">
@@ -146,6 +161,10 @@
             <div data-role="header" data-tap-toggle="false">
                 <a href="#" id="home" data-role="cus-button"></a>
                 <h1>Settings</h1>
+                <span class="dot playerDot"></span>
+                <span class="dot playlistDot"></span>
+                <span class="dot libraryDot"></span>
+                <span class="dot settingsDot"></span>
             </div>
             <div data-role="content">
                 <form id="settings">
@@ -177,6 +196,7 @@
                     <li><img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once"> Repeats the file once</img></li>
                     <li><img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all"> Repeats all the files</img></li>
                     <li><img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all"> Shuffles through playlist</img></li>
+                    <li>You can mute the volume if you tap on the percentage and unmute it if you click again</li>
                     </ul>
 
                     <h1>About me</h1>
@@ -186,8 +206,8 @@
                     Due to the market restrictions I can't use a donation button.
 
                     <h1>Contact</h1>
-                    Twitter: <a href="https://twitter.com/stiller_leser" target="_blank">@stiller_leser</a><br></br>
-                    GitHub: <a href="https://github.com/stiller-leser" target="_blank">stiller-leser</a>
+                    Twitter: <a onclick="var ref = window.open('https://twitter.com/stiller_leser', '_blank');">@stiller_leser</a><br></br>
+                    GitHub: <a onclick="var ref = window.open('https://github.com/stiller-leser', '_blank');">stiller-leser</a>
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
@@ -200,6 +220,7 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jQuery/jquery.js"></script>
         <script type="text/javascript" src="js/jQueryMobile/jquerymobile.js"></script>
+        <script type="text/javascript" src="js/hammer/hammer.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/setupUi.js"></script>
