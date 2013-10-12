@@ -540,7 +540,7 @@ Player.prototype.loadSettings = function(){
 		this.showError("Connected, but could find choosen directory");
 	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
 		data.updaterStarted = true;
-		updateDetails();
+		this.updateDetails();
 		window.setInterval("player.updateDetails();",1000);
 	}
 }
