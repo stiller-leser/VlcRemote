@@ -66,6 +66,5 @@ function init(){
     $("#settings").on("pageshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".settingsDot").addClass("dot-active");
-        player.loadHelper();
     });
 }

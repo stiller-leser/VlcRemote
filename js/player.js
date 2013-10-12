@@ -532,14 +532,16 @@ Player.prototype.loadSettings = function(){
 	$("#settings #port").val(data.port);
 	$("#settings #location").val(data.location);
 
+	$("#playerPopup").css("display","none");
+
 	if(data.connected !== true){
 		this.showError("Couldn't find VLC, please check IP and Port");
 	} else if (data.connected === true && data.foundDir !== true){
 		this.showError("Connected, but could find choosen directory");
 	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
 		data.updaterStarted = true;
+		updateDetails();
 		window.setInterval("player.updateDetails();",1000);
-		$("#playerPopup").css("display","none");
 	}
 }
 
