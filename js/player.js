@@ -460,7 +460,6 @@ Player.prototype.getSettings = function(){
 			//check folder and set data.foundDir accordingly
 			this.checkFolder();		
 		} else {
-			console.log("hui")
 			data.location = "file://~";
 			foundDir(true);
 		}
@@ -479,7 +478,7 @@ Player.prototype.saveSettings = function(){
 	if(data.connected !== true){
 		this.showError("Couldn't find VLC, please check IP and Port");
 	} else if (data.connected === true && data.foundDir !== true){
-		this.showError("Connected, but could find choosen directory");
+		this.showError("Connected, but couldn't find choosen directory");
 	} else if(data.connected === true && data.foundDir === true){
 		this.showMessage("Settings saved");
 		window.localStorage.setItem("vlcip",data.ip);
@@ -536,7 +535,7 @@ Player.prototype.loadSettings = function(){
 	if(data.connected !== true){
 		this.showError("Couldn't find VLC, please check IP and Port");
 	} else if (data.connected === true && data.foundDir !== true){
-		this.showError("Connected, but could find choosen directory");
+		this.showError("Connected, but couldn't find choosen directory");
 	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
 		data.updaterStarted = true;
 		window.setInterval("player.updateDetails();",1000);

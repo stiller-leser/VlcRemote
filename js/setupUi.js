@@ -4,7 +4,7 @@ function setupUi(){
     * Configure swipe events for the menu
     */
 
-    $(document).off('swipeleft').on('swipeleft', 'div[data-role="header"]', function(event){    
+    $(document).off('swipeleft').on('swipeleft', 'section[data-role="page"]', function(event){    
         if(event.handled !== true) // This will prevent event triggering more then once
         {    
             var nextpage = $.mobile.activePage.next('section[data-role="page"]');
@@ -19,7 +19,7 @@ function setupUi(){
         return false;         
     });
 
-    $(document).off('swiperight').on('swiperight', 'div[data-role="header"]', function(event){   
+    $(document).off('swiperight').on('swiperight', 'section[data-role="page"]', function(event){   
         if(event.handled !== true) // This will prevent event triggering more then once
         {      
             var prevpage = $.mobile.activePage.prev('section');
