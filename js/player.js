@@ -475,6 +475,7 @@ Player.prototype.getSettings = function(){
 * Function which saves the settings
 */
 Player.prototype.saveSettings = function(){
+	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 	if(data.connected !== true){
 		this.showError("Couldn't find VLC, please check IP and Port");
 	} else if (data.connected === true && data.foundDir !== true){
@@ -486,8 +487,6 @@ Player.prototype.saveSettings = function(){
 		window.localStorage.setItem("location",data.location);
 
 		window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
-
-		$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 
 		this.loadHelper();
 
@@ -540,7 +539,6 @@ Player.prototype.loadSettings = function(){
 		this.showError("Connected, but could find choosen directory");
 	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
 		data.updaterStarted = true;
-		this.updateDetails();
 		window.setInterval("player.updateDetails();",1000);
 	}
 }
