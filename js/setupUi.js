@@ -57,6 +57,7 @@ function setupUi(){
 
     $("body").on("click", "#stop", function(event){
     	event.preventDefault();
+        $(".pause").removeClass("pause").addClass("play");
     	player.stop();
     });
 

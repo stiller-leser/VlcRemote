@@ -400,7 +400,6 @@ Player.prototype.loadFiles = function(dir) {
 * Set marked folder as home
 */
 Player.prototype.setHome = function(dir){
-	console.log("here");
 	window.localStorage.setItem("location",dir);
 	this.checkFolder(dir);
 	if(data.foundDir == true){
@@ -531,6 +530,7 @@ Player.prototype.loadSettings = function(){
 	$("#settings #location").val(data.location);
 
 	$("#playerPopup").css("display","none");
+	player.updateDetails();
 
 	if(data.connected !== true){
 		this.showError("Couldn't find VLC, please check IP and Port");
