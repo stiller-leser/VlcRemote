@@ -6,6 +6,11 @@
 body{
     height: 100%;
     width: 100%;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility:hidden;
+    overflow: hidden;
+    -ms-content-zooming: none;
 }
 
 div[data-role="header"]{

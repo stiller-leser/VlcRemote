@@ -41,6 +41,7 @@
     <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
     <gap:splash src="icons/winphone/splashscreen.png" gap:platform="winphone" width="480" height="800" />
     <access origin="http://127.0.0.1*" />
-    <access origin="http://192.168.0.1*" />
-
+    <access origin="http://192.168.0.*" />
+    <access origin="http://192.168.1.*" />
+    <access origin="http://192.*.*.*" />
 </widget>
