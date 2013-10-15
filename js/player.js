@@ -450,7 +450,7 @@ Player.prototype.getSettings = function(){
 	try{
 		data.ip = $("#ip").val();
 		data.port = $("#port").val();
-		data.location = $("#location").val();
+		data.location = "file://" + $("#location").val();
 		
 		//check connection and set data.connected accordingly		
 		this.checkConnection();	
