@@ -450,12 +450,12 @@ Player.prototype.getSettings = function(){
 	try{
 		data.ip = $("#ip").val();
 		data.port = $("#port").val();
-		data.location = "file://" + $("#location").val();
 		
 		//check connection and set data.connected accordingly		
 		this.checkConnection();	
 
 		if(data.location !== ""){ //If the user has set a directory
+			data.location = "file://" + $("#location").val();
 			//check folder and set data.foundDir accordingly
 			this.checkFolder();		
 		} else {
@@ -527,7 +527,9 @@ Player.prototype.loadHelper = function(){
 Player.prototype.loadSettings = function(){
 	$("#settings #ip").val(data.ip);
 	$("#settings #port").val(data.port);
-	$("#settings #location").val(data.location);
+	var folder = data.location;
+	folder = folder.replace("file://","");
+	$("#settings #location").val(folder);
 
 	$("#playerPopup").css("display","none");
 	player.updateDetails();
