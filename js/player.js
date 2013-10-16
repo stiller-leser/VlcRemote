@@ -126,13 +126,12 @@ Player.prototype.play = function(){
 };
 
 Player.prototype.stop = function(){
-	$("#positionSlider").val(0).slider("refresh");
 	this.sendCommand({'command':'pl_stop'});
 };
 
 Player.prototype.pause = function(){
 	this.sendCommand({'command':'pl_pause'});
-};
+};10
 
 Player.prototype.previous = function(){
 	this.sendCommand({'command':'pl_previous'});
@@ -273,6 +272,7 @@ Player.prototype.updateDetails = function(){
 						} else {
 							$(".playpause").addClass("play");
 						}
+						$("#positionSlider").val(0).slider("refresh"); //Make sure the slider gets set back
 					}
 				});
 
@@ -382,8 +382,9 @@ Player.prototype.loadFiles = function(dir) {
 		dataType: "xml",
 		success: function (data, status, jqXHR) {
 			$(data).find("element").each(function(){
-				var li = '<li class="item" data-type=' +$(this).attr("type")+' data-path="file://'+$(this).attr("path")+'">' + $(this).attr('name') + "</li>";
-				$(li).hammer().bind("tap", {type : $(this).attr("type"), //bind click event
+				var dataType = $(this).attr("type");
+				var li = '<li class="item" data-type=' +dataType+' data-path="file://'+$(this).attr("path")+'">' + $(this).attr('name') + "</li>";
+				$(li).hammer().bind("tap", {type : dataType, //bind click event
 									 path : 'file://'+$(this).attr("path")}, function(event){
 					if(event.data.type === "dir"){
 						player.loadFiles(event.data.path);
@@ -393,28 +394,29 @@ Player.prototype.loadFiles = function(dir) {
 						player.sendCommand('command='+command); //and play
 					} 
 				}).bind("hold", {path : 'file://'+$(this).attr("path")}, function(event){ //bind taphold event
-					var path = event.data.path;
-					$("#itemPopup").css("display","block"); //show popup
-					$("#playallLocation").text(path); //set headline to current file-uri
+						if(dataType === "dir"){
+							var path = event.data.path;
+							$("#itemPopup").css("display","block"); //show popup
+							$("#playallLocation").text(path); //set headline to current file-uri
 
-					//Configure the play all button, append it and add class for design
-					$("#playAll").remove();
-					var button = '<a href="#" id="playAll" data-theme="c" data-role="button">Play All</a>';
-					$(button).bind("click", {path: path}, function(){
-				        event.preventDefault();
-						player.playAll(event.data.path); //if user wants to play all, call playAll and send path
-					}).appendTo("#itemPopup");
-					$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+							//Configure the play all button, append it and add class for design
+							$("#playAll").remove();
+							var button = '<a href="#" id="playAll" data-theme="c" data-role="button">Play All</a>';
+							$(button).bind("click", {path: path}, function(){
+								event.preventDefault();
+								player.playAll(event.data.path); //if user wants to play all, call playAll and send path
+							}).appendTo("#itemPopup");
+							$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
-					//Configure the play all button, append it and add class for design
-					$("#setHome").remove();
-					var button = '<a href="#" id="setHome" data-theme="c" data-role="button">Set marked folder as home</a>';
-					$(button).bind("click", {path: path}, function(){
-				        event.preventDefault();
-						player.setHome(event.data.path); //if user wants to set the marked folder as home, call function and set home
-					}).appendTo("#itemPopup");
-					$("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
-
+							//Configure the setHome button, append it and add class for design
+							$("#setHome").remove();
+							var button = '<a href="#" id="setHome" data-theme="c" data-role="button">Set marked folder as home</a>';
+							$(button).bind("click", {path: path}, function(){
+								event.preventDefault();
+								player.setHome(event.data.path); //if user wants to set the marked folder as home, call function and set home
+							}).appendTo("#itemPopup");
+							$("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+						};
 				}).appendTo("#filelist");
 			});
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");

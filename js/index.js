@@ -44,26 +44,26 @@ function init(){
     setupButtonUi();
     player.loadHelper();
 
-    $("#player").on("pageshow", function(event){
+    $("#player").on("pagebeforeshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".playerDot").addClass("dot-active");
     });
 
-    $("#playlist").on("pageshow", function(event){
+    $("#playlist").on("pagebeforeshow", function(event){
         $("#playlistPopup").css("display","none");
         $(".dot-active").removeClass("dot-active");
         $(".playlistDot").addClass("dot-active");
         player.loadPlaylist();
     });
 
-    $("#library").on("pageshow", function(event){
+    $("#library").on("pagebeforeshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
         $("#libraryPopup").css("display","none");
         player.loadFiles(data.lastDir);
     });
 
-    $("#settings").on("pageshow", function(event){
+    $("#settings").on("pagebeforeshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".settingsDot").addClass("dot-active");
     });

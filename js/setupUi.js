@@ -76,34 +76,16 @@ function setupUi(){
     $("body").on("click", "#repeat", function(event){
         event.preventDefault();
         player.repeat();
-
-        if($(this).attr("class").indexOf("repeat") !== -1){
-            $(this).removeClass("repeat").addClass("re-active");
-        } else {
-            $(this).removeClass("re-active").addClass("repeat");
-        }
     });
 
     $("body").on("click", "#repeat-all", function(event){
         event.preventDefault();
         player.repeatAll();
-
-        if($(this).attr("class").indexOf("repeat-all") !== -1){
-            $(this).removeClass("repeat-all").addClass("re-all-active");
-        } else {
-            $(this).removeClass("re-all-active").addClass("repeat-all");
-        }
     });
 
     $("body").on("click", "#random", function(event){
         event.preventDefault();
         player.random();
-
-        if($(this).attr("class").indexOf("random") !== -1){
-            $(this).removeClass("random").addClass("ra-active");
-        } else {
-            $(this).removeClass("ra-active").addClass("random");
-        }
     });
 
     $("body").on("click", "#volume-up", function(event){
