@@ -45,13 +45,14 @@ function setupUi(){
     });
 
     //Configure Player-Buttons
-    $("body").on("click", "#playpause", function(){
+    $("body").on("click", ".playpause", function(){
+        console.log("data.state" + data.state);
         if(data.state === "playing"){
     		$(this).removeClass("pause").addClass("play");
-    		player.play();
-    	} else if(data.state === "paused") {
-    		$(this).removeClass("play").addClass("pause");
     		player.pause();
+    	} else {
+    		$(this).removeClass("play").addClass("pause");
+    		player.play();
     	}
     });
 

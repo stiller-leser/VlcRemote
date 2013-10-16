@@ -117,6 +117,7 @@ Player.prototype.showMessage = function(message){
 };
 
 Player.prototype.play = function(){
+	console.log("data.state" + data.state);
 	if(data.state === "paused"){
 		this.sendCommand({'command':'pl_forceresume'});
 	} else if(data.state === "stopped") {
@@ -254,24 +255,23 @@ Player.prototype.updateDetails = function(){
 					var state = $(this).text();
 					data.state = state;
 
-					console.log(state);
 					if(state === "playing"){
-						if($("#playpause").attr("class").indexOf("play") !== -1){
-							$("#playpause").removeClass("play").addClass("pause");
+						if($(".playpause").attr("class").indexOf("play") !== -1){
+							$(".playpause").removeClass("play").addClass("pause");
 						} else {
-							$("#playpause").addClass("pause");
+							$(".playpause").addClass("pause");
 						}
 					} else if(state === "paused"){
-						if($("#playpause").attr("class").indexOf("pause") !== -1){
-							$("#playpause").removeClass("pause").addClass("play");
+						if($(".playpause").attr("class").indexOf("pause") !== -1){
+							$(".playpause").removeClass("pause").addClass("play");
 						} else {
-							$("#playpause").addClass("play");
+							$(".playpause").addClass("play");
 						}
 					} else { //Player got stopped
-						if($("#playpause").attr("class").indexOf("pause") !== -1){
-							$("#playpause").removeClass("pause").addClass("play");
+						if($(".playpause").attr("class").indexOf("pause") !== -1){
+							$(".playpause").removeClass("pause").addClass("play");
 						} else {
-							$("#playpause").addClass("play");
+							$(".playpause").addClass("play");
 						}
 					}
 				});
@@ -290,12 +290,10 @@ Player.prototype.updateDetails = function(){
 				$("#currentTime").text(format_time(time));
 				$("#totalTime").text(format_time(length));
 
-				//If vlc is already playing, change button
-				$(this).find("state").each(function(){
-					if($(this).text() === "playing"){
-						$(".play").removeClass("play").addClass("pause");
-					};
-				});
+				if(time === length){
+					$("#positionSlider").val(0).slider("refresh"); //If the song finshed, reset the slider. Important for
+					//the end of playlist
+				}
 			});
 
 			$(requestData).find('information').each(function(){
