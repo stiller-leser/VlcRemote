@@ -178,6 +178,11 @@ Player.prototype.jumpTo = function(value){
 Player.prototype.clearPlaylist = function(){
 	this.sendCommand({'command':'pl_empty'});
 	$("#playlist #playlistfiles li").remove();
+	console.log("bla");
+	console.log($("#playpause").attr("class").indexOf("pause"));
+	if($("#playpause").attr("class").indexOf("pause") !== -1){
+    	$("#playpause").removeClass("pause").addClass("play");
+   	}
 };
 
 /*
@@ -479,7 +484,7 @@ Player.prototype.saveSettings = function(){
 	} else if (data.connected === true && data.foundDir !== true){
 		this.showError("Connected, but couldn't find choosen directory");
 	} else if(data.connected === true && data.foundDir === true){
-		this.showMessage("Settings saved");
+		this.showMessage("Settings saved, restart may be required");
 		window.localStorage.setItem("vlcip",data.ip);
 		window.localStorage.setItem("vlcport",data.port);
 		window.localStorage.setItem("location",data.location);
@@ -552,6 +557,6 @@ Player.prototype.clearSettings = function(){
 	$("#settings #ip").val(null);
 	$("#settings #port").val(null);
 	$("#settings #location").val(null);
-	this.showMessage("Settings cleared");
+	this.showMessage("Settings cleared, please restart app");
 	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 };
