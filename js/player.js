@@ -116,10 +116,15 @@ Player.prototype.showMessage = function(message){
 };
 
 Player.prototype.play = function(){
-	this.sendCommand({'command':'pl_play'});
+	if($("#playpause").attr("class").indexOf("pause") !== -1){
+		this.sendCommand({'command':'pl_forceresume'});
+	} else {
+		this.sendCommand({'command':'pl_play'});
+	}
 };
 
 Player.prototype.stop = function(){
+	$("#positionSlider").val(0).slider("refresh");
 	this.sendCommand({'command':'pl_stop'});
 };
 
@@ -178,11 +183,6 @@ Player.prototype.jumpTo = function(value){
 Player.prototype.clearPlaylist = function(){
 	this.sendCommand({'command':'pl_empty'});
 	$("#playlist #playlistfiles li").remove();
-	console.log("bla");
-	console.log($("#playpause").attr("class").indexOf("pause"));
-	if($("#playpause").attr("class").indexOf("pause") !== -1){
-    	$("#playpause").removeClass("pause").addClass("play");
-   	}
 };
 
 /*
@@ -245,6 +245,30 @@ Player.prototype.updateDetails = function(){
 						$("#random").removeClass("random").addClass("ra-active");
 					} else {
 						$("#random").removeClass("ra-active").addClass("random");
+					}
+				});
+
+				$(this).find('state').each(function(){
+					var state = $(this).text();
+					console.log(state);
+					if(state === "playing"){
+						if($("#playpause").attr("class").indexOf("play") !== -1){
+							$("#playpause").removeClass("play").addClass("pause");
+						} else {
+							$("#playpause").addClass("pause");
+						}
+					} else if(state === "paused"){
+						if($("#playpause").attr("class").indexOf("pause") !== -1){
+							$("#playpause").removeClass("pause").addClass("play");
+						} else {
+							$("#playpause").addClass("play");
+						}
+					} else { //Player got stopped
+						if($("#playpause").attr("class").indexOf("pause") !== -1){
+							$("#playpause").removeClass("pause").addClass("play");
+						} else {
+							$("#playpause").addClass("play");
+						}
 					}
 				});
 
