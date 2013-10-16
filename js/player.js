@@ -37,6 +37,7 @@ var data = {
 	location: '',
 	lastDir: undefined,
 	startLocation: 'none',
+	state: 'stopped',
 	currentVolume: 0,
 	volumeBeforeMuted: 0,
 	connected: false,
@@ -116,9 +117,9 @@ Player.prototype.showMessage = function(message){
 };
 
 Player.prototype.play = function(){
-	if($("#playpause").attr("class").indexOf("pause") !== -1){
+	if(data.state === "paused"){
 		this.sendCommand({'command':'pl_forceresume'});
-	} else {
+	} else if(data.state === "stopped") {
 		this.sendCommand({'command':'pl_play'});
 	}
 };
@@ -249,7 +250,10 @@ Player.prototype.updateDetails = function(){
 				});
 
 				$(this).find('state').each(function(){
+					data = returnNamespace();
 					var state = $(this).text();
+					data.state = state;
+
 					console.log(state);
 					if(state === "playing"){
 						if($("#playpause").attr("class").indexOf("play") !== -1){
