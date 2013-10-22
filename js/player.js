@@ -62,50 +62,12 @@ function returnNamespace(){ //To be able to access data-namespace in ajax-functi
 	return data;
 };
 
-function messageCallback(){
-
-};
-
-/*
-* Check the connection, will check folder seprately, to give better feedback
-*/
-Player.prototype.checkConnection = function(){
-	//test user settings
-	$.ajax({
-		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
-		success: function (data, status, jqXHR) {
-			connected(true);
-		},
-		error: function(data){
-			connected(false);
-		}
-	});
-};
-
-/*
-* Check the folder
-*/
-Player.prototype.checkFolder= function(){
-	$.ajax({
-		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
-		data: "uri=" + rawurlencode(data.location),
-		success: function (data, status, jqXHR) {
-			if($(data).find("element").length > 0){
-				foundDir(true);
-			} else {
-				foundDir(false);
-			}
-		},
-		error: function(data){
-			foundDir(false);
-		}
-	});
-};
+function messageCallback(){};
 
 /*
 * Display error message
 */
-Player.prototype.showError = function(error){
+showError = function(error){
 	alert(error, messageCallback, "Error", "Ok");
 };
 
@@ -483,19 +445,14 @@ Player.prototype.getSettings = function(){
 	try{
 		data.ip = $("#ip").val();
 		data.port = $("#port").val();
-		
-		//check connection and set data.connected accordingly		
-		this.checkConnection();	
 
 		if(data.location !== ""){ //If the user has set a directory
 			data.location = "file://" + $("#location").val();
-			//check folder and set data.foundDir accordingly
-			this.checkFolder();		
 		} else {
 			data.location = "file://~";
-			foundDir(true);
 		}
-		setTimeout("player.saveSettings()", 2000) //Save settings but wait 5 seconds for the requests to complete
+		//check connection and folder, if successful save settings
+		checkConnection("save",data.location);	
 	}catch(err){
 		console.log(err)
 	}
@@ -507,23 +464,13 @@ Player.prototype.getSettings = function(){
 */
 Player.prototype.saveSettings = function(){
 	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-	if(data.connected !== true){
-		this.showError("Couldn't find VLC, please check IP and Port");
-	} else if (data.connected === true && data.foundDir !== true){
-		this.showError("Connected, but couldn't find choosen directory");
-	} else if(data.connected === true && data.foundDir === true){
-		this.showMessage("Settings saved, restart may be required");
-		window.localStorage.setItem("vlcip",data.ip);
-		window.localStorage.setItem("vlcport",data.port);
-		window.localStorage.setItem("location",data.location);
-
-		window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
-
-		this.loadHelper();
-
-	    data.connected = false;
-	    data.foundDir = false;
-	}
+	
+	this.showMessage("Settings saved, restart may be required");
+	window.localStorage.setItem("vlcip",data.ip);
+	window.localStorage.setItem("vlcport",data.port);
+	window.localStorage.setItem("location",data.location);
+	window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
+	this.loadHelper();
 };
 
 /*
@@ -536,11 +483,10 @@ Player.prototype.loadHelper = function(){
 			data.ip = window.localStorage.getItem("vlcip"); 
 			data.port = window.localStorage.getItem("vlcport");
 			data.location = window.localStorage.getItem("location");
+
 			//check connection and set data.connected accordingly		
-			this.checkConnection();	
-			//check folder and set data.foundDir accordingly
-			this.checkFolder();	
-			setTimeout("player.loadSettings()", 2000) //Save settings but wait 5 seconds for the requests to complete
+			checkConnection("load", data.location);	
+
 			if(data.updaterStarted === false){
 				$("#playerPopup").css("display","block");
 			}
@@ -561,17 +507,18 @@ Player.prototype.loadSettings = function(){
 	$("#settings #ip").val(data.ip);
 	$("#settings #port").val(data.port);
 	var folder = data.location;
-	folder = folder.replace("file://","");
-	$("#settings #location").val(folder);
+	if(folder === "file://"){
+		folder = folder.replace("file://","");
+	} else if(folder === "file://~"){
+		folder = folder.replace("file://~","");
+	}
 
+	$("#settings #location").val(folder);
 	$("#playerPopup").css("display","none");
+
 	player.updateDetails();
 
-	if(data.connected !== true){
-		this.showError("Couldn't find VLC, please check IP and Port");
-	} else if (data.connected === true && data.foundDir !== true){
-		this.showError("Connected, but couldn't find choosen directory");
-	} else if (data.connected === true && data.foundDir === true && data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
+	if(data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
 		data.updaterStarted = true;
 		window.setInterval("player.updateDetails();",1000);
 	}
@@ -587,4 +534,48 @@ Player.prototype.clearSettings = function(){
 	$("#settings #location").val(null);
 	this.showMessage("Settings cleared, please restart app");
 	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+};
+
+/*
+* Check the connection, will check folder seprately, to give better feedback
+*/
+checkConnection = function(id, folder){
+	//test user settings
+	$.ajax({
+		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
+		success: function (data, status, jqXHR) {
+			checkFolder(id,folder); //I'm connected, now go and check the folder			
+		},
+		error: function(data){
+			showError("Couldn't find VLC, please check IP and Port");
+			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+		}
+	});
+};
+
+/*
+* Check the folder
+*/
+checkFolder= function(id, folder){
+	$.ajax({
+		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
+		data: "uri=" + rawurlencode(folder),
+		success: function (data, status, jqXHR) {
+			console.log(data);
+			if($(data).find('root').length > 0){
+				if(id === "load"){ //If I was called from load settings, load settings
+					player.loadSettings();
+				} else if(id === "save"){ //else save settings
+					player.saveSettings();
+				}
+			} else {
+				showError("Connected, but couldn't find choosen directory");
+				$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+			}
+		},
+		error: function(data){
+			showError("Connected, but couldn't find choosen directory");
+			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+		}
+	});
 };
