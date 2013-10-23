@@ -543,6 +543,9 @@ checkConnection = function(id, folder){
 	//test user settings
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
+		beforeSend : function(xhr) {
+		xhr.setRequestHeader("Authorization", "Basic " + base64("test"));
+		},
 		success: function (data, status, jqXHR) {
 			checkFolder(id,folder); //I'm connected, now go and check the folder			
 		},
