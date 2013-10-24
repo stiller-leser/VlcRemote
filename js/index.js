@@ -60,7 +60,7 @@ function init(){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
         $("#libraryPopup").css("display","none");
-        player.loadFiles(data.lastDir);
+        player.loadFiles(data.location);
     });
 
     $("#settings").on("pagebeforeshow", function(event){
