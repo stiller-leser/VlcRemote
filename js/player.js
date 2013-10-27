@@ -34,7 +34,8 @@ function foundDir(dir){
 var data = {
 	ip: '',
 	port: '',
-	authorization: '',
+	username: '',
+	password: '',
 	location: '',
 	lastDir: undefined,
 	startLocation: 'none',
@@ -158,10 +159,9 @@ Player.prototype.sendCommand = function(params, append) {
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
 		data: params,
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
 			//console.log(jqXHR);
 		},
@@ -176,14 +176,14 @@ Player.prototype.sendCommand = function(params, append) {
 */
 
 Player.prototype.updateDetails = function(){
+	console.log("Ud");
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
 		dataType: "xml",
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (requestData, status, jqXHR) {
 			$(requestData).find('root').each(function(){
 				//Set variables for the position slider
@@ -301,21 +301,19 @@ Player.prototype.updateDetails = function(){
 /*
 * Function which loads the playlist
 */
-Player.prototype.loadPlaylist = function(dir) {
-	dir = dir == undefined ? 'file://~' : dir;
+Player.prototype.loadPlaylist = function() {
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/playlist.xml',
 		dataType: "xml",
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
 			$("li.item").remove();
 			$(data).find("leaf").each(function(){
 				var id = $(this).attr("id");
-				var li = '<li class="item" data-type=' +$(this).attr("type")+' data-path="file://'+$(this).attr("path")+'" data-id="'+$(this).attr("id")+'">' + $(this).attr('name') + "</li>";
+				var li = '<li class="item">' + $(this).attr('name') + "</li>";
 				$(li).hammer().bind("tap", {id : id}, function(event){ //bind the id of the file to the object, to be able
 					player.sendCommand('command=pl_play&id='+event.data.id); 	//to play it
 				}).bind("hold", {id : id}, function(event){
@@ -339,13 +337,10 @@ Player.prototype.loadPlaylist = function(dir) {
 			//Necessary to make sure the list elements look are styled in the jqm-styles
 		},
 		error: function (jqXHR, status, error) {
+			console.log(error);
 		}
 	});
 }; 
-
-/*
-* Remove a single Item from the playlist
-*/
 
 /*
 * Function which loads the files and defines events for click and taphold
@@ -359,52 +354,66 @@ Player.prototype.loadFiles = function(dir) {
 		data: 'uri=' + rawurlencode(dir),
 		dataType: "xml",
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
-			console.log(data);
-			$(data).find("element").each(function(){
-				var dataType = $(this).attr("type");
-				var li = '<li class="item" data-type=' +dataType+' data-path="file://'+$(this).attr("path")+'">' + $(this).attr('name') + "</li>";
-				$(li).hammer().bind("tap", {type : dataType, //bind click event
-									 path : 'file://'+$(this).attr("path")}, function(event){
-					if(event.data.type === "dir"){
-						player.loadFiles(event.data.path);
-					} else if(event.data.type === "file"){
-						var file = rawurlencode(event.data.path);
-						var command = 'in_play&input=' + file; //add current file to playlist 
-						player.sendCommand('command='+command); //and play
-					} 
-				}).bind("hold", {path : 'file://'+$(this).attr("path")}, function(event){ //bind taphold event
-						if(dataType === "dir"){
-							var path = event.data.path;
+			if($(data).find("element").length > 0){
+				$(data).find("element").each(function(){
+					var dataType = $(this).attr("type");
+					var uri = $(this).attr("uri");
+					var uriEnd = uri.substring(uri.length -2); //try to find out if the last to characters are ..,
+					//in which case he would map the whole filesystem
+					var lastChars = uri.substring(uri.length -8); //Get the last characters to get file-extension and make sure to really get it
+					var fileType = lastChars.substring(lastChars.indexOf(".") + 1).toLowerCase(); //get the file-extension without the dot
+					data = returnNamespace(); //get my data-namespace
+
+					if(dataType === "dir"){ //If dir 
+						var li = '<li class="item">' + $(this).attr('name') + "</li>";
+						$(li).hammer().bind("tap", {uri : $(this).attr("uri")}, function(event){
+							player.loadFiles(event.data.uri);
+						}).bind("hold", {uri : $(this).attr("uri")}, function(event){ //bind taphold event
+							var uri = event.data.uri;
 							$("#itemPopup").css("display","block"); //show popup
-							$("#playallLocation").text(path); //set headline to current file-uri
+							$("#playallLocation").text(uri); //set headline to current file-uri
 
 							//Configure the play all button, append it and add class for design
 							$("#playAll").remove();
 							var button = '<a href="#" id="playAll" data-theme="c" data-role="button">Play All</a>';
-							$(button).bind("click", {path: path}, function(){
+							$(button).bind("click", {uri: uri}, function(){
 								event.preventDefault();
-								player.playAll(event.data.path); //if user wants to play all, call playAll and send path
+								player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
 							}).appendTo("#itemPopup");
+
 							$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
 							//Configure the setHome button, append it and add class for design
 							$("#setHome").remove();
 							var button = '<a href="#" id="setHome" data-theme="c" data-role="button">Set marked folder as home</a>';
-							$(button).bind("click", {path: path}, function(){
+							$(button).bind("click", {uri: uri}, function(){
 								event.preventDefault();
-								player.setHome(event.data.path); //if user wants to set the marked folder as home, call function and set home
+								player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
 							}).appendTo("#itemPopup");
+
 							$("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
-						};
+						}).appendTo("#filelist");
+					} else if (dataType === "file" && data.allowedTypes.indexOf(fileType) > -1){ //Make sure the file displayed is supported
+						var li = '<li class="item">' + $(this).attr('name') + "</li>";
+						$(li).hammer().bind("tap", {uri : $(this).attr("uri")}, function(event){
+							var file = rawurlencode(event.data.uri);
+							var command = 'in_play&input=' + file; //add current file to playlist 
+							player.sendCommand('command='+command); //and play
+						}).appendTo("#filelist");
+					}
+				});
+			} else { //If the folder is empty, provide a way back for the user
+				var li = '<li class="item">..</li>';
+				$(li).hammer().bind("tap", function(event){
+					player.loadFiles(data.lastDir);
 				}).appendTo("#filelist");
-			});
+			}
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
-			//Necessary to make sure the list elements look are styled in the jqm-styles		
+				//Necessary to make sure the list elements look are styled in the jqm-styles		
 		},
 		error: function (jqXHR, status, error) {
 			console.log("Error" + status)
@@ -434,25 +443,24 @@ Player.prototype.playAll = function(dir){
 		data: 'uri=' + rawurlencode(dir),
 		dataType: "xml",
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
 			$(data).find("element").each(function(){
 				var type = $(this).attr("type");
-				var path = 'file://'+$(this).attr("path");
-				var pathEnd = path.substring(path.length -2); //try to find out if the last to characters are ..,
+				var uri = $(this).attr("uri");
+				var uriEnd = uri.substring(uri.length -2); //try to find out if the last to characters are ..,
 				//in which case he would map the whole filesystem
 
-				var lastChars = path.substring(path.length -8); //Get the last characters to get file-extension and make sure to really get it
+				var lastChars = uri.substring(uri.length -8); //Get the last characters to get file-extension and make sure to really get it
 				var fileType = lastChars.substring(lastChars.indexOf(".") + 1).toLowerCase(); //get the file-extension without the dot
 				data = returnNamespace(); //get my data-namespace
 
-				if(type === "dir" && pathEnd !== ".."){
-					player.playAll(path); //If the type of the current item is dir, call yourself
+				if(type === "dir" && uriEnd !== ".."){
+					player.playAll(uri); //If the type of the current item is dir, call yourself
 				} else if(type === "file" && data.allowedTypes.indexOf(fileType) > -1){ //figure out if file is supported
-					var file = rawurlencode(path); 
+					var file = rawurlencode(uri); 
 					var command = 'in_enqueue&input=' + file; //add current file to playlist
 					player.sendCommand('command='+command);
 				}
@@ -472,16 +480,8 @@ Player.prototype.getSettings = function(){
 	try{
 		data.ip = $("#ip").val();
 		data.port = $("#port").val();
-		var password = $("#password").val();
-		var username = $("#username").val();
-
-		if(username !== "" && password !== ""){ //If the username and the password is set
-			data.authorization = btoa(username+":"+password);
-		} else if (username === "" && password !== ""){ //If no username, but the password is set
-			data.authorization = btoa(":"+password);
-		} else if (username === "" && password === ""){ //If nothing is set
-			data.authorization = undefined;
-		}
+		data.password = $("#password").val();
+		data.username = $("#username").val();
 
 		if(data.location !== ""){ //If the user has set a directory
 			data.location = "file://" + $("#location").val();
@@ -490,7 +490,7 @@ Player.prototype.getSettings = function(){
 		}
 
 		//check connection and folder, if successful save settings
-		checkConnection("save",data.location);	
+		checkConnection("save");	
 	}catch(err){
 		console.log(err)
 	}
@@ -504,7 +504,8 @@ Player.prototype.saveSettings = function(){
 	window.localStorage.setItem("vlcip",data.ip);
 	window.localStorage.setItem("vlcport",data.port);
 	window.localStorage.setItem("location",data.location);
-	window.localStorage.setItem("authorization", data.authorization);
+	window.localStorage.setItem("username",data.username);
+	window.localStorage.setItem("password",data.password);
 	window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
 
 	this.showMessage("Settings saved, restart may be required");
@@ -522,10 +523,12 @@ Player.prototype.loadHelper = function(){
 			data.ip = window.localStorage.getItem("vlcip"); 
 			data.port = window.localStorage.getItem("vlcport");
 			data.location = window.localStorage.getItem("location");
-			data.authorization = window.localStorage.getItem("authorization");
+			data.username = window.localStorage.getItem("username");
+			data.password = window.localStorage.getItem("password");
 
 			//check connection and set data.connected accordingly		
-			checkConnection("load", data.location);	
+			checkConnection("load");	
+			data.lastDir = data.location; //Set lastDir to currrent location to make sure the user sees the same folder
 
 			if(data.updaterStarted === false){
 				$("#playerPopup").css("display","block");
@@ -567,42 +570,65 @@ Player.prototype.loadSettings = function(){
 /*
 * Function that clears the settings
 */
-Player.prototype.clearSettings = function(){
-	window.localStorage.clear();
-	$("#settings #ip").val(null);
-	$("#settings #port").val(null);
-	$("#settings #location").val(null);
-	$("#settings #username").val(null);
-	$("#settings #password").val(null);
-	this.showMessage("Settings cleared, please restart app");
-	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+Player.prototype.clearSettings = function(caller){
+	data.location = "";
+	if(caller !== "error"){
+		this.showMessage("Settings cleared, please restart app");
+		window.localStorage.clear();
+		$("#settings #ip").val(null);
+		$("#settings #port").val(null);
+		$("#settings #location").val(null);
+		$("#settings #username").val(null);
+		$("#settings #password").val(null);
+		$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+		data.authorization = "";
+		data.ip = "";
+		data.port= "";
+		data.lastDir = "";
+	}
 };
 
 /*
 * Check the connection, will check folder seprately, to give better feedback
 */
-checkConnection = function(id, folder){
+checkConnection = function(id){
+	console.log("cc");
+	$("#settings #playerPopup").css("display","block");
 	//test user settings
-	$.ajax({
+	var x = $.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+
+        },
+		dataType: "xml",
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
+			console.log("Success: " + data);
 			if($(data).find("root").length > 0){
-				checkFolder(id,folder); //I'm connected, now go and check the folder	
+				checkFolder(id); //I'm connected, now go and check the folder	
 			} else {
+				$("#settings #playerPopup").css("display","none");
 				showError("Couldn't find VLC, please check IP and Port");
+				player.clearSettings("error");
 				$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 			}		
 		},
-		error: function(data){
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("hi");
+			console.log(jqXHR.status);
+			console.log(textStatus);
+			console.log(errorThrown);
+			if(errorThrown === "timeout"){
+				$("#settings #playerPopup").css("display","none");
+				/*player.clearSettings();*/
+			}
 			if($(data.status).get(0) === 401){ //If the username or password is wrong
-				showError("Ups - the username or password must be wrong");
+				showError("Ups - the username or password must be wrong");				
 			} else {
+				$("#settings #playerPopup").css("display","none");
 				showError("Couldn't find VLC, please check IP and Port");
+				player.clearSettings("error");
 			}
 			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 		}
@@ -612,15 +638,15 @@ checkConnection = function(id, folder){
 /*
 * Check the folder
 */
-checkFolder= function(id, folder){
+checkFolder= function(id){
+	console.log("cf");
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
-		data: "uri=" + rawurlencode(folder),
+		data: "uri=" + rawurlencode(data.location),
 		beforeSend : function(xhr) {
-			if(data.authorization !== undefined){
-				xhr.setRequestHeader("Authorization", "Basic " + data.authorization);
-			}
-		},
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+        },
+		timeout: 5000,
 		success: function (data, status, jqXHR) {
 			if($(data).find('root').length > 0){
 				if(id === "load"){ //If I was called from load settings, load settings
@@ -628,13 +654,18 @@ checkFolder= function(id, folder){
 				} else if(id === "save"){ //else save settings
 					player.saveSettings();
 				}
+				$("#settings #playerPopup").css("display","none");
 			} else {
+				$("#settings #playerPopup").css("display","none");
 				showError("Connected, but couldn't find choosen directory");
+				player.clearSettings("error");
 				$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 			}
 		},
 		error: function(data){
+			$("#settings #playerPopup").css("display","none");
 			showError("Connected, but couldn't find choosen directory");
+			player.clearSettings("error");
 			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 		}
 	});
