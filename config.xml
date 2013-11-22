@@ -36,6 +36,13 @@
         <param name="android-package" value="org.apache.cordova.Notification" />
     </feature>
 
+    <config-file target="config.xml" parent="/*">
+    <feature name="BasicAuth">
+        <param name="wp-package" value="BasicAuth"/>
+    </feature>
+    </config-file>
+
+  
     <icon src="icons/icon.png" />
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="mdpi" />

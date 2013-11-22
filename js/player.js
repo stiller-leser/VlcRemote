@@ -44,6 +44,7 @@ var data = {
 	volumeBeforeMuted: 0,
 	connected: false,
 	foundDir: false,
+    cfCaller: '',
 	updaterStarted: false,
 	allowedTypes: new Array("3ga", "a52", "aac", "ac3", "ape", "awb", "dts", "flac", "it",
 							"m4a", "m4p", "mka", "mlp", "mod", "mp1", "mp2", "mp3",
@@ -477,7 +478,7 @@ Player.prototype.playAll = function(dir){
 * Function which get the settings if they have been changed and save them, needed to prevent bug
 */
 Player.prototype.getSettings = function(){
-	try{
+	//try{
 		data.ip = $("#ip").val();
 		data.port = $("#port").val();
 		data.password = $("#password").val();
@@ -489,11 +490,12 @@ Player.prototype.getSettings = function(){
 			data.location = "file://~";
 		}
 
-		//check connection and folder, if successful save settings
-		checkConnection("save");	
-	}catch(err){
-		console.log(err)
-	}
+        //check connection and folder, if successful save settings
+		data.cfCaller = "save";
+		checkConnection();	
+	//}catch(err){
+	//	console.log(err)
+	//}
 
 };
 
@@ -526,8 +528,9 @@ Player.prototype.loadHelper = function(){
 			data.username = window.localStorage.getItem("username");
 			data.password = window.localStorage.getItem("password");
 
-			//check connection and set data.connected accordingly		
-			checkConnection("load");	
+		    //check connection and set data.connected accordingly	
+            data.cfCaller = "load"
+			checkConnection();	
 			data.lastDir = data.location; //Set lastDir to currrent location to make sure the user sees the same folder
 
 			if(data.updaterStarted === false){
@@ -539,6 +542,8 @@ Player.prototype.loadHelper = function(){
 	} else {
 		this.showMessage("Please set settings");
 		$.mobile.changePage("#settings", "slide", true, true);
+		$(".dot-active").removeClass("dot-active");
+		$(".settingsDot").addClass("dot-active");
 	} 
 
 };
@@ -591,11 +596,12 @@ Player.prototype.clearSettings = function(caller){
 /*
 * Check the connection, will check folder seprately, to give better feedback
 */
-checkConnection = function(id){
-	console.log("cc");
+checkConnection = function(){
 	$("#settings #playerPopup").css("display","block");
-	//test user settings
-	var x = $.ajax({
+    //test user settings
+	var url = "http://" + data.ip + ":" + data.port + "/requests/status.xml";
+	cordova.exec(checkFolder, connectionError, "BasicAuth", "get", [data.ip, data.port, data.username, data.password]);
+	/*var x = $.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
 		beforeSend : function(xhr) {
 			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
@@ -621,7 +627,7 @@ checkConnection = function(id){
 			console.log(errorThrown);
 			if(errorThrown === "timeout"){
 				$("#settings #playerPopup").css("display","none");
-				/*player.clearSettings();*/
+				//player.clearSettings();
 			}
 			if($(data.status).get(0) === 401){ //If the username or password is wrong
 				showError("Ups - the username or password must be wrong");				
@@ -632,14 +638,21 @@ checkConnection = function(id){
 			}
 			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 		}
-	});
+	});*/
 };
+
+connectionError = function(){
+    $("#settings #playerPopup").css("display", "none");
+    showError("Couldn't find VLC, please check IP and Port and your credentials");
+    $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+}
 
 /*
 * Check the folder
 */
-checkFolder= function(id){
-	console.log("cf");
+checkFolder= function(){
+    console.log("cf");
+
 	$.ajax({
 		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
 		data: "uri=" + rawurlencode(data.location),
@@ -648,10 +661,11 @@ checkFolder= function(id){
         },
 		timeout: 5000,
 		success: function (data, status, jqXHR) {
-			if($(data).find('root').length > 0){
-				if(id === "load"){ //If I was called from load settings, load settings
+		    if ($(data).find('root').length > 0) {
+		        ns = returnNamespace(); //get my data-namespace
+				if(ns.cfCaller === "load"){ //If I was called from load settings, load settings
 					player.loadSettings();
-				} else if(id === "save"){ //else save settings
+				} else if(ns.cfCaller === "save"){ //else save settings
 					player.saveSettings();
 				}
 				$("#settings #playerPopup").css("display","none");
@@ -659,14 +673,13 @@ checkFolder= function(id){
 				$("#settings #playerPopup").css("display","none");
 				showError("Connected, but couldn't find choosen directory");
 				player.clearSettings("error");
-				$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 			}
 		},
 		error: function(data){
 			$("#settings #playerPopup").css("display","none");
 			showError("Connected, but couldn't find choosen directory");
 			player.clearSettings("error");
-			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 		}
 	});
+	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
 };
