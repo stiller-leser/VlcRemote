@@ -46,8 +46,8 @@ function setupUi(){
 
     //Configure Player-Buttons
     $("body").on("click", ".playpause", function(){
-        console.log("data.state" + data.state);
-        if(data.state === "playing"){
+        console.log("plData.state" + plData.state);
+        if(plData.state === "playing"){
     		$(this).removeClass("pause").addClass("play");
     		player.pause();
     	} else {

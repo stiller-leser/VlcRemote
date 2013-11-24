@@ -33,6 +33,7 @@ var app = {
 
 function init(){
     player = new Player;
+    updater = new Updater;
 
     $( document ).bind( "mobileinit", function() {
         // Make your jQuery Mobile framework configuration changes here!
@@ -59,8 +60,8 @@ function init(){
     $("#library").on("pagebeforeshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
-        $("#libraryPopup").css("display","none");
-        player.loadFiles(data.lastDir);
+        $("#libraryPopup").css("display", "none");
+        player.loadFiles(plData.lastDir);
     });
 
     $("#settings").on("pagebeforeshow", function(event){

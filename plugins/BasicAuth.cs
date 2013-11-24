@@ -35,6 +35,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Data);
+                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, ""));
             }
         }
 
