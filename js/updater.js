@@ -12,7 +12,7 @@ Updater.prototype.getState = function () {
 };
 
 Updater.prototype.startUpdater = function () {
-    upData.intervall = window.setInterval("updater.updateDetails();", 1000);
+    upData.interval = window.setInterval("updater.updateDetails();", 1000);
     upData.started = true;
     console.log("startUpdater");
 };
