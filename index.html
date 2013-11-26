@@ -13,15 +13,15 @@
         <!-- PLAYER !-->
         <section id="player" data-role="page" data-pagination="1" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
-                <h1>Player</h1>
+                <h1 id="playerHeadline">Player</h1>
                 <span class="dot playerDot dot-active"></span> <!--needs to active when app starts !-->
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
                 <span class="dot settingsDot"></span>
             </div>
             <div id="playerPopup">
-                <h3>Connecting to VLC</h3>
-                Be patient
+                <h3 id="ppHeadline">Connecting to VLC</h3>
+                <p id="ppMessage">Be patient</p>
             </div>
             <div data-role="content">
                 <div id="controls-left">
@@ -45,7 +45,7 @@
                   <table>
                     <tr>
                       <td>
-                        <h2>Title:</h2>
+                        <h2 id="titleHeadline">Title:</h2>
                       </td>
                       <td>
                         <p id="title"></p>
@@ -53,7 +53,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <h2>Artist:</h2>
+                        <h2 id="artistHeadline">Artist:</h2>
                       </td>
                       <td>
                         <p id="artist"></p>
@@ -61,7 +61,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <h2>Album:</h2>
+                        <h2 id="albumHeadline">Album:</h2>
                       </td>
                       <td>
                         <p id="album"></p>
@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <h2>Year:</h2>
+                        <h2 id="yearHeadline">Year:</h2>
                       </td>
                       <td>
                         <p id="year"></p>
@@ -92,11 +92,11 @@
                     <a href="#" id="clearPlaylist" data-theme="c" data-role="button" data-icon="delete" data-iconpos="top">Clear Playlist</a> 
             </div>
             <div id="playlistItemPopup">
-                <h3>Item Options</h3>
+                <h3 id="pipHeadline">Item Options</h3>
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
                 <a href="#" id="home" data-role="cus-button"></a>
-                <h1>Playlist</h1><a href="#" id="options" data-role="cus-button"></a>
+                <h1 id="playlistHeadline">Playlist</h1><a href="#" id="options" data-role="cus-button"></a>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -118,7 +118,7 @@
         <section id="library" data-role="page" data-pagination="3" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <a href="#" id="home" data-role="cus-button"></a>
-                <h1>Library</h1>
+                <h1 id="libraryHeadline">Library</h1>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -141,13 +141,13 @@
 
         <!-- Settings !-->
         <section id="settings" data-role="page" data-pagination="4" data-theme="a">
-            <div id="playerPopup">
-                <h3>Connecting to VLC</h3>
-                Be patient
+            <div id="settingsPopup">
+                <h3 id="spHeadline">Connecting to VLC</h3>
+                <p id="spMessage">Be patient</p>
             </div>
             <div data-role="header" data-tap-toggle="false">
                 <a href="#" id="home" data-role="cus-button"></a>
-                <h1>Settings</h1>
+                <h1 id="settingsHeadline">Settings</h1>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -155,51 +155,65 @@
             </div>
             <div data-role="content">
                 <form id="settings">
-                    <label for="ip">IP-Address</label>
+                    <label id="ipLabel" for="ip">IP-Address</label>
                         <input type="text" id="ip" value="192.168.0.101" placeholder="192.168.0.1"></input>
-                    <label for="port">Port</label>
+                    <label id="portLabel" for="port">Port</label>
                         <input type="text" id="port" value="8080" placeholder="8080"></input>
-                    <label for="location">Home-Folder</label>
+                    <label id="homefolderLabel" for="location">Home-Folder</label>
                         <input type="text" id="location" placeholder="/home/name/music"></input>
-                    <label for="password">Password</label>
+                    <label id="passwordLabel" for="password">Password</label>
                         <input type="password" id="password" value="olewcbu" placeholder="Won't be shown again, but stored"></input>                    
-                    <label for="username">Username</label>
+                    <label id="usernameLabel" for="username">Username</label>
                         <input type="text" id="username" placeholder="leave it empty, if you haven't set it"></input>
-                    <label for="saveSettings">Save</label>
+                    <label id="saveLabel" for="saveSettings">Save</label>
                         <input type="submit" id="saveSettings" value="Save" data-theme="c"></input>
-                    <label for="clearSettings">Clear Settings</label>
+                    <label id="clearSettingsLabel" for="clearSettings">Clear Settings</label>
                         <input type="submit" id="clearSettings" value="Clear settings" data-theme="c"></input>
                 </form>
                 <div id="faq">
-                    <h1>How to use?</h1>
-                    Enter the IP and the Port of your VLC-server above. If you
+                    <h1 id="faqHeadline">How to use?</h1>
+                    <p id="faqMessage">Enter the IP and the Port of your VLC-server above. If you
                     run the app for the first time you have to set your connection
                     details (ip, port). Furthermore you can set a home-folder, but
-                    that is optional.<br>
+                    that is optional.
                     Please note, that the VLC may take a moment to react to the commands.
-                    Be patient :).
+                    Be patient :).</p>
 
 
-                    <h1>The icons explained</h1>
-                    <i>I'm not a grafic designer ;)</i>
+                    <h1 id="iconsHeadline">The icons explained</h1>
                     <ul>
                     <li>
-                      <img src="images/home.png" height="30px" width="30px" alt="home-button"> Takes you back to the player</img></li>
-                    <li><img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once"> Repeats the file once</img></li>
-                    <li><img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all"> Repeats all the files</img></li>
-                    <li><img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all"> Shuffles through playlist</img></li>
-                    <li>You can mute the volume if you tap on the percentage and unmute it if you click again</li>
+                        <img src="images/home.png" height="30px" width="30px" alt="home-button">
+                            <p id="iconHome">Takes you back to the player</p>
+                        </img>
+                    </li>
+                    <li>
+                        <img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once">
+                            <p id="iconRepeatOnce">Repeats the file once</p>
+                        </img>
+                    </li>
+                    <li>
+                        <img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all">
+                            <p id="iconRepeatAll">Repeats all the files</p>
+                        </img>
+                    </li>
+                    <li>
+                        <img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all">
+                            <p id="iconShuffle">Shuffles through playlist</p>
+                        </img>
+                    </li>
+                    <li><p id="muteMessage">You can mute the volume if you tap on the percentage and unmute it if you click again</p></li>
                     </ul>
 
-                    <h1>About me</h1>
-                    I'm a student, free software and open source enthusiast. That's why the app
+                    <h1 id="aboutMeHeadline">About me</h1>
+                    <p id="aboutMeMessage">I'm a student, free software and open source enthusiast. That's why the app
                     is free. I feel like software for an open project like the VLC
-                    should be free as well.</br>
-                    Due to market and legal restrictions I can't use a donation button.</br>
+                    should be free as well.
+                    Due to market and legal restrictions I can't use a donation button.
                     P.S. Constructive criticism is welcome, however, please remember:
-                    The app is free and it did not write itself.
+                    The app is free and it did not write itself.</p>
 
-                    <h1>Contact</h1>
+                    <h1 id="contactHeadline">Contact</h1>
                     Twitter: <a onclick="var ref = window.open('https://twitter.com/stiller_leser', '_blank');">@stiller_leser</a><br></br>
                     GitHub: <a onclick="var ref = window.open('https://github.com/stiller-leser', '_blank');">stiller-leser</a>
                 </div>
@@ -217,6 +231,7 @@
         <script type="text/javascript" src="js/hammer/hammer.js"></script>
         <script type="text/javascript" src="js/updater.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="js/languages.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/setupUi.js"></script>
         <script type="text/javascript">

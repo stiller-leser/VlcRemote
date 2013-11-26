@@ -51,6 +51,10 @@ var plData = {
 							  //Taken from the vlc-webinterface to make sure I support everything
 };
 
+//Languages object getting modified by Language
+var plLang = {
+};
+
 function returnNamespace(){ //To be able to access plData-namespace in ajax-functions
 	return plData;
 };
@@ -167,7 +171,7 @@ Player.prototype.sendCommand = function(params, append) {
 * Check the connection, will check folder seprately, to give better feedback
 */
 checkConnection = function () {
-    $("#settings #playerPopup").css("display", "block");
+    $("#settings #settingsPopup").css("display", "block");
     //test user settings
 
     if (navigator.userAgent.match(/Windows Phone/) != null) {
@@ -187,8 +191,9 @@ checkConnection = function () {
                 if ($(requestData).find("root").length > 0) {
                     checkFolder(); //I'm connected, now go and check the folder	
                 } else {
-                    $("#settings #playerPopup").css("display", "none");
-                    showError("Couldn't find VLC, please check IP and Port");
+                    $("#settings #settingsPopup").css("display", "none");
+                    $("#player #playerPopup").css("display", "none");
+                    showError(plLang["checkIpAndPort"]);
                     player.clearSettings("error");
                     $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
                 }
@@ -199,15 +204,15 @@ checkConnection = function () {
                 console.log(textStatus);
                 console.log(errorThrown);
                 if (errorThrown === "timeout") {
-                    $("#settings #playerPopup").css("display", "none");
+                    $("#settings #settingsPopup").css("display", "none");
                     $("#player #playerPopup").css("display", "none");
                     //player.clearSettings();
                 }
-                if ($(requestData.status).get(0) === 401) { //If the username or password is wrong
-                    showError("Ups - the username or password must be wrong");
+                if ($(jqXHR.status).get(0) === 401) { //If the username or password is wrong
+                    showError(plLang["usernameOrPasswordWrong"]);
                 } else {
-                    $("#settings #playerPopup").css("display", "none");
-                    showError("Couldn't find VLC, please check IP and Port");
+                    $("#settings #settingsPopup").css("display", "none");
+                    showError(plLang["checkIpAndPort"]);
                     player.clearSettings("error");
                 }
                 $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
@@ -217,8 +222,8 @@ checkConnection = function () {
 };
 
 connectionError = function () {
-    $("#settings #playerPopup").css("display", "none");
-    showError("Couldn't find VLC, please check IP and Port and your credentials");
+    $("#settings #settingsPopup").css("display", "none");
+    showError(plLang["checkSettings"]);
     $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
     player.clearSettings("error");
 }
@@ -244,16 +249,16 @@ checkFolder = function () {
                 } else if (ns.cfCaller === "save") { //else save settings
                     player.saveSettings();
                 }
-                $("#settings #playerPopup").css("display", "none");
+                $("#settings #settingsPopup").css("display", "none");
             } else {
-                $("#settings #playerPopup").css("display", "none");
-                showError("Connected, but couldn't find choosen directory");
+                $("#settings #settingsPopup").css("display", "none");
+                showError(plLang["connectedNoDir"]);
                 player.clearSettings("error");
             }
         },
         error: function (requestData) {
-            $("#settings #playerPopup").css("display", "none");
-            showError("Connected, but couldn't find choosen directory");
+            $("#settings #settingsPopup").css("display", "none");
+            showError(plLang["connectedNoDir"]);
             player.clearSettings("error");
         }
     });
@@ -296,7 +301,7 @@ Player.prototype.saveSettings = function () {
     window.localStorage.setItem("password", plData.password);
     window.localStorage.setItem("notFirstRun", "true"); //Doesn't set the variable true though
 
-    showMessage("Settings saved, restart may be required");
+    showMessage(plLang["settingsSaved"]);
     $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
     this.loadHelper();
 };
@@ -326,7 +331,7 @@ Player.prototype.loadHelper = function () {
             console.log("err");
         }
     } else {
-        showMessage("Please set settings");
+        showMessage(plLang["setSettings"]);
         $.mobile.changePage("#settings", "slide", true, true);
         $(".dot-active").removeClass("dot-active");
         $(".settingsDot").addClass("dot-active");
@@ -363,7 +368,7 @@ Player.prototype.loadSettings = function () {
 Player.prototype.clearSettings = function (caller) {
     plData.location = "";
     if (caller !== "error") {
-        showMessage("Settings cleared, please restart app");
+        showMessage(plLang["settingsSavedRestart"]);
         window.localStorage.clear();
         $("#settings #ip").val(null);
         $("#settings #port").val(null);
@@ -416,7 +421,7 @@ Player.prototype.loadPlaylist = function() {
 		},
 		error: function (jqXHR, status, error) {
 		    if (updater.getState === true) {
-		        showError("Lost connection to the VLC");
+		        showError(plLang["lostConnection"]);
 		        updater.stopUpdater();
 		    }
 		}
@@ -498,7 +503,7 @@ Player.prototype.loadFiles = function(dir) {
 		},
 		error: function (jqXHR, status, error) {
 		    if (updater.getState === true) {
-		        showError("Lost connection to the VLC");
+		        showError(plLang["lostConnection"]);
 		        updater.stopUpdater();
 		    }
 		}
@@ -513,7 +518,7 @@ Player.prototype.setHome = function(dir){
 	window.localStorage.setItem("location",dir);
 	this.checkFolder(dir);
 	if(plData.foundDir == true){
-		showMessage("Success, needs restart");
+		showMessage(plLang["settingsSavedRestart"]);
 		plData.foundDir = false;
 	}
 };

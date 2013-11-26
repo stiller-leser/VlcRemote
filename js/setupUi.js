@@ -32,13 +32,13 @@ function setupUi(){
         }
         return false;            
     });
- };
+};
 
- function setupButtonUi(){
+function setupButtonUi(){
 
  	//Do it like this to have the persistent buttons work everywhere
 
-    //Configre Home-Button
+    //Configure Home-Button
     $("body").on("click", "#home", function(event){
         event.preventDefault();
         $.mobile.changePage("#player", "slide", true, true);        

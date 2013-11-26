@@ -34,6 +34,7 @@ var app = {
 function init(){
     player = new Player;
     updater = new Updater;
+    language = new Languages;
 
     $( document ).bind( "mobileinit", function() {
         // Make your jQuery Mobile framework configuration changes here!
@@ -41,6 +42,7 @@ function init(){
         $.mobile.allowCrossDomainPages = true;
     });
 
+    language.getLanguage();
     setupUi();
     setupButtonUi();
     player.loadHelper();
