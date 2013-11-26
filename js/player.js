@@ -212,6 +212,7 @@ checkConnection = function () {
                     showError(plLang["usernameOrPasswordWrong"]);
                 } else {
                     $("#settings #settingsPopup").css("display", "none");
+                    $("#playerPopup").css("display", "none");
                     showError(plLang["checkIpAndPort"]);
                     player.clearSettings("error");
                 }
@@ -223,6 +224,7 @@ checkConnection = function () {
 
 connectionError = function () {
     $("#settings #settingsPopup").css("display", "none");
+    $("#playerPopup").css("display", "none");
     showError(plLang["checkSettings"]);
     $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
     player.clearSettings("error");
@@ -248,6 +250,8 @@ checkFolder = function () {
                     player.loadSettings();
                 } else if (ns.cfCaller === "save") { //else save settings
                     player.saveSettings();
+                } else if(ns.cfCaller === "setHome"){ //If the user changed his homefolder
+                    return true;
                 }
                 $("#settings #settingsPopup").css("display", "none");
             } else {
@@ -516,11 +520,12 @@ Player.prototype.loadFiles = function(dir) {
 */
 Player.prototype.setHome = function(dir){
 	window.localStorage.setItem("location",dir);
-	this.checkFolder(dir);
-	if(plData.foundDir == true){
-		showMessage(plLang["settingsSavedRestart"]);
-		plData.foundDir = false;
-	}
+    //check folder
+    plData.location = dir;
+    plData.cfCaller = "setHome"
+	if(this.checkFolder()){ //Folder has been found
+        showMessage(plLang["settingsSavedRestart"]);
+    };
 };
 
 /*

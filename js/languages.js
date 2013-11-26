@@ -2,6 +2,19 @@ function Languages(){
 
 };
 
+var english = {
+	//Error messages only, because the app was in english initally
+
+	"checkIpAndPort" : "Couldn't connect. Please check IP and Port.",
+	"usernameOrPasswordWrong" : "Ups, the username or password must be wrong",
+	"checkSettings" : "There is an error in your settings - sorry can't be more specific here.",
+	"connectedNoDir" : "Connected, but couldn't find choosen directory",
+	"settingsSaved" : "Settings saved",
+	"settingsSavedRestart" : "Settings saved, please restart the app.",
+	"setSettings" : "Please set settings.",
+	"lostConnection" : "Lost connection."
+}
+
 var german = {
 
 	//Strings on the player-site
@@ -25,7 +38,7 @@ var german = {
 
 	"library" : "Bibliothek",
 	"playAll" : "Alle wiedergeben",
-	"setHomefolder" : "Markierten Ordner als Start",
+	"setHomefolder" : "Markierten Ordner als Startpunkt setzen",
 
 	//Strings on the settings-site
 
@@ -47,7 +60,7 @@ var german = {
 	//Strings in the faq on the settings-site
 
 	"faqHeadline" : "FAQ",
-	"faqMessage"  : "Ein wenig Text",
+	"faqMessage"  : null,
 	"iconsHeadline" : "Die Knöpfe erklärt",
 	"iconHome" : "Bringt Sie zum Player zurück",
 	"iconRepeatOnce" : "Wiederholt die Datei einmal",
@@ -55,7 +68,7 @@ var german = {
 	"iconShuffle" : "Spielt zufällige Titel aus der Wiedergabeliste",
 	"muteMessage" : "Der Player kann stumm geschaltet werden, in dem man auf die Lautstärke drückt, bzw. andersherum.",
 	"aboutMeHeadline" : "Über mich",
-	"aboutMeMessage" : "Mehr Text",
+	"aboutMeMessage" : null,
 	"contactHeadline" : "Kontakt",
 
 	//Error messages
@@ -123,7 +136,9 @@ Languages.prototype.setLanguage = function(){
 	//Strings in the faq on the settings-site
 
 	$("#faqHeadline").text(plLang["faqHeadline"]);
-	$("#faqMessage").text(plLang["faqMessage"]);
+	if(plLang["faqMessage"] !== null){ //If the faq has been translated
+		$("#faqMessage").text(plLang["faqMessage"]);
+	}
 	$("#iconsHeadline").text(plLang["iconsHeadline"]);
 	$("#iconHome").text(plLang["iconHome"]);
 	$("#iconRepeatOnce").text(plLang["iconRepeatOnce"]);
@@ -131,6 +146,8 @@ Languages.prototype.setLanguage = function(){
 	$("#iconShuffle").text(plLang["iconShuffle"]);
 	$("#muteMessage").text(plLang["muteMessage"]);
 	$("#aboutMeHeadline").text(plLang["aboutMeHeadline"]);
-	$("#aboutMeMessage").text(plLang["aboutMeMessage"]);
-	$("contactHeadline").text(plLang["contactHeadline"]);
+	if(plLang["aboutMeMessage"] !== null){ //If the about me message has been translated
+		$("#aboutMeMessage").text(plLang["aboutMeMessage"]);
+	}
+	$("#contactHeadline").text(plLang["contactHeadline"]);
 };
