@@ -154,7 +154,7 @@
                 <span class="dot settingsDot"></span>
             </div>
             <div data-role="content">
-                <form id="settings">
+                <form id="settingsForm">
                     <label id="ipLabel" for="ip">IP-Address</label>
                         <input type="text" id="ip" value="192.168.0.101" placeholder="192.168.0.1"></input>
                     <label id="portLabel" for="port">Port</label>
@@ -166,9 +166,9 @@
                     <label id="usernameLabel" for="username">Username</label>
                         <input type="text" id="username" placeholder="leave it empty, if you haven't set it"></input>
                     <label id="saveLabel" for="saveSettings">Save</label>
-                        <input type="submit" id="saveSettings" value="Save" data-theme="c"></input>
+                        <input type="submit" id="saveSettings" value="Save" data-theme="none"></input>
                     <label id="clearSettingsLabel" for="clearSettings">Clear Settings</label>
-                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="c"></input>
+                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="none"></input>
                 </form>
                 <div id="faq">
                     <h1 id="faqHeadline">How to use?</h1>
@@ -183,23 +183,23 @@
                     <h1 id="iconsHeadline">The icons explained</h1>
                     <ul>
                     <li>
-                        <img src="images/home.png" height="30px" width="30px" alt="home-button">
-                            <p id="iconHome">Takes you back to the player</p>
+                        <img src="images/home.png" class="icon" alt="home-button">
+                            <p id="iconHome" class="imgExp">Takes you back to the player</p>
                         </img>
                     </li>
                     <li>
-                        <img src="images/repeat-once.png" height="30px" width="30px" alt="repeat-once">
-                            <p id="iconRepeatOnce">Repeats the file once</p>
+                        <img src="images/repeat-once.png" class="icon" alt="repeat-once">
+                            <p id="iconRepeatOnce" class="imgExp">Repeats the file once</p>
                         </img>
                     </li>
                     <li>
-                        <img src="images/repeat-all.png" height="30px" width="30px" alt="repeat-all">
-                            <p id="iconRepeatAll">Repeats all the files</p>
+                        <img src="images/repeat-all.png" class="icon" alt="repeat-all">
+                            <p id="iconRepeatAll" class="imgExp">Repeats all the files</p>
                         </img>
                     </li>
                     <li>
-                        <img src="images/shuffle.png" height="30px" width="30px" alt="repeat-all">
-                            <p id="iconShuffle">Shuffles through playlist</p>
+                        <img src="images/shuffle.png" class="icon" alt="repeat-all">
+                            <p id="iconShuffle" class="imgExp">Shuffles through playlist</p>
                         </img>
                     </li>
                     <li><p id="muteMessage">You can mute the volume if you tap on the percentage and unmute it if you click again</p></li>

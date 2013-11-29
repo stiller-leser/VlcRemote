@@ -3,6 +3,10 @@ body{
     width: 100%;
 }
 
+body.rigid{
+    -ms-touch-action: none;
+}
+
 div[data-role="header"]{
     text-align: center;
     height: 11%;
@@ -11,7 +15,7 @@ div[data-role="header"]{
 
 
 div[data-role="header"] h1{
-    font-size: 150% !important;
+    font-size: 120% !important;
     margin-top: 2% !important;
     margin-bottom: 0 !important;
 }
@@ -28,7 +32,7 @@ div[data-role="header"] h1{
     background-color: white;
 }
 
-#playerPopup, #playlistPopup, #playlistItemPopup, #itemPopup{
+#playerPopup, #playlistPopup, #playlistItemPopup, #itemPopup, #settingsPopup{
     z-index: 999;
     position: fixed;
     background-color: rgba(0,0,0,0.8);
@@ -65,11 +69,11 @@ a[data-role="cus-button"]{
 }
 
 a#home{
-    background-image: url(../images/home.png); ;
+    background-image: url(../images/home.png);
 }
 
 a#options{
-    background-image: url(../images/options.png); ;
+    background-image: url(../images/options.png);
 }
 
 #playlist #options{
@@ -253,6 +257,11 @@ ul#filelist, ul#playlistfiles{
 	overflow: hidden;
 }
 
+div.ui-btn, #saveSettings{
+    border: 2px solid white !important;
+    border-radius: 0;
+}
+
 #faq{
     background-color: black;
     box-shadow: inset 0px 2px 4px 2px;
@@ -272,6 +281,15 @@ ul#filelist, ul#playlistfiles{
 #faq h1{
     margin: 4%;
     margin-left: 0;
+}
+
+#faq .imgExp{
+    display: inline;
+}
+
+#faq .icon{
+    height: 30px;
+    width: 30px;
 }
 
 div[data-role="footer"]{

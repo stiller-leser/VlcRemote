@@ -84,9 +84,10 @@ var german = {
 };
 
 Languages.prototype.getLanguage = function(){
-	var lang = navigator.language;
-	if(lang === "de"){
-		lang = $.extend(plLang, german);
+    var browserLang = navigator.language;
+    var systemLang = navigator.systemLanguage;
+	if(browserLang === "de" | systemLang === "de-DE"){
+		$.extend(plLang, german);
 		this.setLanguage();
 	}
 };
@@ -129,9 +130,9 @@ Languages.prototype.setLanguage = function(){
 	$("#usernameLabel").text(plLang["username"]);
 		$("#username").prop("placeholder", plLang["usernamePlaceholder"]);
 	$("#saveLabel").text(plLang["save"]);
-		$("#saveSettings").prop("value", plLang["saveSettingsButton"]);
+		$("#saveSettings").prev("span").find("span.ui-btn-text").text(plLang["saveSettingsButton"]);
 	$("#clearSettingsLabel").text(plLang["clearSettings"]);
-		$("#clearSettings").prop("value", plLang["clearSettingsButton"]);
+	$("#clearSettings").prev("span").find("span.ui-btn-text").text(plLang["clearSettingsButton"]);
 
 	//Strings in the faq on the settings-site
 

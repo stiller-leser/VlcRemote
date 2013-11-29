@@ -42,6 +42,8 @@ function init(){
         $.mobile.allowCrossDomainPages = true;
     });
 
+    console.log(navigator.systemLanguage)
+
     language.getLanguage();
     setupUi();
     setupButtonUi();
