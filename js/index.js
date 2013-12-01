@@ -42,8 +42,6 @@ function init(){
         $.mobile.allowCrossDomainPages = true;
     });
 
-    console.log(navigator.systemLanguage)
-
     language.getLanguage();
     setupUi();
     setupButtonUi();
@@ -54,14 +52,14 @@ function init(){
         $(".playerDot").addClass("dot-active");
     });
 
-    $("#playlist").on("pagebeforeshow", function(event){
+    $("#playlist").on("pageshow", function(event){
         $("#playlistPopup").css("display","none");
         $(".dot-active").removeClass("dot-active");
         $(".playlistDot").addClass("dot-active");
         player.loadPlaylist();
     });
 
-    $("#library").on("pagebeforeshow", function(event){
+    $("#library").on("pageshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
         $("#libraryPopup").css("display", "none");

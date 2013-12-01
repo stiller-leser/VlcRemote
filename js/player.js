@@ -326,7 +326,6 @@ Player.prototype.loadHelper = function () {
             //check connection
             plData.cfCaller = "load"
             checkConnection();
-            plData.lastDir = plData.location; //Set lastDir to currrent location to make sure the user sees the same folder
 
             if (updater.getState() === false) {
                 $("#playerPopup").css("display", "block");
@@ -424,6 +423,7 @@ Player.prototype.loadPlaylist = function() {
 			//Necessary to make sure the list elements look are styled in the jqm-styles
 		},
 		error: function (jqXHR, status, error) {
+            console.log("loadPlaylist")
 		    if (updater.getState === true) {
 		        showError(plLang["lostConnection"]);
 		        updater.stopUpdater();
@@ -437,82 +437,87 @@ Player.prototype.loadPlaylist = function() {
 */
 Player.prototype.loadFiles = function(dir) {
 	dir = dir == undefined ? plData.location : dir;
-	console.log(dir)
-	$("li.item").remove();
-	$.ajax({
-		url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
-		data: 'uri=' + rawurlencode(dir),
-		dataType: "xml",
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(plData.username+":"+plData.password));
-        },
-		timeout: 5000,
-		success: function (requestData, status, jqXHR) {
-		    if ($(requestData).find("element").length > 0) {
-		        $(requestData).find("element").each(function () {
-					var dataType = $(this).attr("type");
-					var uri = $(this).attr("uri");
-					var uriEnd = uri.substring(uri.length -2); //try to find out if the last to characters are ..,
-					//in which case he would map the whole filesystem
-					var lastChars = uri.substring(uri.length -8); //Get the last characters to get file-extension and make sure to really get it
-					var fileType = lastChars.substring(lastChars.indexOf(".") + 1).toLowerCase(); //get the file-extension without the dot
-					plData = returnNamespace(); //get my plData-namespace
+	console.log(dir !== plData.lastDir)
+    console.log(plData.location)
+    //if (dir !== plData.lastDir) {
+        //console.log("here")
+	    $("li.item").remove();
+	    $.ajax({
+	        url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
+	        data: 'uri=' + rawurlencode(dir),
+	        dataType: "xml",
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader("Authorization", "Basic " + btoa(plData.username + ":" + plData.password));
+	        },
+	        timeout: 5000,
+	        success: function (requestData, status, jqXHR) {
+	            if ($(requestData).find("element").length > 0) {
+	                $(requestData).find("element").each(function () {
+	                    var dataType = $(this).attr("type");
+	                    var uri = $(this).attr("uri");
+	                    var uriEnd = uri.substring(uri.length - 2); //try to find out if the last to characters are ..,
+	                    //in which case he would map the whole filesystem
+	                    var lastChars = uri.substring(uri.length - 8); //Get the last characters to get file-extension and make sure to really get it
+	                    var fileType = lastChars.substring(lastChars.indexOf(".") + 1).toLowerCase(); //get the file-extension without the dot
+	                    plData = returnNamespace(); //get my plData-namespace
 
-					if(dataType === "dir"){ //If dir 
-						var li = '<li class="item">' + $(this).attr('name') + "</li>";
-						$(li).hammer().bind("tap", {uri : $(this).attr("uri")}, function(event){
-							player.loadFiles(event.data.uri);
-						}).bind("hold", {uri : $(this).attr("uri")}, function(event){ //bind taphold event
-							var uri = event.data.uri;
-							$("#itemPopup").css("display","block"); //show popup
-							$("#playallLocation").text(uri); //set headline to current file-uri
+	                    if (dataType === "dir") { //If dir 
+	                        var li = '<li class="item">' + $(this).attr('name') + "</li>";
+	                        $(li).hammer().bind("tap", { uri: $(this).attr("uri") }, function (event) {
+	                            player.loadFiles(event.data.uri);
+	                        }).bind("hold", { uri: $(this).attr("uri") }, function (event) { //bind taphold event
+	                            var uri = event.data.uri;
+	                            $("#itemPopup").css("display", "block"); //show popup
+	                            $("#playallLocation").text(uri); //set headline to current file-uri
 
-							//Configure the play all button, append it and add class for design
-							$("#playAll").remove();
-							var button = '<a href="#" id="playAll" plData-theme="c" plData-role="button">Play All</a>';
-							$(button).bind("click", {uri: uri}, function(){
-								event.preventDefault();
-								player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
-							}).appendTo("#itemPopup");
+	                            //Configure the play all button, append it and add class for design
+	                            $("#playAll").remove();
+	                            var button = '<a href="#" id="playAll" plData-theme="c" plData-role="button">Play All</a>';
+	                            $(button).bind("click", { uri: uri }, function () {
+	                                event.preventDefault();
+	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
+	                            }).appendTo("#itemPopup");
 
-							$("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+	                            $("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
-							//Configure the setHome button, append it and add class for design
-							$("#setHome").remove();
-							var button = '<a href="#" id="setHome" plData-theme="c" plData-role="button">Set marked folder as home</a>';
-							$(button).bind("click", {uri: uri}, function(){
-								event.preventDefault();
-								player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
-							}).appendTo("#itemPopup");
+	                            //Configure the setHome button, append it and add class for design
+	                            $("#setHome").remove();
+	                            var button = '<a href="#" id="setHome" plData-theme="c" plData-role="button">Set marked folder as home</a>';
+	                            $(button).bind("click", { uri: uri }, function () {
+	                                event.preventDefault();
+	                                player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
+	                            }).appendTo("#itemPopup");
 
-							$("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
-						}).appendTo("#filelist");
-					} else if (dataType === "file" && plData.allowedTypes.indexOf(fileType) > -1){ //Make sure the file displayed is supported
-						var li = '<li class="item">' + $(this).attr('name') + "</li>";
-						$(li).hammer().bind("tap", {uri : $(this).attr("uri")}, function(event){
-							var file = rawurlencode(event.data.uri);
-							var command = 'in_play&input=' + file; //add current file to playlist 
-							player.sendCommand('command='+command); //and play
-						}).appendTo("#filelist");
-					}
-				});
-			} else { //If the folder is empty, provide a way back for the user
-				var li = '<li class="item">..</li>';
-				$(li).hammer().bind("tap", function(event){
-					player.loadFiles(plData.lastDir);
-				}).appendTo("#filelist");
-			}
-			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
-				//Necessary to make sure the list elements look are styled in the jqm-styles		
-		},
-		error: function (jqXHR, status, error) {
-		    if (updater.getState === true) {
-		        showError(plLang["lostConnection"]);
-		        updater.stopUpdater();
-		    }
-		}
-	});
-	plData.lastDir = dir;
+	                            $("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+	                        }).appendTo("#filelist");
+	                    } else if (dataType === "file" && plData.allowedTypes.indexOf(fileType) > -1) { //Make sure the file displayed is supported
+	                        var li = '<li class="item">' + $(this).attr('name') + "</li>";
+	                        $(li).hammer().bind("tap", { uri: $(this).attr("uri") }, function (event) {
+	                            var file = rawurlencode(event.data.uri);
+	                            var command = 'in_play&input=' + file; //add current file to playlist 
+	                            player.sendCommand('command=' + command); //and play
+	                        }).appendTo("#filelist");
+	                    }
+	                });
+	                plData.lastDir = dir; //If last dir is not empty and the request was successful
+	            } else { //If the folder is empty, provide a way back for the user
+	                var li = '<li class="item">..</li>';
+	                $(li).hammer().bind("tap", function (event) {
+	                    player.loadFiles(plData.lastDir);
+	                }).appendTo("#filelist");
+	            }
+	            $(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
+	            //Necessary to make sure the list elements look are styled in the jqm-styles		
+	        },
+	        error: function (jqXHR, status, error) {
+                console.log("loadFiles")
+	            if (updater.getState === true) {
+	                showError(plLang["lostConnection"]);
+	                updater.stopUpdater();
+	            }
+	        }
+	    });
+	//}
 };
 
 /*

@@ -14,7 +14,6 @@ Updater.prototype.getState = function () {
 Updater.prototype.startUpdater = function () {
     upData.interval = window.setInterval("updater.updateDetails();", 1000);
     upData.started = true;
-    console.log("startUpdater");
 };
 
 Updater.prototype.stopUpdater = function () {
@@ -25,11 +24,9 @@ Updater.prototype.stopUpdater = function () {
 stopUpdater = function () {
     window.clearInterval(upData.interval);
     upData.started = false;
-    console.log("tried");
 }
 
 Updater.prototype.updateDetails = function() {
-    console.log("Ud");
     $.ajax({
         url: 'http://' + plData.ip + ":" + plData.port + '/requests/status.xml',
         dataType: "xml",
@@ -147,8 +144,9 @@ Updater.prototype.updateDetails = function() {
             });
         },
         error: function (jqXHR, status, error) {
+            /*console.log("updateError")
             showError("Lost connection to the VLC");
-            stopUpdater();
+            stopUpdater();*/
         }
     });
 };

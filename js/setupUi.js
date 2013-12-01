@@ -39,7 +39,7 @@ function setupButtonUi(){
  	//Do it like this to have the persistent buttons work everywhere
 
     //Configure Home-Button
-    $("body").on("click", "#home", function(event){
+    $("body").on("click", ".home", function(event){
         event.preventDefault();
         $.mobile.changePage("#player", "slide", true, true);        
     });
@@ -56,18 +56,18 @@ function setupButtonUi(){
     	}
     });
 
-    $("body").on("click", "#stop", function(event){
+    $("body").on("click", ".stop", function(event){
     	event.preventDefault();
         $(".pause").removeClass("pause").addClass("play");
     	player.stop();
     });
 
-    $("body").on("click", "#forward", function(event){
+    $("body").on("click", ".forward", function(event){
     	event.preventDefault();
     	player.forward();
     });
 
-    $("body").on("click", "#previous", function(event){
+    $("body").on("click", ".previous", function(event){
     	event.preventDefault();
     	player.previous();
     });

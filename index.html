@@ -79,10 +79,10 @@
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
-                <a href="#" id="previous" data-role="cus-button"></a>
-                <a href="#" class="play playpause" data-role="cus-button"></a>
-                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
-                <a href="#" id="forward" data-role="cus-button"></a>
+                <a href="#" class="previous" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="play playpause" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="stop" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="forward" data-role="cus-button" data-shadow="false"></a>
             </div>
         </section>
 
@@ -95,8 +95,8 @@
                 <h3 id="pipHeadline">Item Options</h3>
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
-                <a href="#" id="home" data-role="cus-button"></a>
-                <h1 id="playlistHeadline">Playlist</h1><a href="#" id="options" data-role="cus-button"></a>
+                <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
+                <h1 id="playlistHeadline">Playlist</h1><a href="#" id="options" data-role="cus-button" data-shadow="false"></a>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -107,17 +107,17 @@
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
-                <a href="#" id="previous" data-role="cus-button"></a>
-                <a href="#" class="play playpause" data-role="cus-button"></a>
-                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
-                <a href="#" id="forward" data-role="cus-button"></a>
+                <a href="#" class="previous" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="play playpause" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="stop" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="forward" data-role="cus-button" data-shadow="false"></a>
             </div>
         </section>
 
         <!-- LIBRARY !-->
         <section id="library" data-role="page" data-pagination="3" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
-                <a href="#" id="home" data-role="cus-button"></a>
+                <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
                 <h1 id="libraryHeadline">Library</h1>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
@@ -132,10 +132,10 @@
                 </ul>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
-                <a href="#" id="previous" data-role="cus-button"></a>
-                <a href="#" class="play playpause" data-role="cus-button"></a>
-                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
-                <a href="#" id="forward" data-role="cus-button"></a>
+                <a href="#" class="previous" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="play playpause" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="stop" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="forward" data-role="cus-button" data-shadow="false"></a>
             </div>
         </section>
 
@@ -146,7 +146,7 @@
                 <p id="spMessage">Be patient</p>
             </div>
             <div data-role="header" data-tap-toggle="false">
-                <a href="#" id="home" data-role="cus-button"></a>
+                <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
                 <h1 id="settingsHeadline">Settings</h1>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
@@ -156,19 +156,19 @@
             <div data-role="content">
                 <form id="settingsForm">
                     <label id="ipLabel" for="ip">IP-Address</label>
-                        <input type="text" id="ip" value="192.168.0.101" placeholder="192.168.0.1"></input>
+                        <input type="text" id="ip" placeholder="192.168.0.1" />
                     <label id="portLabel" for="port">Port</label>
-                        <input type="text" id="port" value="8080" placeholder="8080"></input>
+                        <input type="text" id="port" placeholder="8080" />
                     <label id="homefolderLabel" for="location">Home-Folder</label>
-                        <input type="text" id="location" placeholder="/home/name/music"></input>
+                        <input type="text" id="location" placeholder="/home/name/music" />
                     <label id="passwordLabel" for="password">Password</label>
-                        <input type="password" id="password" value="olewcbu" placeholder="Won't be shown again, but stored"></input>                    
+                        <input type="password" id="password" placeholder="Won't be shown again, but stored" />
                     <label id="usernameLabel" for="username">Username</label>
-                        <input type="text" id="username" placeholder="leave it empty, if you haven't set it"></input>
+                        <input type="text" id="username" placeholder="leave it empty, if you haven't set it" />
                     <label id="saveLabel" for="saveSettings">Save</label>
-                        <input type="submit" id="saveSettings" value="Save" data-theme="none"></input>
+                        <input type="submit" id="saveSettings" value="Save" data-theme="none" />
                     <label id="clearSettingsLabel" for="clearSettings">Clear Settings</label>
-                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="none"></input>
+                        <input type="submit" id="clearSettings" value="Clear settings" data-theme="none" />
                 </form>
                 <div id="faq">
                     <h1 id="faqHeadline">How to use?</h1>
@@ -183,24 +183,20 @@
                     <h1 id="iconsHeadline">The icons explained</h1>
                     <ul>
                     <li>
-                        <img src="images/home.png" class="icon" alt="home-button">
+                        <img src="images/home.png" class="icon" alt="home-button" />
                             <p id="iconHome" class="imgExp">Takes you back to the player</p>
-                        </img>
                     </li>
                     <li>
-                        <img src="images/repeat-once.png" class="icon" alt="repeat-once">
+                        <img src="images/repeat-once.png" class="icon" alt="repeat-once" />
                             <p id="iconRepeatOnce" class="imgExp">Repeats the file once</p>
-                        </img>
                     </li>
                     <li>
-                        <img src="images/repeat-all.png" class="icon" alt="repeat-all">
+                        <img src="images/repeat-all.png" class="icon" alt="repeat-all" />
                             <p id="iconRepeatAll" class="imgExp">Repeats all the files</p>
-                        </img>
                     </li>
                     <li>
-                        <img src="images/shuffle.png" class="icon" alt="repeat-all">
+                        <img src="images/shuffle.png" class="icon" alt="repeat-all" />
                             <p id="iconShuffle" class="imgExp">Shuffles through playlist</p>
-                        </img>
                     </li>
                     <li><p id="muteMessage">You can mute the volume if you tap on the percentage and unmute it if you click again</p></li>
                     </ul>
@@ -214,15 +210,15 @@
                     The app is free and it did not write itself.</p>
 
                     <h1 id="contactHeadline">Contact</h1>
-                    Twitter: <a onclick="var ref = window.open('https://twitter.com/stiller_leser', '_blank');">@stiller_leser</a><br></br>
+                    Twitter: <a onclick="var ref = window.open('https://twitter.com/stiller_leser', '_blank');">@stiller_leser</a><br/>
                     GitHub: <a onclick="var ref = window.open('https://github.com/stiller-leser', '_blank');">stiller-leser</a>
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
-                <a href="#" id="previous" data-role="cus-button"></a>
-                <a href="#" class="play playpause" data-role="cus-button"></a>
-                <a href="#" id="stop" class="stop" data-role="cus-button"></a>
-                <a href="#" id="forward" data-role="cus-button"></a>
+                <a href="#" class="previous" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="play playpause" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="stop" data-role="cus-button" data-shadow="false"></a>
+                <a href="#" class="forward" data-role="cus-button" data-shadow="false"></a>
             </div>
         </section>
         <script type="text/javascript" src="cordova.js"></script>
