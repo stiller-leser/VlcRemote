@@ -597,48 +597,52 @@ Player.prototype.clearSettings = function(caller){
 * Check the connection, will check folder seprately, to give better feedback
 */
 checkConnection = function(){
-	$("#settings #playerPopup").css("display","block");
+    $("#settings #playerPopup").css("display", "block");
+    console.log(device.platform);
     //test user settings
-	var url = "http://" + data.ip + ":" + data.port + "/requests/status.xml";
-	cordova.exec(checkFolder, connectionError, "BasicAuth", "get", [data.ip, data.port, data.username, data.password]);
-	/*var x = $.ajax({
-		url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
+	if (device.platform === "Win32NT") { //If the app is running on a Windows Phone 8 device
+	    var url = "http://" + data.ip + ":" + data.port + "/requests/status.xml";
+	    cordova.exec(checkFolder, connectionError, "BasicAuth", "get", [data.ip, data.port, data.username, data.password]);
+	} else {
+	    var x = $.ajax({
+	        url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username + ":" + data.password));
 
-        },
-		dataType: "xml",
-		timeout: 5000,
-		success: function (data, status, jqXHR) {
-			console.log("Success: " + data);
-			if($(data).find("root").length > 0){
-				checkFolder(id); //I'm connected, now go and check the folder	
-			} else {
-				$("#settings #playerPopup").css("display","none");
-				showError("Couldn't find VLC, please check IP and Port");
-				player.clearSettings("error");
-				$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-			}		
-		},
-		error: function(jqXHR, textStatus, errorThrown){
-			console.log("hi");
-			console.log(jqXHR.status);
-			console.log(textStatus);
-			console.log(errorThrown);
-			if(errorThrown === "timeout"){
-				$("#settings #playerPopup").css("display","none");
-				//player.clearSettings();
-			}
-			if($(data.status).get(0) === 401){ //If the username or password is wrong
-				showError("Ups - the username or password must be wrong");				
-			} else {
-				$("#settings #playerPopup").css("display","none");
-				showError("Couldn't find VLC, please check IP and Port");
-				player.clearSettings("error");
-			}
-			$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-		}
-	});*/
+	        },
+	        dataType: "xml",
+	        timeout: 5000,
+	        success: function (data, status, jqXHR) {
+	            console.log("Success: " + data);
+	            if ($(data).find("root").length > 0) {
+	                checkFolder(); //I'm connected, now go and check the folder	
+	            } else {
+	                $("#settings #playerPopup").css("display", "none");
+	                showError("Couldn't find VLC, please check IP and Port");
+	                player.clearSettings("error");
+	                $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+	            }
+	        },
+	        error: function (jqXHR, textStatus, errorThrown) {
+	            console.log("hi");
+	            console.log(jqXHR.status);
+	            console.log(textStatus);
+	            console.log(errorThrown);
+	            if (errorThrown === "timeout") {
+	                $("#settings #playerPopup").css("display", "none");
+	                //player.clearSettings();
+	            }
+	            if ($(data.status).get(0) === 401) { //If the username or password is wrong
+	                showError("Ups - the username or password must be wrong");
+	            } else {
+	                $("#settings #playerPopup").css("display", "none");
+	                showError("Couldn't find VLC, please check IP and Port");
+	                player.clearSettings("error");
+	            }
+	            $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
+	        }
+	    });
+	}
 };
 
 connectionError = function(){

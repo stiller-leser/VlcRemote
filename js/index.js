@@ -33,6 +33,7 @@ var app = {
 
 function init(){
     player = new Player;
+    console.log(device.platform);
 
     $( document ).bind( "mobileinit", function() {
         // Make your jQuery Mobile framework configuration changes here!
