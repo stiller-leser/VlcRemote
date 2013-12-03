@@ -10,18 +10,28 @@ namespace WPCordovaClassLib.Cordova.Commands
 {
     public class BasicAuth : BaseCommand
     {
+        //Create timer to control timeout
+        DispatcherTimer timeoutTimer = new DispatcherTimer();
+        WebClient webClient = new WebClient();
+
+        public BasicAuth(){
+            timeoutTimer.Interval = TimeSpan.FromSeconds(5);
+            timeoutTimer.Tick += new EventHandler(timeout);
+            timeoutTimer.Start();
+        }
+
         public void get(string options)
         {
+            //Parse data that gets passed into the plugin
             string[] passedData = JSON.JsonHelper.Deserialize<string[]>(options);
 
             string ip = passedData[0];
             string port = passedData[1];
             string username = passedData[2];
-            string password = passedData[3];
-
+            string password = passedData[3];            
+            
             try
             {
-                WebClient webClient = new WebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
                 string credentials = String.Format("{0}:{1}", username, password);
                 byte[] bytes = Encoding.UTF8.GetBytes(credentials);
@@ -35,6 +45,8 @@ namespace WPCordovaClassLib.Cordova.Commands
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Data);
+                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, ""));
+                timeoutTimer.Stop();
             }
         }
 
@@ -45,6 +57,12 @@ namespace WPCordovaClassLib.Cordova.Commands
             } catch{
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, ""));
             }
+        }
+
+        private void timeout(Object sender, EventArgs e)
+        {
+            webClient.CancelAsync(); //Cancel Async download
+            timeoutTimer.Stop(); //Stop timer from beeing executed again
         }
     }
 

@@ -32,22 +32,22 @@ function setupUi(){
         }
         return false;            
     });
- };
+};
 
- function setupButtonUi(){
+function setupButtonUi(){
 
  	//Do it like this to have the persistent buttons work everywhere
 
-    //Configre Home-Button
-    $("body").on("click", "#home", function(event){
+    //Configure Home-Button
+    $("body").on("click", ".home", function(event){
         event.preventDefault();
         $.mobile.changePage("#player", "slide", true, true);        
     });
 
     //Configure Player-Buttons
     $("body").on("click", ".playpause", function(){
-        console.log("data.state" + data.state);
-        if(data.state === "playing"){
+        console.log("plData.state" + plData.state);
+        if(plData.state === "playing"){
     		$(this).removeClass("pause").addClass("play");
     		player.pause();
     	} else {
@@ -56,18 +56,18 @@ function setupUi(){
     	}
     });
 
-    $("body").on("click", "#stop", function(event){
+    $("body").on("click", ".stop", function(event){
     	event.preventDefault();
         $(".pause").removeClass("pause").addClass("play");
     	player.stop();
     });
 
-    $("body").on("click", "#forward", function(event){
+    $("body").on("click", ".forward", function(event){
     	event.preventDefault();
     	player.forward();
     });
 
-    $("body").on("click", "#previous", function(event){
+    $("body").on("click", ".previous", function(event){
     	event.preventDefault();
     	player.previous();
     });

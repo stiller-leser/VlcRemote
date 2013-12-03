@@ -33,7 +33,12 @@ var app = {
 
 function init(){
     player = new Player;
+<<<<<<< HEAD
     console.log(device.platform);
+=======
+    updater = new Updater;
+    language = new Languages;
+>>>>>>> 48029aa8d9a755ce2ac65c2d002403109cef296c
 
     $( document ).bind( "mobileinit", function() {
         // Make your jQuery Mobile framework configuration changes here!
@@ -41,6 +46,7 @@ function init(){
         $.mobile.allowCrossDomainPages = true;
     });
 
+    language.getLanguage();
     setupUi();
     setupButtonUi();
     player.loadHelper();
@@ -50,18 +56,18 @@ function init(){
         $(".playerDot").addClass("dot-active");
     });
 
-    $("#playlist").on("pagebeforeshow", function(event){
+    $("#playlist").on("pageshow", function(event){
         $("#playlistPopup").css("display","none");
         $(".dot-active").removeClass("dot-active");
         $(".playlistDot").addClass("dot-active");
         player.loadPlaylist();
     });
 
-    $("#library").on("pagebeforeshow", function(event){
+    $("#library").on("pageshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
-        $("#libraryPopup").css("display","none");
-        player.loadFiles(data.lastDir);
+        $("#libraryPopup").css("display", "none");
+        player.loadFiles(plData.lastDir);
     });
 
     $("#settings").on("pagebeforeshow", function(event){
