@@ -40,11 +40,7 @@
     <feature name="BasicAuth">
         <param name="wp-package" value="BasicAuth"/>
     </feature>
-<<<<<<< HEAD
     </config-file>
-=======
-    </config-file>  
->>>>>>> 48029aa8d9a755ce2ac65c2d002403109cef296c
   
   <icon src="icons/icon.png" />
     <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />

@@ -408,14 +408,13 @@ Player.prototype.loadPlaylist = function() {
 
 					//Configure the removeItem button, append it and add class for design
 					$("#removeItem").remove();
-					var button = '<a href="#" id="removeItem" plData-theme="c" plData-role="button" plData-icon="delete" plData-iconpos="top">Remove Item</a>';
+					var button = '<a href="#" id="removeItem" class="wp8-styled-button" >Remove Item</a>';
 					$(button).bind("click", {id : itemId}, function(event){
 				        event.preventDefault();
 				        var command = "pl_delete&id=" + event.data.id;
 						player.sendCommand('command='+command); //call removeItem and hand over id
 						player.loadPlaylist(); //and reload the playlist
 					}).appendTo("#playlistItemPopup");
-					$("#removeItem").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
 				}).appendTo("#playlistfiles");
 			});			
@@ -472,23 +471,20 @@ Player.prototype.loadFiles = function(dir) {
 
 	                            //Configure the play all button, append it and add class for design
 	                            $("#playAll").remove();
-	                            var button = '<a href="#" id="playAll" plData-theme="c" plData-role="button">Play All</a>';
+	                            var button = '<a href="#" id="playAll" class="wp8-styled-button" data-role="button">Play All</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
 	                            }).appendTo("#itemPopup");
 
-	                            $("#playAll").addClass("ui-btn-inner"); // ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
-
 	                            //Configure the setHome button, append it and add class for design
 	                            $("#setHome").remove();
-	                            var button = '<a href="#" id="setHome" plData-theme="c" plData-role="button">Set marked folder as home</a>';
+	                            var button = '<a href="#" id="setHome" class="wp8-styled-button" data-role="button">Set marked folder as home</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
 	                            }).appendTo("#itemPopup");
 
-	                            $("#setHome").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 	                        }).appendTo("#filelist");
 	                    } else if (dataType === "file" && plData.allowedTypes.indexOf(fileType) > -1) { //Make sure the file displayed is supported
 	                        var li = '<li class="item">' + $(this).attr('name') + "</li>";
@@ -536,7 +532,8 @@ Player.prototype.setHome = function(dir){
 /*
 * Function gets called from loadFiles if a certain item is clicked, adds all files from thereon to the playlist
 */
-Player.prototype.playAll = function(dir){
+Player.prototype.playAll = function (dir) {
+    this.clearPlaylist();
 	$.ajax({
 		url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
 		data: 'uri=' + rawurlencode(dir),
@@ -570,221 +567,4 @@ Player.prototype.playAll = function(dir){
 		}
 	});
 	this.sendCommand({'command':'pl_play'}); //After all items are loaded in the playlist, play one of them
-<<<<<<< HEAD
-};
-
-/*
-* Function which get the settings if they have been changed and save them, needed to prevent bug
-*/
-Player.prototype.getSettings = function(){
-	//try{
-		data.ip = $("#ip").val();
-		data.port = $("#port").val();
-		data.password = $("#password").val();
-		data.username = $("#username").val();
-
-		if(data.location !== ""){ //If the user has set a directory
-			data.location = "file://" + $("#location").val();
-		} else {
-			data.location = "file://~";
-		}
-
-        //check connection and folder, if successful save settings
-		data.cfCaller = "save";
-		checkConnection();	
-	//}catch(err){
-	//	console.log(err)
-	//}
-
-};
-
-/*
-* Function which saves the settings
-*/
-Player.prototype.saveSettings = function(){
-	window.localStorage.setItem("vlcip",data.ip);
-	window.localStorage.setItem("vlcport",data.port);
-	window.localStorage.setItem("location",data.location);
-	window.localStorage.setItem("username",data.username);
-	window.localStorage.setItem("password",data.password);
-	window.localStorage.setItem("notFirstRun","true"); //Doesn't set the variable true though
-
-	this.showMessage("Settings saved, restart may be required");
-	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-	this.loadHelper();
-};
-
-/*
-* Function which loads the few settings there are
-*/
-Player.prototype.loadHelper = function(){
-	var firstRun = window.localStorage.getItem("notFirstRun");
-	if(firstRun !== null && firstRun.indexOf("true") > -1){
-		try{
-			data.ip = window.localStorage.getItem("vlcip"); 
-			data.port = window.localStorage.getItem("vlcport");
-			data.location = window.localStorage.getItem("location");
-			data.username = window.localStorage.getItem("username");
-			data.password = window.localStorage.getItem("password");
-
-		    //check connection and set data.connected accordingly	
-            data.cfCaller = "load"
-			checkConnection();	
-			data.lastDir = data.location; //Set lastDir to currrent location to make sure the user sees the same folder
-
-			if(data.updaterStarted === false){
-				$("#playerPopup").css("display","block");
-			}
-		}catch(err){
-			console.log("err");
-		}
-	} else {
-		this.showMessage("Please set settings");
-		$.mobile.changePage("#settings", "slide", true, true);
-		$(".dot-active").removeClass("dot-active");
-		$(".settingsDot").addClass("dot-active");
-	} 
-
-};
-
-/*
-* Function which loads the few settings there are
-*/
-Player.prototype.loadSettings = function(){
-	$("#settings #ip").val(data.ip);
-	$("#settings #port").val(data.port);
-	var folder = data.location;
-	if(folder === "file://"){
-		folder = folder.replace("file://","");
-	} else if(folder === "file://~"){
-		folder = folder.replace("file://~","");
-	}
-
-	$("#settings #location").val(folder);
-	$("#playerPopup").css("display","none");
-
-	player.updateDetails();
-
-	if(data.updaterStarted === false){ //If everything is ok and the updater hasn't been started
-		data.updaterStarted = true;
-		window.setInterval("player.updateDetails();",1000);
-	}
-}
-
-/*
-* Function that clears the settings
-*/
-Player.prototype.clearSettings = function(caller){
-	data.location = "";
-	if(caller !== "error"){
-		this.showMessage("Settings cleared, please restart app");
-		window.localStorage.clear();
-		$("#settings #ip").val(null);
-		$("#settings #port").val(null);
-		$("#settings #location").val(null);
-		$("#settings #username").val(null);
-		$("#settings #password").val(null);
-		$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-		data.authorization = "";
-		data.ip = "";
-		data.port= "";
-		data.lastDir = "";
-	}
-};
-
-/*
-* Check the connection, will check folder seprately, to give better feedback
-*/
-checkConnection = function(){
-    $("#settings #playerPopup").css("display", "block");
-    console.log(device.platform);
-    //test user settings
-	if (device.platform === "Win32NT") { //If the app is running on a Windows Phone 8 device
-	    var url = "http://" + data.ip + ":" + data.port + "/requests/status.xml";
-	    cordova.exec(checkFolder, connectionError, "BasicAuth", "get", [data.ip, data.port, data.username, data.password]);
-	} else {
-	    var x = $.ajax({
-	        url: 'http://' + data.ip + ":" + data.port + '/requests/status.xml',
-	        beforeSend: function (xhr) {
-	            xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username + ":" + data.password));
-
-	        },
-	        dataType: "xml",
-	        timeout: 5000,
-	        success: function (data, status, jqXHR) {
-	            console.log("Success: " + data);
-	            if ($(data).find("root").length > 0) {
-	                checkFolder(); //I'm connected, now go and check the folder	
-	            } else {
-	                $("#settings #playerPopup").css("display", "none");
-	                showError("Couldn't find VLC, please check IP and Port");
-	                player.clearSettings("error");
-	                $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-	            }
-	        },
-	        error: function (jqXHR, textStatus, errorThrown) {
-	            console.log("hi");
-	            console.log(jqXHR.status);
-	            console.log(textStatus);
-	            console.log(errorThrown);
-	            if (errorThrown === "timeout") {
-	                $("#settings #playerPopup").css("display", "none");
-	                //player.clearSettings();
-	            }
-	            if ($(data.status).get(0) === 401) { //If the username or password is wrong
-	                showError("Ups - the username or password must be wrong");
-	            } else {
-	                $("#settings #playerPopup").css("display", "none");
-	                showError("Couldn't find VLC, please check IP and Port");
-	                player.clearSettings("error");
-	            }
-	            $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-	        }
-	    });
-	}
-};
-
-connectionError = function(){
-    $("#settings #playerPopup").css("display", "none");
-    showError("Couldn't find VLC, please check IP and Port and your credentials");
-    $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-}
-
-/*
-* Check the folder
-*/
-checkFolder= function(){
-    console.log("cf");
-
-	$.ajax({
-		url: 'http://' + data.ip + ":" + data.port + '/requests/browse.xml',
-		data: "uri=" + rawurlencode(data.location),
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(data.username+":"+data.password));
-        },
-		timeout: 5000,
-		success: function (data, status, jqXHR) {
-		    if ($(data).find('root').length > 0) {
-		        ns = returnNamespace(); //get my data-namespace
-				if(ns.cfCaller === "load"){ //If I was called from load settings, load settings
-					player.loadSettings();
-				} else if(ns.cfCaller === "save"){ //else save settings
-					player.saveSettings();
-				}
-				$("#settings #playerPopup").css("display","none");
-			} else {
-				$("#settings #playerPopup").css("display","none");
-				showError("Connected, but couldn't find choosen directory");
-				player.clearSettings("error");
-			}
-		},
-		error: function(data){
-			$("#settings #playerPopup").css("display","none");
-			showError("Connected, but couldn't find choosen directory");
-			player.clearSettings("error");
-		}
-	});
-	$(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
-=======
->>>>>>> 48029aa8d9a755ce2ac65c2d002403109cef296c
 };
