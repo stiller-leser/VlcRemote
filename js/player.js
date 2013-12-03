@@ -468,7 +468,7 @@ Player.prototype.loadFiles = function(dir) {
 	                        }).bind("hold", { uri: $(this).attr("uri") }, function (event) { //bind taphold event
 	                            var uri = event.data.uri;
 	                            $("#itemPopup").css("display", "block"); //show popup
-	                            $("#playallLocation").text(uri); //set headline to current file-uri
+	                            $("#playallLocation").text(uri.replace("file://","")); //set headline to current file-uri
 
 	                            //Configure the play all button, append it and add class for design
 	                            $("#playAll").remove();
@@ -478,7 +478,7 @@ Player.prototype.loadFiles = function(dir) {
 	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
 	                            }).appendTo("#itemPopup");
 
-	                            $("#playAll").addClass("ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
+	                            $("#playAll").addClass("ui-btn-inner"); // ui-shadow ui-btn-corner-all ui-btn-icon-top ui-btn-up-c")
 
 	                            //Configure the setHome button, append it and add class for design
 	                            $("#setHome").remove();
