@@ -338,6 +338,8 @@ div[data-role="footer"] a[data-role="cus-button"]{
     
     border: 0;
     border-radius: 0 !important;
+    outline: none !important;
+    text-decoration: none;
 }
 
 a.previous{
