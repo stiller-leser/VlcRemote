@@ -124,18 +124,40 @@ Updater.prototype.updateDetails = function() {
                         $(this).find("info").each(function () {
                             switch ($(this).attr('name')) {
                                 case "title":
-                                    $("#title").text($(this).text());
+                                    var text = $(this).text();
+                                    if(text.length > 0)
+                                        $("#title").text(text);
+                                    else
+                                        $("#title").text("");
                                     break;
                                 case "filename":
-                                    $("#title").text($(this).text());
+                                    var text = $(this).text();
+                                    if(text.length > 0)
+                                        $("#filename").text(text);
+                                    else
+                                        $("#filename").text("");
+                                    break;
                                 case "artist":
-                                    $("#artist").text($(this).text());
+                                   var text = $(this).text();
+                                    if(text.length > 0)
+                                        $("#artist").text(text);
+                                    else
+                                        $("#artist").text("");
                                     break;
                                 case "album":
-                                    $("#album").text($(this).text());
+                                   var text = $(this).text();
+                                    if(text.length > 0)
+                                        $("#album").text(text);
+                                    else
+                                        $("#album").text("");
                                     break;
                                 case "date":
-                                    $("#year").text($(this).text());
+                                    var text = $(this).text();
+                                    if(text.length > 0)
+                                        $("#year").text(text);
+                                    else
+                                        $("#year").text("");
+                                    break;
                                     break;
                             }
                         });
