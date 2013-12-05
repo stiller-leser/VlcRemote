@@ -226,6 +226,10 @@ a#volume-up{
     margin-left: -50px;
 }
 
+#position .ui-slider-track{
+    border: 1px solid grey;
+}
+
 #position #currentTime{
     display: inline;
     float: left;
