@@ -104,6 +104,7 @@ function setupButtonUi(){
     });
 
     //Configure position slider
+
     $("#positionSlider").on("slidestop", function(){
         player.jumpTo($(this).val());
     });

@@ -60,7 +60,7 @@ var german = {
 	//Strings in the faq on the settings-site
 
 	"faqHeadline" : "FAQ",
-	"faqMessage"  : null,
+	"faqMessage"  : "Wenn sie die App zum ersten Mal starten, oder die Einstellungen gelöscht habe, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
 	"iconsHeadline" : "Die Knöpfe erklärt",
 	"iconHome" : "Bringt Sie zum Player zurück",
 	"iconRepeatOnce" : "Wiederholt die Datei einmal",
@@ -68,7 +68,7 @@ var german = {
 	"iconShuffle" : "Spielt zufällige Titel aus der Wiedergabeliste",
 	"muteMessage" : "Der Player kann stumm geschaltet werden, in dem man auf die Lautstärke drückt, bzw. andersherum.",
 	"aboutMeHeadline" : "Über mich",
-	"aboutMeMessage" : null,
+	"aboutMeMessage" : "Ich bin Student und Fan von Open-Source-Software. Das ist auch der Grund, warum die App kostenlos ist. Eine Anwendung für ein offendes Projekt wie den VLC-Player sollte kostenlos sein. Auf Grund der Regeln des Appstores kann ich kein Spenden-Button nutzen. Konstruktive Kritik ist jedoch willkommen, aber bitte denken Sie daran, dass die App kostenlos ist und die Entwicklung Zeit gekostet hat.",
 	"contactHeadline" : "Kontakt",
 
 	//Error messages
