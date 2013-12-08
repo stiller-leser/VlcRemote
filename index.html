@@ -96,7 +96,8 @@
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
                 <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
-                <h1 id="playlistHeadline">Playlist</h1><a href="#" id="options" data-role="cus-button" data-shadow="false"></a>
+                <h1 id="playlistHeadline">Playlist</h1>
+                <a href="#" id="options" data-role="cus-button" data-shadow="false"></a>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -148,6 +149,7 @@
             <div data-role="header" data-tap-toggle="false">
                 <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
                 <h1 id="settingsHeadline">Settings</h1>
+                <a href="#faqAnchor" id="faqButton" data-role="cus-button" data-shadow="false" onClick="window.location.hash='faqAnchor';"></a>
                 <span class="dot playerDot"></span>
                 <span class="dot playlistDot"></span>
                 <span class="dot libraryDot"></span>
@@ -156,9 +158,9 @@
             <div data-role="content">
                 <form id="settingsForm">
                     <label id="ipLabel" for="ip">IP-Address</label>
-                        <input type="text" id="ip" placeholder="192.168.0.1" />
+                        <input type="text" id="ip" placeholder="e.g. 192.168.0.1" />
                     <label id="portLabel" for="port">Port</label>
-                        <input type="text" id="port" placeholder="8080" />
+                        <input type="text" id="port" placeholder="e.g. 8080" />
                     <label id="homefolderLabel" for="location">Home-Folder</label>
                         <input type="text" id="location" placeholder="/home/name/music" />
                     <label id="passwordLabel" for="password">Password</label>
@@ -170,6 +172,7 @@
                     <label id="clearSettingsLabel" for="clearSettings">Clear Settings</label>
                         <input type="submit" id="clearSettings" value="Clear settings" data-theme="none" />
                 </form>
+                <a name="faqAnchor" id="faqAnchor"></a>
                 <div id="faq">
                     <h1 id="faqHeadline">How to use?</h1>
                     <p id="faqMessage">Enter the IP and the Port of your VLC-server above. If you

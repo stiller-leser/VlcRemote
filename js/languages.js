@@ -45,8 +45,10 @@ var german = {
 	"settings" : "Einstellungen",
 	"spHeadline" : "Verbindet mit VLC",
 	"spMessage" : "Bitte warten",
-	"ip" : "IP-Adresse",
-	"port" : "Port",
+	"ipLabel" : "IP-Adresse",
+	"ip" : "z.B. 192.168.0.101",
+	"portLabel" : "Port",
+	"port" : "z.B. 8080",
 	"homefolder" : "Heimatverzeichnis",
 	"password" : "Passwort",
 	"passwordPlaceholder" : "Wird nicht wieder angezeigt.",
@@ -77,7 +79,7 @@ var german = {
 	"usernameOrPasswordWrong" : "Oh, der Nutzername oder das Password sind falsch.",
 	"checkSettings" : "In den Einstellungen befindet sich ein Fehler.",
 	"connectedNoDir" : "Verbunden, konnte den Ordner aber nicht finden.",
-	"settingsSaved" : "Einstellungen gespeichert, wird nach Neustart aktiv",
+	"settingsSaved" : "Einstellungen gespeichert",
 	"settingsSavedRestart" : "Einstellungen gespeichert, bitte App neustarten",
 	"setSettings" : "Bitte geben Sie die Einstellungen an",
 	"lostConnection" : "Verbindung zum VLC wurde unterbrochen"
@@ -122,8 +124,10 @@ Languages.prototype.setLanguage = function(){
 	$("#settingsHeadline").text(plLang["settings"]);
 	$("#spHeadline").text(plLang["spHeadline"]);
 	$("#spMessage").text(plLang["spMessage"]);
-	$("#ipLabel").text(plLang["ip"]);
-	$("#portLabel").text(plLang["port"]);
+	$("#ipLabel").text(plLang["ipLabel"]);
+	$("#ip").attr("placeholder",plLang["ip"]);
+	$("#portLabel").text(plLang["portLabel"]);
+	$("#port").attr("placeholder",plLang["port"]);
 	$("#homefolderLabel").text(plLang["homefolder"]);
 	$("#passwordLabel").text(plLang["password"]);
 		$("#password").prop("placeholder", plLang["passwordPlaceholder"]);

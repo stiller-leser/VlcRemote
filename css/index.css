@@ -83,6 +83,10 @@ a#options{
     background-image: url(../images/options.png);
 }
 
+a#faqButton{
+    background-image: url(../images/faq.png);
+}
+
 #playlist #options{
     margin-left: 85%;
 }
@@ -274,6 +278,10 @@ div.ui-btn{
     border-radius: 0;
 }
 
+#settings #faqButton{
+    margin-left: 85%;
+}
+
 #faq{
     background-color: black;
     box-shadow: inset 0px 2px 4px 2px;
@@ -316,7 +324,7 @@ div[data-role="footer"] a[data-role="cus-button"]:not(:last-child){
 }
 
 div[data-role="footer"] a[data-role="cus-button"]{
-    background-size: 100% !important;
+    background-size: 90% !important;
     background-repeat: no-repeat;
     background-color: transparent;
     

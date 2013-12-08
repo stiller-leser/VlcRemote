@@ -36,7 +36,10 @@ function setupUi(){
 
 function setupButtonUi(){
 
- 	//Do it like this to have the persistent buttons work everywhere
+    //Added to prevent footer hiding during focus of input
+    $("[data-role=footer]").fixedtoolbar({ hideDuringFocus: "input, select" });
+ 	
+    //Do it like this to have the persistent buttons work everywhere
 
     //Configure Home-Button
     $("body").on("click", ".home", function(event){
