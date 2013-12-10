@@ -5,6 +5,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width,  target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="css/indexMin.css"/>!-->
         <link rel="stylesheet" type="text/css" href="css/jquerymobile-min.css"/>
         <title>FreeVlcRemote</title>
     </head>
@@ -146,7 +147,7 @@
                 <h3 id="spHeadline">Connecting to VLC</h3>
                 <p id="spMessage">Be patient</p>
             </div>
-            <div data-role="header" data-tap-toggle="false">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
                 <h1 id="settingsHeadline">Settings</h1>
                 <a href="#faqAnchor" id="faqButton" data-role="cus-button" data-shadow="false" onClick="window.location.hash='faqAnchor';"></a>
@@ -226,6 +227,12 @@
             </div>
         </section>
         <script type="text/javascript" src="cordova.js"></script>
+
+        <!--<script type="text/javascript" src="js/jQuery/jquery.js"></script>
+        <script type="text/javascript" src="js/jQueryMobile/jquerymobile.js"></script>
+        <script type="text/javascript" src="js/hammer/hammer.js"></script>
+        <script type="text/javascript" src="js/buildMin.js"></script>!-->
+
         <script type="text/javascript" src="js/jQuery/jquery.js"></script>
         <script type="text/javascript" src="js/jQueryMobile/jquerymobile.js"></script>
         <script type="text/javascript" src="js/hammer/hammer.js"></script>

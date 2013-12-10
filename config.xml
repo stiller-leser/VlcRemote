@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.freevlcremote" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>FreeVlcRemote</name>
+    <name>VlcRemote</name>
     <description>
         This is a basic remote for the Video Lan Client, short VLC. You can do all the basic things with it, not much more.
     </description>
@@ -14,7 +14,7 @@
     <feature name="http://api.phonegap.com/1.0/device" />
     <feature name="http://api.phonegap.com/1.0/notification" />
     <feature name="http://api.phonegap.com/1.0/network" />
-    <preference name="phonegap-version" value="2.9.0" /> 
+    <preference name="phonegap-version" value="3.1.0" /> 
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
     <preference name="orientation" value="portrait" />

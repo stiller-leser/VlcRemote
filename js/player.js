@@ -89,7 +89,7 @@ Player.prototype.stop = function(){
 
 Player.prototype.pause = function(){
 	this.sendCommand({'command':'pl_pause'});
-};10
+};
 
 Player.prototype.previous = function(){
 	this.sendCommand({'command':'pl_previous'});
