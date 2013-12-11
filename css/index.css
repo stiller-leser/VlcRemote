@@ -2,6 +2,22 @@ section[data-role="page"]{
     background: black !important;
 }
 
+.ui-fixed-hidden{
+    position: relative !important;
+    top: 0 !important;
+    padding: 0 !important;
+}
+
+.ui-header-fixed{
+    position: fixed !important;
+    top: -1px !important;
+    padding-top: 1px !important;
+}
+
+.ui-header{
+    position: fixed !important;
+}
+
 div[data-role="header"]{
     text-align: center;
     height: 11%;

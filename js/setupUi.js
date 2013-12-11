@@ -32,13 +32,21 @@ function setupUi(){
         }
         return false;            
     });
-};
 
-function setupButtonUi(){
+    //Ugly workaround for annoying header and footer animation size change
+
+    $("input").select(function(event){
+        $("#settings").css("padding","0");
+        $("#settings div[data-role=header]").removeClass("slidedown");
+        $("#settings div[data-role=footer]").removeClass("slideup");
+    })
 
     //Added to prevent footer hiding during focus of input
     $("[data-role=footer]").fixedtoolbar({ hideDuringFocus: "input, select" });
 
+};
+
+function setupButtonUi(){
     //Do it like this to have the persistent buttons work everywhere
 
     //Configure Home-Button
