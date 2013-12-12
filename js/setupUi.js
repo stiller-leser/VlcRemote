@@ -35,11 +35,14 @@ function setupUi(){
 
     //Ugly workaround for annoying header and footer animation size change
 
-    $("input").select(function(event){
-        $("#settings").css("padding","0");
+    $("input").focus(function (event) {
+        //Fix jqm-css-bugs here
         $("#settings div[data-role=header]").removeClass("slidedown");
         $("#settings div[data-role=footer]").removeClass("slideup");
-    })
+
+        //select content of input
+        $(this).select();
+    });
 
     //Added to prevent footer hiding during focus of input
     $("[data-role=footer]").fixedtoolbar({ hideDuringFocus: "input, select" });

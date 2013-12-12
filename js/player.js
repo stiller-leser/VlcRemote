@@ -455,6 +455,7 @@ Player.prototype.loadFiles = function(dir) {
 	            if ($(requestData).find("element").length > 0) {
 	                $(requestData).find("element").each(function () {
 	                    var dataType = $(this).attr("type");
+	                    var path = $(this).attr("path");
 	                    var uri = $(this).attr("uri");
 	                    var uriEnd = uri.substring(uri.length - 2); //try to find out if the last to characters are ..,
 	                    //in which case he would map the whole filesystem
@@ -469,7 +470,7 @@ Player.prototype.loadFiles = function(dir) {
 	                        }).bind("hold", { uri: $(this).attr("uri") }, function (event) { //bind taphold event
 	                            var uri = event.data.uri;
 	                            $("#itemPopup").css("display", "block"); //show popup
-	                            $("#playallLocation").text(uri.replace("file://","")); //set headline to current file-uri
+	                            $("#playallLocation").text(path); //set headline to current file-uri (in the right format, using path instead of uri)
 
 	                            //Configure the play all button, append it and add class for design
 	                            $("#playAll").remove();
@@ -526,9 +527,7 @@ Player.prototype.setHome = function(dir){
     //check folder
     plData.lastDir = dir;
     plData.cfCaller = "setHome"
-	if(this.checkFolder()){ //Folder has been found
-        showMessage(plLang["settingsSavedRestart"]);
-    };
+    showMessage(plLang["settingsSavedRestart"]);
 };
 
 /*

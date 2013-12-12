@@ -11,7 +11,7 @@ var english = {
 	"connectedNoDir" : "Connected, but couldn't find choosen directory",
 	"settingsSaved" : "Settings saved",
 	"settingsSavedRestart" : "Settings saved, please restart the app.",
-	"settingsDeletedRestart" : "Settings deleted, please restart the app."
+	"settingsDeletedRestart" : "Settings deleted, please restart the app.",
 	"setSettings" : "Please set settings.",
 	"lostConnection" : "Lost connection."
 }

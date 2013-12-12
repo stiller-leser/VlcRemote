@@ -4,7 +4,8 @@
 
 var upData = {
     interval: '',
-    started: false
+    started: false,
+    lastTitle: ''
 }
 
 Updater.prototype.getState = function () {
@@ -17,6 +18,7 @@ Updater.prototype.startUpdater = function () {
 };
 
 Updater.prototype.stopUpdater = function () {
+    console.log("here");
     window.clearInterval(upData.interval);
     upData.started = false;
 }
@@ -24,6 +26,10 @@ Updater.prototype.stopUpdater = function () {
 stopUpdater = function () {
     window.clearInterval(upData.interval);
     upData.started = false;
+}
+
+getUpdaterData = function () { //Neccessary to handle data-namespace in ajax
+    return upData;
 }
 
 Updater.prototype.updateDetails = function () {
@@ -118,52 +124,22 @@ Updater.prototype.updateDetails = function () {
                 }
             });
 
-            $(requestData).find('information').each(function () {
-                $(this).find("category").each(function () {
-                    if ($(this).attr('name') === "meta") {
-                        $(this).find("info").each(function () {
-                            switch ($(this).attr('name')) {
-                                case "title":
-                                    var text = $(this).text();
-                                    if (text.length > 0)
-                                        $("#title").text(text);
-                                    else
-                                        $("#title").text("");
-                                    break;
-                                case "filename":
-                                    var text = $(this).text();
-                                    if (text.length > 0)
-                                        $("#filename").text(text);
-                                    else
-                                        $("#filename").text("");
-                                    break;
-                                case "artist":
-                                    var text = $(this).text();
-                                    if (text.length > 0)
-                                        $("#artist").text(text);
-                                    else
-                                        $("#artist").text("");
-                                    break;
-                                case "album":
-                                    var text = $(this).text();
-                                    if (text.length > 0)
-                                        $("#album").text(text);
-                                    else
-                                        $("#album").text("");
-                                    break;
-                                case "date":
-                                    var text = $(this).text();
-                                    if (text.length > 0)
-                                        $("#year").text(text);
-                                    else
-                                        $("#year").text("");
-                                    break;
-                                    break;
-                            }
-                        });
-                    }
+            //Import namespace to identify the last track
+            var updaterData = getUpdaterData();
+            var title = $(requestData).find("info[name=title]").text();
+
+            if (title !== updaterData.lastTitle) {
+                $("#details p").each(function () { //Delete current details, in case the next track has less information
+                    $(this).text("");
                 });
-            });
+
+                $("#title").text(title);
+                $("#filename").text($(requestData).find("info[name=filename]").text());
+                $("#artist").text($(requestData).find("info[name=artist]").text());
+                $("#album").text($(requestData).find("info[name=album]").text());
+                $("#year").text($(requestData).find("info[name=date]").text());
+                updaterData.lastTitle = title;
+            }
         },
         error: function (jqXHR, status, error) {
             /*console.log("updateError")
@@ -495,6 +471,7 @@ Player.prototype.loadHelper = function () {
             plData.ip = window.localStorage.getItem("vlcip");
             plData.port = window.localStorage.getItem("vlcport");
             plData.location = window.localStorage.getItem("location");
+            plData.lastDir = window.localStorage.getItem("location"); //Also set lastDir, to make jump in library possible
             plData.username = window.localStorage.getItem("username");
             plData.password = window.localStorage.getItem("password");
 
@@ -546,7 +523,7 @@ Player.prototype.loadSettings = function () {
 Player.prototype.clearSettings = function (caller) {
     plData.location = "";
     if (caller !== "error") {
-        showMessage(plLang["settingsSavedRestart"]);
+        showMessage(plLang["settingsDeletedRestart"]);
         window.localStorage.clear();
         $("#settings #ip").val(null);
         $("#settings #port").val(null);
@@ -555,6 +532,7 @@ Player.prototype.clearSettings = function (caller) {
         $("#settings #password").val(null);
         $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
         plData = null;
+        updater.stopUpdater();
     }
 };
 
@@ -610,8 +588,8 @@ Player.prototype.loadPlaylist = function () {
 * Function which loads the files and defines events for click and taphold
 */
 Player.prototype.loadFiles = function (dir) {
-    dir = dir == undefined ? plData.location : dir;
-    console.log(dir !== plData.lastDir)
+    dir = dir == undefined ? plData.lastDir : dir;
+    console.log(plData.lastDir)
     console.log(plData.location)
     //if (dir !== plData.lastDir) {
     //console.log("here")
@@ -628,6 +606,7 @@ Player.prototype.loadFiles = function (dir) {
             if ($(requestData).find("element").length > 0) {
                 $(requestData).find("element").each(function () {
                     var dataType = $(this).attr("type");
+                    var path = $(this).attr("path");
                     var uri = $(this).attr("uri");
                     var uriEnd = uri.substring(uri.length - 2); //try to find out if the last to characters are ..,
                     //in which case he would map the whole filesystem
@@ -642,7 +621,7 @@ Player.prototype.loadFiles = function (dir) {
                         }).bind("hold", { uri: $(this).attr("uri") }, function (event) { //bind taphold event
                             var uri = event.data.uri;
                             $("#itemPopup").css("display", "block"); //show popup
-                            $("#playallLocation").text(uri.replace("file://", "")); //set headline to current file-uri
+                            $("#playallLocation").text(path); //set headline to current file-uri (in the right format, using path instead of uri)
 
                             //Configure the play all button, append it and add class for design
                             $("#playAll").remove();
@@ -697,11 +676,9 @@ Player.prototype.loadFiles = function (dir) {
 Player.prototype.setHome = function (dir) {
     window.localStorage.setItem("location", dir);
     //check folder
-    plData.location = dir;
+    plData.lastDir = dir;
     plData.cfCaller = "setHome"
-    if (this.checkFolder()) { //Folder has been found
-        showMessage(plLang["settingsSavedRestart"]);
-    };
+    showMessage(plLang["settingsSavedRestart"]);
 };
 
 /*
@@ -757,6 +734,7 @@ var english = {
     "connectedNoDir": "Connected, but couldn't find choosen directory",
     "settingsSaved": "Settings saved",
     "settingsSavedRestart": "Settings saved, please restart the app.",
+    "settingsDeletedRestart": "Settings deleted, please restart the app.",
     "setSettings": "Please set settings.",
     "lostConnection": "Lost connection."
 }
@@ -827,6 +805,7 @@ var german = {
     "connectedNoDir": "Verbunden, konnte den Ordner aber nicht finden.",
     "settingsSaved": "Einstellungen gespeichert",
     "settingsSavedRestart": "Einstellungen gespeichert, bitte App neustarten",
+    "settingsDeletedRestart": "Einstellungen wurden gelöscht, bitte App neustarten",
     "setSettings": "Bitte geben Sie die Einstellungen an",
     "lostConnection": "Verbindung zum VLC wurde unterbrochen"
 };
@@ -977,6 +956,7 @@ function init() {
     });
 }
 
+
 function setupUi() {
 
     /*
@@ -1011,13 +991,24 @@ function setupUi() {
         }
         return false;
     });
-};
 
-function setupButtonUi() {
+    //Ugly workaround for annoying header and footer animation size change
+
+    $("input").focus(function (event) {
+        //Fix jqm-css-bugs here
+        $("#settings div[data-role=header]").removeClass("slidedown");
+        $("#settings div[data-role=footer]").removeClass("slideup");
+
+        //select content of input
+        $(this).select();
+    });
 
     //Added to prevent footer hiding during focus of input
     $("[data-role=footer]").fixedtoolbar({ hideDuringFocus: "input, select" });
 
+};
+
+function setupButtonUi() {
     //Do it like this to have the persistent buttons work everywhere
 
     //Configure Home-Button
