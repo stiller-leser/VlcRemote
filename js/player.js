@@ -320,6 +320,7 @@ Player.prototype.loadHelper = function () {
             plData.ip = window.localStorage.getItem("vlcip");
             plData.port = window.localStorage.getItem("vlcport");
             plData.location = window.localStorage.getItem("location");
+            plData.lastDir = window.localStorage.getItem("location"); //Also set lastDir, to make jump in library possible
             plData.username = window.localStorage.getItem("username");
             plData.password = window.localStorage.getItem("password");
 
@@ -371,7 +372,7 @@ Player.prototype.loadSettings = function () {
 Player.prototype.clearSettings = function (caller) {
     plData.location = "";
     if (caller !== "error") {
-        showMessage(plLang["settingsSavedRestart"]);
+        showMessage(plLang["settingsDeletedRestart"]);
         window.localStorage.clear();
         $("#settings #ip").val(null);
         $("#settings #port").val(null);
@@ -380,6 +381,7 @@ Player.prototype.clearSettings = function (caller) {
         $("#settings #password").val(null);
         $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
         plData = null;
+        updater.stopUpdater();
     }
 };
 
@@ -435,8 +437,8 @@ Player.prototype.loadPlaylist = function() {
 * Function which loads the files and defines events for click and taphold
 */
 Player.prototype.loadFiles = function(dir) {
-	dir = dir == undefined ? plData.location : dir;
-	console.log(dir !== plData.lastDir)
+	dir = dir == undefined ? plData.lastDir : dir;
+	console.log(plData.lastDir)
     console.log(plData.location)
     //if (dir !== plData.lastDir) {
         //console.log("here")
@@ -522,7 +524,7 @@ Player.prototype.loadFiles = function(dir) {
 Player.prototype.setHome = function(dir){
 	window.localStorage.setItem("location",dir);
     //check folder
-    plData.location = dir;
+    plData.lastDir = dir;
     plData.cfCaller = "setHome"
 	if(this.checkFolder()){ //Folder has been found
         showMessage(plLang["settingsSavedRestart"]);

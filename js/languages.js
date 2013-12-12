@@ -11,6 +11,7 @@ var english = {
 	"connectedNoDir" : "Connected, but couldn't find choosen directory",
 	"settingsSaved" : "Settings saved",
 	"settingsSavedRestart" : "Settings saved, please restart the app.",
+	"settingsDeletedRestart" : "Settings deleted, please restart the app."
 	"setSettings" : "Please set settings.",
 	"lostConnection" : "Lost connection."
 }
@@ -81,6 +82,7 @@ var german = {
 	"connectedNoDir" : "Verbunden, konnte den Ordner aber nicht finden.",
 	"settingsSaved" : "Einstellungen gespeichert",
 	"settingsSavedRestart" : "Einstellungen gespeichert, bitte App neustarten",
+	"settingsDeletedRestart" : "Einstellungen wurden gelöscht, bitte App neustarten",
 	"setSettings" : "Bitte geben Sie die Einstellungen an",
 	"lostConnection" : "Verbindung zum VLC wurde unterbrochen"
 };

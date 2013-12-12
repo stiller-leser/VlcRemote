@@ -4,7 +4,8 @@
 
 var upData = {
     interval: '',
-    started: false
+    started: false,
+    lastTitle: ''
 }
 
 Updater.prototype.getState = function () {
@@ -17,6 +18,7 @@ Updater.prototype.startUpdater = function () {
 };
 
 Updater.prototype.stopUpdater = function () {
+    console.log("here");
     window.clearInterval(upData.interval);
     upData.started = false;
 }
@@ -24,6 +26,10 @@ Updater.prototype.stopUpdater = function () {
 stopUpdater = function () {
     window.clearInterval(upData.interval);
     upData.started = false;
+}
+
+getUpdaterData = function(){ //Neccessary to handle data-namespace in ajax
+    return upData;
 }
 
 Updater.prototype.updateDetails = function() {
@@ -118,52 +124,22 @@ Updater.prototype.updateDetails = function() {
                 }
             });
 
-            $(requestData).find('information').each(function () {
-                $(this).find("category").each(function () {
-                    if ($(this).attr('name') === "meta") {
-                        $(this).find("info").each(function () {
-                            switch ($(this).attr('name')) {
-                                case "title":
-                                    var text = $(this).text();
-                                    if(text.length > 0)
-                                        $("#title").text(text);
-                                    else
-                                        $("#title").text("");
-                                    break;
-                                case "filename":
-                                    var text = $(this).text();
-                                    if(text.length > 0)
-                                        $("#filename").text(text);
-                                    else
-                                        $("#filename").text("");
-                                    break;
-                                case "artist":
-                                   var text = $(this).text();
-                                    if(text.length > 0)
-                                        $("#artist").text(text);
-                                    else
-                                        $("#artist").text("");
-                                    break;
-                                case "album":
-                                   var text = $(this).text();
-                                    if(text.length > 0)
-                                        $("#album").text(text);
-                                    else
-                                        $("#album").text("");
-                                    break;
-                                case "date":
-                                    var text = $(this).text();
-                                    if(text.length > 0)
-                                        $("#year").text(text);
-                                    else
-                                        $("#year").text("");
-                                    break;
-                                    break;
-                            }
-                        });
-                    }
+            //Import namespace to identify the last track
+            var updaterData = getUpdaterData();
+            var title = $(requestData).find("info[name=title]").text();
+
+            if(title !== updaterData.lastTitle){
+                $("#details p").each(function(){ //Delete current details, in case the next track has less information
+                    $(this).text("");                
                 });
-            });
+
+                $("#title").text(title);
+                $("#filename").text($(requestData).find("info[name=filename]").text());
+                $("#artist").text($(requestData).find("info[name=artist]").text());
+                $("#album").text($(requestData).find("info[name=album]").text());
+                $("#year").text($(requestData).find("info[name=date]").text());
+                updaterData.lastTitle = title;
+            }
         },
         error: function (jqXHR, status, error) {
             /*console.log("updateError")
