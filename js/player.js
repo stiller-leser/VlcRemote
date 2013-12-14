@@ -478,6 +478,7 @@ Player.prototype.loadFiles = function(dir) {
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
+	                                player.sendCommand({ 'command': 'pl_play' }); //After all items are loaded in the playlist, play one of them
 	                            }).appendTo("#itemPopup");
 
 	                            //Configure the setHome button, append it and add class for design
@@ -567,5 +568,4 @@ Player.prototype.playAll = function (dir) {
 			console.log(error);
 		}
 	});
-	this.sendCommand({'command':'pl_play'}); //After all items are loaded in the playlist, play one of them
 };

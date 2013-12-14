@@ -54,7 +54,7 @@ var german = {
 	"password" : "Passwort",
 	"passwordPlaceholder" : "Wird nicht wieder angezeigt.",
 	"username" : "Benutzername",
-	"usernamePlaceholder" : "Tragen Sie hier nichts ein, wenn Sie es nicht konfiguriert haben.",
+	"usernamePlaceholder" : "Wenn nicht konfiguriert, leer lassen.",
 	"save" : "Speichern",
 	"saveSettingsButton" : "Speichern",
 	"clearSettings" : "Einstellungen löschen",
@@ -136,9 +136,9 @@ Languages.prototype.setLanguage = function(){
 	$("#usernameLabel").text(plLang["username"]);
 		$("#username").prop("placeholder", plLang["usernamePlaceholder"]);
 	$("#saveLabel").text(plLang["save"]);
-		$("#saveSettings").prev("span").find("span.ui-btn-text").text(plLang["saveSettingsButton"]);
+	$("#saveSettings").val(plLang["saveSettingsButton"]);
 	$("#clearSettingsLabel").text(plLang["clearSettings"]);
-	$("#clearSettings").prev("span").find("span.ui-btn-text").text(plLang["clearSettingsButton"]);
+	    $("#clearSettings").val(plLang["clearSettingsButton"]);
 
 	//Strings in the faq on the settings-site
 

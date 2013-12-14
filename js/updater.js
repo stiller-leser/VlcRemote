@@ -133,11 +133,39 @@ Updater.prototype.updateDetails = function() {
                     $(this).text("");                
                 });
 
-                $("#title").text(title);
-                $("#filename").text($(requestData).find("info[name=filename]").text());
-                $("#artist").text($(requestData).find("info[name=artist]").text());
-                $("#album").text($(requestData).find("info[name=album]").text());
-                $("#year").text($(requestData).find("info[name=date]").text());
+                if (title.length > 20) {
+                    $("#title").text(title.substring(0, 20) + "...");
+                } else {
+                    $("#title").text(title);
+                }
+
+                var filename = $(requestData).find("info[name=artist]").text();
+                if (filename.length > 20) {
+                    $("#filename").text(filename.substring(0,20) + "...");
+                } else {
+                    $("#filename").text(filename);
+                }
+
+                var artist = $(requestData).find("info[name=artist]").text();
+                if (artist.length > 20) {
+                    $("#artist").text(artist.substring(0, 20) + "...");
+                } else {
+                    $("#artist").text(artist);
+                }
+
+                var album = $(requestData).find("info[name=album]").text();
+                if (album.length > 20) {
+                    $("#album").text(album.substring(0, 20) + "...");
+                } else {
+                    $("#album").text(album);
+                }
+
+                var year = $(requestData).find("info[name=date]").text();
+                if (year.length > 20) {
+                    $("#year").text(year.substring(0, 20) + "...");
+                } else {
+                    $("#year").text(year);
+                }
                 updaterData.lastTitle = title;
             }
         },

@@ -42,9 +42,12 @@ function init(){
         $.mobile.allowCrossDomainPages = true;
     });
 
-    language.getLanguage();
+    //Setup UI
     setupUi();
     setupButtonUi();
+    //Change Language
+    language.getLanguage();
+    //Load settings
     player.loadHelper();
 
     $("#player").on("pagebeforeshow", function(event){
