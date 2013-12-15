@@ -410,7 +410,7 @@ Player.prototype.loadPlaylist = function() {
 
 					//Configure the removeItem button, append it and add class for design
 					$("#removeItem").remove();
-					var button = '<a href="#" id="removeItem" class="wp8-styled-button" >Remove Item</a>';
+					var button = '<a href="#" id="removeItem" class="wp8-styled-button" >' + plLang["removeItem"] + '</a>';
 					$(button).bind("click", {id : itemId}, function(event){
 				        event.preventDefault();
 				        var command = "pl_delete&id=" + event.data.id;
@@ -474,7 +474,7 @@ Player.prototype.loadFiles = function(dir) {
 
 	                            //Configure the play all button, append it and add class for design
 	                            $("#playAll").remove();
-	                            var button = '<a href="#" id="playAll" class="wp8-styled-button" data-role="button">Play All</a>';
+	                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["playAll"] + '</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
@@ -483,7 +483,7 @@ Player.prototype.loadFiles = function(dir) {
 
 	                            //Configure the setHome button, append it and add class for design
 	                            $("#setHome").remove();
-	                            var button = '<a href="#" id="setHome" class="wp8-styled-button" data-role="button">Set marked folder as home</a>';
+	                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["setHome"] + '</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
@@ -494,7 +494,7 @@ Player.prototype.loadFiles = function(dir) {
 	                        var li = '<li class="item">' + $(this).attr('name') + "</li>";
 	                        $(li).hammer().bind("tap", { uri: $(this).attr("uri") }, function (event) {
 	                            var file = rawurlencode(event.data.uri);
-	                            var command = 'in_play&input=' + file; //add current file to playlist 
+	                            var command = 'in_enqueue&input=' + file; //add current file to playlist 
 	                            player.sendCommand('command=' + command); //and play
 	                        }).appendTo("#filelist");
 	                    }

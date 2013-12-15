@@ -133,11 +133,39 @@ Updater.prototype.updateDetails = function () {
                     $(this).text("");
                 });
 
-                $("#title").text(title);
-                $("#filename").text($(requestData).find("info[name=filename]").text());
-                $("#artist").text($(requestData).find("info[name=artist]").text());
-                $("#album").text($(requestData).find("info[name=album]").text());
-                $("#year").text($(requestData).find("info[name=date]").text());
+                if (title.length > 20) {
+                    $("#title").text(title.substring(0, 20) + "...");
+                } else {
+                    $("#title").text(title);
+                }
+
+                var filename = $(requestData).find("info[name=artist]").text();
+                if (filename.length > 20) {
+                    $("#filename").text(filename.substring(0, 20) + "...");
+                } else {
+                    $("#filename").text(filename);
+                }
+
+                var artist = $(requestData).find("info[name=artist]").text();
+                if (artist.length > 20) {
+                    $("#artist").text(artist.substring(0, 20) + "...");
+                } else {
+                    $("#artist").text(artist);
+                }
+
+                var album = $(requestData).find("info[name=album]").text();
+                if (album.length > 20) {
+                    $("#album").text(album.substring(0, 20) + "...");
+                } else {
+                    $("#album").text(album);
+                }
+
+                var year = $(requestData).find("info[name=date]").text();
+                if (year.length > 20) {
+                    $("#year").text(year.substring(0, 20) + "...");
+                } else {
+                    $("#year").text(year);
+                }
                 updaterData.lastTitle = title;
             }
         },
@@ -561,7 +589,7 @@ Player.prototype.loadPlaylist = function () {
 
                     //Configure the removeItem button, append it and add class for design
                     $("#removeItem").remove();
-                    var button = '<a href="#" id="removeItem" class="wp8-styled-button" >Remove Item</a>';
+                    var button = '<a href="#" id="removeItem" class="wp8-styled-button" >' + plLang["removeItem"] + '</a>';
                     $(button).bind("click", { id: itemId }, function (event) {
                         event.preventDefault();
                         var command = "pl_delete&id=" + event.data.id;
@@ -625,15 +653,16 @@ Player.prototype.loadFiles = function (dir) {
 
                             //Configure the play all button, append it and add class for design
                             $("#playAll").remove();
-                            var button = '<a href="#" id="playAll" class="wp8-styled-button" data-role="button">Play All</a>';
+                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["playAll"] + '</a>';
                             $(button).bind("click", { uri: uri }, function () {
                                 event.preventDefault();
                                 player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
+                                player.sendCommand({ 'command': 'pl_play' }); //After all items are loaded in the playlist, play one of them
                             }).appendTo("#itemPopup");
 
                             //Configure the setHome button, append it and add class for design
                             $("#setHome").remove();
-                            var button = '<a href="#" id="setHome" class="wp8-styled-button" data-role="button">Set marked folder as home</a>';
+                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["setHome"] + '</a>';
                             $(button).bind("click", { uri: uri }, function () {
                                 event.preventDefault();
                                 player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
@@ -644,7 +673,7 @@ Player.prototype.loadFiles = function (dir) {
                         var li = '<li class="item">' + $(this).attr('name') + "</li>";
                         $(li).hammer().bind("tap", { uri: $(this).attr("uri") }, function (event) {
                             var file = rawurlencode(event.data.uri);
-                            var command = 'in_play&input=' + file; //add current file to playlist 
+                            var command = 'in_enqueue&input=' + file; //add current file to playlist 
                             player.sendCommand('command=' + command); //and play
                         }).appendTo("#filelist");
                     }
@@ -718,7 +747,6 @@ Player.prototype.playAll = function (dir) {
             console.log(error);
         }
     });
-    this.sendCommand({ 'command': 'pl_play' }); //After all items are loaded in the playlist, play one of them
 };
 
 function Languages() {
@@ -726,7 +754,13 @@ function Languages() {
 };
 
 var english = {
-    //Error messages only, because the app was in english initally
+    //Error messages and dynamically content only, because App is basically english
+
+    "playAll": "play all",
+    "setHome": "set marked folder as home",
+    "removeItem": "remove item",
+    "saveSettingsButton": "save",
+    "clearSettingsButton": "clear settings",
 
     "checkIpAndPort": "Couldn't connect. Please check IP and Port.",
     "usernameOrPasswordWrong": "Ups, the username or password must be wrong",
@@ -762,7 +796,8 @@ var german = {
 
     "library": "Bibliothek",
     "playAll": "Alle wiedergeben",
-    "setHomefolder": "Markierten Ordner als Startpunkt setzen",
+    "setHome": "Markierten Ordner als Startpunkt setzen",
+    "playAll": "Alle wiedergeben",
 
     //Strings on the settings-site
 
@@ -777,7 +812,7 @@ var german = {
     "password": "Passwort",
     "passwordPlaceholder": "Wird nicht wieder angezeigt.",
     "username": "Benutzername",
-    "usernamePlaceholder": "Tragen Sie hier nichts ein, wenn Sie es nicht konfiguriert haben.",
+    "usernamePlaceholder": "Wenn nicht konfiguriert, leer lassen.",
     "save": "Speichern",
     "saveSettingsButton": "Speichern",
     "clearSettings": "Einstellungen löschen",
@@ -815,6 +850,9 @@ Languages.prototype.getLanguage = function () {
     var systemLang = navigator.systemLanguage;
     if (browserLang === "de" | systemLang === "de-DE") {
         $.extend(plLang, german);
+        this.setLanguage();
+    } else {
+        $.extend(plLang, english);
         this.setLanguage();
     }
 };
@@ -859,9 +897,9 @@ Languages.prototype.setLanguage = function () {
     $("#usernameLabel").text(plLang["username"]);
     $("#username").prop("placeholder", plLang["usernamePlaceholder"]);
     $("#saveLabel").text(plLang["save"]);
-    $("#saveSettings").prev("span").find("span.ui-btn-text").text(plLang["saveSettingsButton"]);
+    $("#saveSettings").val(plLang["saveSettingsButton"]);
     $("#clearSettingsLabel").text(plLang["clearSettings"]);
-    $("#clearSettings").prev("span").find("span.ui-btn-text").text(plLang["clearSettingsButton"]);
+    $("#clearSettings").val(plLang["clearSettingsButton"]);
 
     //Strings in the faq on the settings-site
 
@@ -926,9 +964,12 @@ function init() {
         $.mobile.allowCrossDomainPages = true;
     });
 
-    language.getLanguage();
+    //Setup UI
     setupUi();
     setupButtonUi();
+    //Change Language
+    language.getLanguage();
+    //Load settings
     player.loadHelper();
 
     $("#player").on("pagebeforeshow", function (event) {
@@ -955,6 +996,7 @@ function init() {
         $(".settingsDot").addClass("dot-active");
     });
 }
+
 
 
 function setupUi() {

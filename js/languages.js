@@ -3,7 +3,13 @@ function Languages(){
 };
 
 var english = {
-	//Error messages only, because the app was in english initally
+	//Error messages and dynamically content only, because App is basically english
+
+    "playAll" : "play all",
+    "setHome": "set marked folder as home",
+    "removeItem": "remove item",
+    "saveSettingsButton": "save",
+    "clearSettingsButton": "clear settings",
 
 	"checkIpAndPort" : "Couldn't connect. Please check IP and Port.",
 	"usernameOrPasswordWrong" : "Ups, the username or password must be wrong",
@@ -33,13 +39,14 @@ var german = {
 	"clearPlaylist" : "Wiedergabeliste löschen",	
 	"pipHeadline" : "Wiedergabeliste-Funktionen",
 	"removeItem" : "Titel entfernen",
-	"playlist" : "Wiedergabeliste",
+	"playlist": "Wiedergabeliste",
 
 	//Strings on the library-site
 
 	"library" : "Bibliothek",
 	"playAll" : "Alle wiedergeben",
-	"setHomefolder" : "Markierten Ordner als Startpunkt setzen",
+	"setHome": "Markierten Ordner als Startpunkt setzen",
+	"playAll": "Alle wiedergeben",
 
 	//Strings on the settings-site
 
@@ -63,15 +70,15 @@ var german = {
 	//Strings in the faq on the settings-site
 
 	"faqHeadline" : "FAQ",
-	"faqMessage"  : "Wenn sie die App zum ersten Mal starten, oder die Einstellungen gelöscht habe, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
+	"faqMessage"  : "Wenn Sie die App zum ersten Mal starten, oder die Einstellungen gelöscht haben, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
 	"iconsHeadline" : "Die Knöpfe erklärt",
 	"iconHome" : "Bringt Sie zum Player zurück",
 	"iconRepeatOnce" : "Wiederholt die Datei einmal",
 	"iconRepeatAll" : "Wiederholt alle Dateien",
 	"iconShuffle" : "Spielt zufällige Titel aus der Wiedergabeliste",
-	"muteMessage" : "Der Player kann stumm geschaltet werden, in dem man auf die Lautstärke drückt, bzw. andersherum.",
+	"muteMessage": "Der Player kann stumm geschaltet werden, indem man auf die Lautstärkeangabe drückt, bzw. andersherum.",
 	"aboutMeHeadline" : "Über mich",
-	"aboutMeMessage" : "Ich bin Student und Fan von Open-Source-Software. Das ist auch der Grund, warum die App kostenlos ist. Eine Anwendung für ein offendes Projekt wie den VLC-Player sollte kostenlos sein. Auf Grund der Regeln des Appstores kann ich kein Spenden-Button nutzen. Konstruktive Kritik ist jedoch willkommen, aber bitte denken Sie daran, dass die App kostenlos ist und die Entwicklung Zeit gekostet hat.",
+	"aboutMeMessage" : "Ich bin Student und Fan von Open-Source-Software. Das ist auch der Grund, warum die App kostenlos ist. Eine Anwendung für ein offenes Projekt sollte kostenlos sein. Auf Grund der Regeln des Appstores kann ich kein Spenden-Button nutzen. Konstruktive Kritik ist jedoch willkommen, aber bitte denken Sie daran, dass die App kostenlos ist und die Entwicklung Zeit gekostet hat.",
 	"contactHeadline" : "Kontakt",
 
 	//Error messages
@@ -93,6 +100,9 @@ Languages.prototype.getLanguage = function(){
 	if(browserLang === "de" | systemLang === "de-DE"){
 		$.extend(plLang, german);
 		this.setLanguage();
+	} else {
+	    $.extend(plLang, english);
+	    this.setLanguage();
 	}
 };
 
