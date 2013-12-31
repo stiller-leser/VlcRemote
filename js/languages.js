@@ -18,7 +18,7 @@ var english = {
 	"settingsSaved" : "Settings saved",
 	"settingsSavedRestart" : "Settings saved, please restart the app.",
 	"settingsDeletedRestart" : "Settings deleted, please restart the app.",
-	"setSettings" : "Please set settings.",
+	"setSettings" : "Please set settings, but make sure the VLC-Server is running first:<br>Open the VLC, find the settings, activate the HTTP-Webinterface.<br>For VLC < 2.1, find the .hosts-file of the VLC and activate your IP.<br>For VLC >= 2.1, set the lua-password, to a password of your choice.<br>Restart the VLC !!! Now test it in your browser, using localhost:8080 (if you heven't changed the port).",
 	"lostConnection" : "Lost connection."
 }
 
@@ -70,7 +70,7 @@ var german = {
 	//Strings in the faq on the settings-site
 
 	"faqHeadline" : "FAQ",
-	"faqMessage"  : "Wenn Sie die App zum ersten Mal starten, oder die Einstellungen gelöscht haben, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
+	"faqMessage": "Wenn Sie die App zum ersten Mal starten, oder die Einstellungen gelöscht haben, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Testen Sie zuerst, ob der VLC-Server richtig läuft! Öffnen Sie die Einstellungen des VLCs und aktivieren Sie das HTTP-Interface (unter Erweiterte Einstellungen). Für VLC < 2.1: Lassen Sie nun die gewünschten IPs in der .hosts-Datei zu. Für VLC >= 2.1: Setzen sie das Lua-Passwort. Jetzt muss der VLC neugestartet werden!!! Testen Sie die Einstellungen nun, in dem Sie den Browser öffnen und folgendes eingeben: localhost:8080 (wenn der Port nicht geöffnet wurde). Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
 	"iconsHeadline" : "Die Knöpfe erklärt",
 	"iconHome" : "Bringt Sie zum Player zurück",
 	"iconRepeatOnce" : "Wiederholt die Datei einmal",
@@ -90,7 +90,7 @@ var german = {
 	"settingsSaved" : "Einstellungen gespeichert",
 	"settingsSavedRestart" : "Einstellungen gespeichert, bitte App neustarten",
 	"settingsDeletedRestart" : "Einstellungen wurden gelöscht, bitte App neustarten",
-	"setSettings" : "Bitte geben Sie die Einstellungen an",
+	"setSettings" : "Bitte geben Sie die Einstellungen an. Testen Sie zuerst, ob der VLC-Server richtig läuft! Öffnen Sie die Einstellungen des VLCs und aktivieren Sie das HTTP-Interface (unter Erweiterte Einstellungen). Für VLC < 2.1: Lassen Sie nun die gewünschten IPs in der .hosts-Datei zu. Für VLC >= 2.1: Setzen sie das Lua-Passwort. Jetzt muss der VLC neugestartet werden!!! Testen Sie die Einstellungen nun, in dem Sie den Browser öffnen und folgendes eingeben: localhost:8080 (wenn der Port nicht geöffnet wurde)",
 	"lostConnection" : "Verbindung zum VLC wurde unterbrochen"
 };
 

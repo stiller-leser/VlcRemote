@@ -473,8 +473,8 @@ Player.prototype.loadFiles = function(dir) {
 	                            $("#playallLocation").text(path); //set headline to current file-uri (in the right format, using path instead of uri)
 
 	                            //Configure the play all button, append it and add class for design
-	                            $("#playAll").remove();
-	                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["playAll"] + '</a>';
+	                            $(".playAll").remove();
+	                            var button = '<a href="#" class="wp8-styled-button playAll" data-role="button">' + plLang["playAll"] + '</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
@@ -482,8 +482,8 @@ Player.prototype.loadFiles = function(dir) {
 	                            }).appendTo("#itemPopup");
 
 	                            //Configure the setHome button, append it and add class for design
-	                            $("#setHome").remove();
-	                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["setHome"] + '</a>';
+	                            $(".setHome").remove();
+	                            var button = '<a href="#" class="wp8-styled-button setHome" data-role="button">' + plLang["setHome"] + '</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
 	                                player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
@@ -535,7 +535,6 @@ Player.prototype.setHome = function(dir){
 * Function gets called from loadFiles if a certain item is clicked, adds all files from thereon to the playlist
 */
 Player.prototype.playAll = function (dir) {
-    this.clearPlaylist();
 	$.ajax({
 		url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
 		data: 'uri=' + rawurlencode(dir),

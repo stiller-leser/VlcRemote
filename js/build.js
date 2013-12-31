@@ -5,7 +5,8 @@
 var upData = {
     interval: '',
     started: false,
-    lastTitle: ''
+    lastTitle: '',
+    lastFilename: ''
 }
 
 Updater.prototype.getState = function () {
@@ -127,23 +128,19 @@ Updater.prototype.updateDetails = function () {
             //Import namespace to identify the last track
             var updaterData = getUpdaterData();
             var title = $(requestData).find("info[name=title]").text();
+            var filename = $(requestData).find("info[name=filename]").text();
 
-            if (title !== updaterData.lastTitle) {
+            if (title !== updaterData.lastTitle | filename !== updaterData.lastFilename) { //If title is different or the filename changed
                 $("#details p").each(function () { //Delete current details, in case the next track has less information
                     $(this).text("");
                 });
 
                 if (title.length > 20) {
                     $("#title").text(title.substring(0, 20) + "...");
+                } else if (title.length == 0) { //If title is empty use filename instead
+                    $("#title").text(filename.substring(0, 20) + "...");
                 } else {
                     $("#title").text(title);
-                }
-
-                var filename = $(requestData).find("info[name=artist]").text();
-                if (filename.length > 20) {
-                    $("#filename").text(filename.substring(0, 20) + "...");
-                } else {
-                    $("#filename").text(filename);
                 }
 
                 var artist = $(requestData).find("info[name=artist]").text();
@@ -167,6 +164,7 @@ Updater.prototype.updateDetails = function () {
                     $("#year").text(year);
                 }
                 updaterData.lastTitle = title;
+                updaterData.lastFilename = filename;
             }
         },
         error: function (jqXHR, status, error) {
