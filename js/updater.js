@@ -131,6 +131,17 @@ Updater.prototype.updateDetails = function() {
             var filename = $(requestData).find("info[name=filename]").text();
 
             if(title !== updaterData.lastTitle | filename !== updaterData.lastFilename){ //If title is different or the filename changed
+                
+                //Update album art
+                plData = returnNamespace();
+                $("#cover").css({
+                    "background" : "url(http://"+plData.ip+":"+plData.port+"/art)",
+                    "background-repeat" : "no-repeat",
+                    "background-position" : "center",
+                    "background-size" : "90%" 
+                });
+
+                //Update album details
                 $("#details p").each(function(){ //Delete current details, in case the next track has less information
                     $(this).text("");                
                 });
