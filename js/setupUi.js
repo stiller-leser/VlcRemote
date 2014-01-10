@@ -19,7 +19,7 @@ function setupUi(){
         return false;         
     });
 
-    $(document).off('swiperight').on('swiperight', 'section[data-role="page"]', function(event){   
+    $(document).off('swiperight').on('swiperight', 'section[data-role="page"]', function (event) {
         if(event.handled !== true) // This will prevent event triggering more then once
         {      
             var prevpage = $.mobile.activePage.prev('section');

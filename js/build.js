@@ -131,6 +131,17 @@ Updater.prototype.updateDetails = function () {
             var filename = $(requestData).find("info[name=filename]").text();
 
             if (title !== updaterData.lastTitle | filename !== updaterData.lastFilename) { //If title is different or the filename changed
+
+                //Update album art
+                plData = returnNamespace();
+                $("#cover").css({
+                    "background": "url(http://" + plData.ip + ":" + plData.port + "/art)",
+                    "background-repeat": "no-repeat",
+                    "background-position": "center",
+                    "background-size": "90%"
+                });
+
+                //Update album details
                 $("#details p").each(function () { //Delete current details, in case the next track has less information
                     $(this).text("");
                 });
@@ -650,8 +661,8 @@ Player.prototype.loadFiles = function (dir) {
                             $("#playallLocation").text(path); //set headline to current file-uri (in the right format, using path instead of uri)
 
                             //Configure the play all button, append it and add class for design
-                            $("#playAll").remove();
-                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["playAll"] + '</a>';
+                            $(".playAll").remove();
+                            var button = '<a href="#" class="wp8-styled-button playAll" data-role="button">' + plLang["playAll"] + '</a>';
                             $(button).bind("click", { uri: uri }, function () {
                                 event.preventDefault();
                                 player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
@@ -659,8 +670,8 @@ Player.prototype.loadFiles = function (dir) {
                             }).appendTo("#itemPopup");
 
                             //Configure the setHome button, append it and add class for design
-                            $("#setHome").remove();
-                            var button = '<a href="#" class="wp8-styled-button" data-role="button">' + plLang["setHome"] + '</a>';
+                            $(".setHome").remove();
+                            var button = '<a href="#" class="wp8-styled-button setHome" data-role="button">' + plLang["setHome"] + '</a>';
                             $(button).bind("click", { uri: uri }, function () {
                                 event.preventDefault();
                                 player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
@@ -712,7 +723,6 @@ Player.prototype.setHome = function (dir) {
 * Function gets called from loadFiles if a certain item is clicked, adds all files from thereon to the playlist
 */
 Player.prototype.playAll = function (dir) {
-    this.clearPlaylist();
     $.ajax({
         url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
         data: 'uri=' + rawurlencode(dir),
@@ -767,7 +777,7 @@ var english = {
     "settingsSaved": "Settings saved",
     "settingsSavedRestart": "Settings saved, please restart the app.",
     "settingsDeletedRestart": "Settings deleted, please restart the app.",
-    "setSettings": "Please set settings.",
+    "setSettings": "Please set settings, but make sure the VLC-Server is running first: Open the VLC, find the settings, activate the HTTP-Webinterface. For VLC < 2.1, find the .hosts-file of the VLC and enter your smartphones IP. For VLC >= 2.1, set the lua-password, to a password of your choice. Restart the VLC !!! Now test it in your browser, using localhost:8080 (if you haven't changed the port).",
     "lostConnection": "Lost connection."
 }
 
@@ -819,15 +829,15 @@ var german = {
     //Strings in the faq on the settings-site
 
     "faqHeadline": "FAQ",
-    "faqMessage": "Wenn sie die App zum ersten Mal starten, oder die Einstellungen gelöscht habe, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
+    "faqMessage": "Wenn Sie die App zum ersten Mal starten, oder die Einstellungen gelöscht haben, tragen Sie die IP-Adresse und den Port ihres VLCs oben ein. Testen Sie zuerst, ob der VLC-Server richtig läuft! Öffnen Sie die Einstellungen des VLCs und aktivieren Sie das HTTP-Interface (unter Erweiterte Einstellungen). Für VLC < 2.1: Lassen Sie nun die gewünschten IPs in der .hosts-Datei zu. Für VLC >= 2.1: Setzen sie das Lua-Passwort. Jetzt muss der VLC neugestartet werden!!! Testen Sie die Einstellungen nun, in dem Sie den Browser öffnen und folgendes eingeben: localhost:8080 (wenn der Port nicht geöffnet wurde). Außerdem können Sie einen Start-Ordner und ein Passwort setzen (ab VLC-Version 2.1 benötigt). Bitte beachten Sie, dass der VLC manchmal etwas braucht, bevor er reagiert.",
     "iconsHeadline": "Die Knöpfe erklärt",
     "iconHome": "Bringt Sie zum Player zurück",
     "iconRepeatOnce": "Wiederholt die Datei einmal",
     "iconRepeatAll": "Wiederholt alle Dateien",
     "iconShuffle": "Spielt zufällige Titel aus der Wiedergabeliste",
-    "muteMessage": "Der Player kann stumm geschaltet werden, in dem man auf die Lautstärke drückt, bzw. andersherum.",
+    "muteMessage": "Der Player kann stumm geschaltet werden, indem man auf die Lautstärkeangabe drückt, bzw. andersherum.",
     "aboutMeHeadline": "Über mich",
-    "aboutMeMessage": "Ich bin Student und Fan von Open-Source-Software. Das ist auch der Grund, warum die App kostenlos ist. Eine Anwendung für ein offendes Projekt wie den VLC-Player sollte kostenlos sein. Auf Grund der Regeln des Appstores kann ich kein Spenden-Button nutzen. Konstruktive Kritik ist jedoch willkommen, aber bitte denken Sie daran, dass die App kostenlos ist und die Entwicklung Zeit gekostet hat.",
+    "aboutMeMessage": "Ich bin Student und Fan von Open-Source-Software. Das ist auch der Grund, warum die App kostenlos ist. Eine Anwendung für ein offenes Projekt sollte kostenlos sein. Auf Grund der Regeln des Appstores kann ich kein Spenden-Button nutzen. Konstruktive Kritik ist jedoch willkommen, aber bitte denken Sie daran, dass die App kostenlos ist und die Entwicklung Zeit gekostet hat.",
     "contactHeadline": "Kontakt",
 
     //Error messages
@@ -839,7 +849,7 @@ var german = {
     "settingsSaved": "Einstellungen gespeichert",
     "settingsSavedRestart": "Einstellungen gespeichert, bitte App neustarten",
     "settingsDeletedRestart": "Einstellungen wurden gelöscht, bitte App neustarten",
-    "setSettings": "Bitte geben Sie die Einstellungen an",
+    "setSettings": "Bitte geben Sie die Einstellungen an. Testen Sie zuerst, ob der VLC-Server richtig läuft! Öffnen Sie die Einstellungen des VLCs und aktivieren Sie das HTTP-Interface (unter Erweiterte Einstellungen). Für VLC < 2.1: Lassen Sie nun die gewünschten IPs in der .hosts-Datei zu. Für VLC >= 2.1: Setzen sie das Lua-Passwort. Jetzt muss der VLC neugestartet werden!!! Testen Sie die Einstellungen nun, in dem Sie den Browser öffnen und folgendes eingeben: localhost:8080 (wenn der Port nicht geändert wurde)",
     "lostConnection": "Verbindung zum VLC wurde unterbrochen"
 };
 
@@ -994,8 +1004,6 @@ function init() {
         $(".settingsDot").addClass("dot-active");
     });
 }
-
-
 
 function setupUi() {
 
