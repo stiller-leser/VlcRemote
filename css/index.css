@@ -61,7 +61,7 @@ div[data-role="content"]:not(#player){
     background-color: white;
 }
 
-#playerPopup, #playlistPopup, #playlistItemPopup, #itemPopup, #settingsPopup{
+#playerPopup, #playlistLoadingPopup, #playlistOptionsPopup, #playlistItemPopup, #libraryLoadingPopup, #itemPopup, #settingsPopup{
     z-index: 999;
     position: fixed;
     background-color: rgba(0,0,0,0.8);
@@ -76,6 +76,48 @@ div[data-role="content"]:not(#player){
 
     display: none;
     text-align: center;
+}
+
+.spinner{
+  width: 50px;
+  height: 50px;
+  border: solid #FFFFFF ;
+  border-width: 3px 0px 0px 0px;
+
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  -webkit-border-radius: 50%;
+     -moz-border-radius: 50%;
+          border-radius: 50%;
+
+  -webkit-animation: spin 0.5s infinite linear;
+     -moz-animation: spin 0.5s infinite linear;
+       -o-animation: spin 0.5s infinite linear;
+          animation: spin 0.5s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  from {-webkit-transform: rotate(0deg);}
+  to   {-webkit-transform: rotate(359deg);}
+}
+
+@-moz-keyframes spin {
+  from {-moz-transform: rotate(0deg);}
+  to   {-moz-transform: rotate(359deg);}
+}
+
+@-o-keyframes spin {
+  from {-o-transform: rotate(0deg);}
+  to   {-o-transform: rotate(359deg);}
+}
+
+@keyframes spin{
+  from {transform: rotate(0deg);}
+  to   {transform: rotate(359deg);}
 }
 
 a.wp8-styled-button{

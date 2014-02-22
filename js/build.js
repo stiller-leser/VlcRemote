@@ -764,7 +764,7 @@ function Languages() {
 var english = {
     //Error messages and dynamically content only, because App is basically english
 
-    "playAll": "play all",
+    "playAll": "add to playlist",
     "setHome": "set marked folder as home",
     "removeItem": "remove item",
     "saveSettingsButton": "save",
@@ -803,9 +803,8 @@ var german = {
     //Strings on the library-site
 
     "library": "Bibliothek",
-    "playAll": "Alle wiedergeben",
+    "playAll": "Alle zur Wiedergabe hinzufügen",
     "setHome": "Markierten Ordner als Startpunkt setzen",
-    "playAll": "Alle wiedergeben",
 
     //Strings on the settings-site
 
@@ -825,6 +824,8 @@ var german = {
     "saveSettingsButton": "Speichern",
     "clearSettings": "Einstellungen löschen",
     "clearSettingsButton": "Einstellungen löschen",
+    "spHeadline": "Verbindet mit VLC",
+    "spMessage": "Bitte warten",
 
     //Strings in the faq on the settings-site
 
@@ -908,6 +909,8 @@ Languages.prototype.setLanguage = function () {
     $("#saveSettings").val(plLang["saveSettingsButton"]);
     $("#clearSettingsLabel").text(plLang["clearSettings"]);
     $("#clearSettings").val(plLang["clearSettingsButton"]);
+    $("#spHeadline").text(plLang["spHeadline"]);
+    $("#spMessage").text(plLang["spMessage"]);
 
     //Strings in the faq on the settings-site
 
@@ -1004,6 +1007,7 @@ function init() {
         $(".settingsDot").addClass("dot-active");
     });
 }
+
 
 function setupUi() {
 

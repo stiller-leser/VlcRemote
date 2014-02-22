@@ -56,7 +56,7 @@ function init(){
     });
 
     $("#playlist").on("pageshow", function(event){
-        $("#playlistPopup").css("display","none");
+        $("#playlistOptionsPopup").css("display","none");
         $(".dot-active").removeClass("dot-active");
         $(".playlistDot").addClass("dot-active");
         player.loadPlaylist();
@@ -65,7 +65,6 @@ function init(){
     $("#library").on("pageshow", function(event){
         $(".dot-active").removeClass("dot-active");
         $(".libraryDot").addClass("dot-active");
-        $("#libraryPopup").css("display", "none");
         player.loadFiles(plData.lastDir);
     });
 

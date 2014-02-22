@@ -389,7 +389,8 @@ Player.prototype.clearSettings = function (caller) {
 /*
 * Function which loads the playlist
 */
-Player.prototype.loadPlaylist = function() {
+Player.prototype.loadPlaylist = function () {
+    $("#playlistLoadingPopup").css("display", "block");
 	$.ajax({
 		url: 'http://' + plData.ip + ":" + plData.port + '/requests/playlist.xml',
 		dataType: "xml",
@@ -421,7 +422,8 @@ Player.prototype.loadPlaylist = function() {
 				}).appendTo("#playlistfiles");
 			});			
 			$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
-			//Necessary to make sure the list elements look are styled in the jqm-styles
+		    //Necessary to make sure the list elements look are styled in the jqm-styles
+			$("#playlistLoadingPopup").css("display", "none");
 		},
 		error: function (jqXHR, status, error) {
             console.log("loadPlaylist")
@@ -429,6 +431,7 @@ Player.prototype.loadPlaylist = function() {
 		        showError(plLang["lostConnection"]);
 		        updater.stopUpdater();
 		    }
+		    $("#playlistLoadingPopup").css("display", "none");
 		}
 	});
 }; 
@@ -436,7 +439,8 @@ Player.prototype.loadPlaylist = function() {
 /*
 * Function which loads the files and defines events for click and taphold
 */
-Player.prototype.loadFiles = function(dir) {
+Player.prototype.loadFiles = function (dir) {
+    $("#libraryLoadingPopup").css("display", "block");
 	dir = dir == undefined ? plData.lastDir : dir;
 	console.log(plData.lastDir)
     console.log(plData.location)
@@ -455,7 +459,6 @@ Player.prototype.loadFiles = function(dir) {
 	            if ($(requestData).find("element").length > 0) {
 	                $(requestData).find("element").each(function () {
 	                    var dataType = $(this).attr("type");
-	                    var path = $(this).attr("path");
 	                    var uri = $(this).attr("uri");
 	                    var uriEnd = uri.substring(uri.length - 2); //try to find out if the last to characters are ..,
 	                    //in which case he would map the whole filesystem
@@ -470,14 +473,14 @@ Player.prototype.loadFiles = function(dir) {
 	                        }).bind("hold", { uri: $(this).attr("uri") }, function (event) { //bind taphold event
 	                            var uri = event.data.uri;
 	                            $("#itemPopup").css("display", "block"); //show popup
-	                            $("#playallLocation").text(path); //set headline to current file-uri (in the right format, using path instead of uri)
+	                            $("#playallLocation").text(uri.replace("file://","")); //set headline to current file-uri (in the right format, using formatted uri)
 
 	                            //Configure the play all button, append it and add class for design
 	                            $(".playAll").remove();
 	                            var button = '<a href="#" class="wp8-styled-button playAll" data-role="button">' + plLang["playAll"] + '</a>';
 	                            $(button).bind("click", { uri: uri }, function () {
 	                                event.preventDefault();
-	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send path
+	                                player.playAll(event.data.uri); //if user wants to play all, call playAll and send uri
 	                                player.sendCommand({ 'command': 'pl_play' }); //After all items are loaded in the playlist, play one of them
 	                            }).appendTo("#itemPopup");
 
@@ -508,6 +511,7 @@ Player.prototype.loadFiles = function(dir) {
 	            }
 	            $(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
 	            //Necessary to make sure the list elements look are styled in the jqm-styles		
+	            $("#libraryLoadingPopup").css("display", "none");
 	        },
 	        error: function (jqXHR, status, error) {
                 console.log("loadFiles")
@@ -515,6 +519,7 @@ Player.prototype.loadFiles = function(dir) {
 	                showError(plLang["lostConnection"]);
 	                updater.stopUpdater();
 	            }
+	            $("#libraryLoadingPopup").css("display", "none");
 	        }
 	    });
 	//}

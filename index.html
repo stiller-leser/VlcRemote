@@ -5,7 +5,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width,  target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css"/>
-        <!--<link rel="stylesheet" type="text/css" href="css/indexMin.css"/>-->
+        <!--<link rel="stylesheet" type="text/css" href="css/indexMin.css"/>!-->
         <link rel="stylesheet" type="text/css" href="css/jquerymobile-min.css"/>
         <title>VlcRemote</title>
     </head>
@@ -23,6 +23,7 @@
             <div id="playerPopup">
                 <h3 id="ppHeadline">Connecting to VLC</h3>
                 <p id="ppMessage">Be patient</p>
+                <div class="spinner"></div>
             </div>
             <div data-role="content">
                 <div id="controls-left">
@@ -89,7 +90,12 @@
 
         <!-- PLAYLIST !-->
         <section id="playlist" data-role="page" data-pagination="2" data-theme="a">
-            <div id="playlistPopup">
+            <div id="playlistLoadingPopup">
+                <h3 id="plpHeadline">Loading playlist</h3>
+                <p id="plpMessage">Be patient</p>
+                <div class="spinner"></div>
+            </div>
+            <div id="playlistOptionsPopup">
                     <a href="#" id="clearPlaylist" class="wp8-styled-button">Clear Playlist</a> 
             </div>
             <div id="playlistItemPopup">
@@ -127,6 +133,11 @@
                 <span class="dot settingsDot"></span>
             </div>
             <div data-role="content">
+                <div id="libraryLoadingPopup">
+                    <h3 id="lpHeadline">Loading files</h3>
+                    <p id="lpMessage">Be patient</p>
+                    <div class="spinner"></div>
+                </div>
                 <div id="itemPopup">
                     <h3 id="playallLocation"></h3>
                 </div>
@@ -146,6 +157,7 @@
             <div id="settingsPopup">
                 <h3 id="spHeadline">Connecting to VLC</h3>
                 <p id="spMessage">Be patient</p>
+                <div class="spinner"></div>
             </div>
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <a href="#" class="home" data-role="cus-button" data-shadow="false"></a>
@@ -242,7 +254,7 @@
         <script type="text/javascript" src="js/updater.js"></script>
         <script type="text/javascript" src="js/player.js"></script>
         <script type="text/javascript" src="js/languages.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>        
         <script type="text/javascript" src="js/setupUi.js"></script>
         <script type="text/javascript">
             app.initialize();

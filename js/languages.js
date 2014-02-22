@@ -5,7 +5,7 @@ function Languages(){
 var english = {
 	//Error messages and dynamically content only, because App is basically english
 
-    "playAll" : "play all",
+    "playAll" : "add to playlist",
     "setHome": "set marked folder as home",
     "removeItem": "remove item",
     "saveSettingsButton": "save",
@@ -40,13 +40,16 @@ var german = {
 	"pipHeadline" : "Wiedergabeliste-Funktionen",
 	"removeItem" : "Titel entfernen",
 	"playlist": "Wiedergabeliste",
+	"plpHeadline": "Lade Wiedergabeliste",
+    "plpMessage": "Bitte warten",
 
 	//Strings on the library-site
 
 	"library" : "Bibliothek",
-	"playAll" : "Alle wiedergeben",
+	"playAll" : "Alle zur Wiedergabe hinzufügen",
 	"setHome": "Markierten Ordner als Startpunkt setzen",
-	"playAll": "Alle wiedergeben",
+	"lpHeadline": "Lade Dateien",
+    "lpMessage": "Bitte warten",
 
 	//Strings on the settings-site
 
@@ -65,7 +68,9 @@ var german = {
 	"save" : "Speichern",
 	"saveSettingsButton" : "Speichern",
 	"clearSettings" : "Einstellungen löschen",
-	"clearSettingsButton" : "Einstellungen löschen",
+	"clearSettingsButton": "Einstellungen löschen",
+	"spHeadline": "Verbindet mit VLC",
+	"spMessage": "Bitte warten",
 
 	//Strings in the faq on the settings-site
 
@@ -124,12 +129,16 @@ Languages.prototype.setLanguage = function(){
 	$("#pipHeadline").text(plLang["pipHeadline"]);
 	$("#removeItem").text(plLang["removeItem"]);
 	$("#playlistHeadline").text(plLang["playlist"]);
+	$("#plpHeadline").text(plLang["plpHeadline"]);
+	$("#plpMessage").text(plLang["plpMessage"]);
 
 	//Strings on the library-site
 
 	$("#libraryHeadline").text(plLang["library"]);
 	$("#playAll").text(plLang["playAll"]);
 	$("#setHome").text(plLang["setHomefolder"]);
+	$("#lpHeadline").text(plLang["lpHeadline"]);
+	$("#lpMessage").text(plLang["lpMessage"]);
 
 	//Strings on the settings-site
 
@@ -149,6 +158,8 @@ Languages.prototype.setLanguage = function(){
 	$("#saveSettings").val(plLang["saveSettingsButton"]);
 	$("#clearSettingsLabel").text(plLang["clearSettings"]);
 	    $("#clearSettings").val(plLang["clearSettingsButton"]);
+	$("#spHeadline").text(plLang["spHeadline"]);
+	$("#spMessage").text(plLang["spMessage"]);
 
 	//Strings in the faq on the settings-site
 

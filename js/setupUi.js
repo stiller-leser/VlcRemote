@@ -126,18 +126,18 @@ function setupButtonUi(){
     //Configure buttons on Playlist-Site
     $("body").on("click", "#options", function(event){
         event.preventDefault();
-        if($("#playlistPopup").css("display") === "none"){
-            $("#playlistPopup").css("display","block");
+        if($("#playlistOptionsPopup").css("display") === "none"){
+            $("#playlistOptionsPopup").css("display","block");
         } else {
-            $("#playlistPopup").css("display","none");
+            $("#playlistOptionsPopup").css("display","none");
         }
     });
 
     //Configure Popups on Playlist-Site
 
-    $("body").on("click", "#playlistPopup", function(event){
+    $("body").on("click", "#playlistOptionsPopup", function(event){
         event.preventDefault();
-        $("#playlistPopup").css("display","none");
+        $("#playlistOptionsPopup").css("display","none");
     });
 
     $("body").on("click", "#playlistItemPopup", function(event){
