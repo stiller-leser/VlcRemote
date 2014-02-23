@@ -15,7 +15,7 @@ namespace WPCordovaClassLib.Cordova.Commands
         WebClient webClient = new WebClient();
 
         public BasicAuth(){
-            timeoutTimer.Interval = TimeSpan.FromSeconds(5);
+            timeoutTimer.Interval = TimeSpan.FromSeconds(3);
             timeoutTimer.Tick += new EventHandler(timeout);
             timeoutTimer.Start();
         }

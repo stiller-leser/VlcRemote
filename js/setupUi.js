@@ -33,8 +33,21 @@ function setupUi(){
         return false;            
     });
 
-    //Ugly workaround for annoying header and footer animation size change
+    //Set up lazy loading
+    $(window).scroll(function () {
+        if ($(window).scrollTop() - 100 <= ($(document).height() - $(window).height())) {
+            switch ($.mobile.activePage[0].id) {
+                case "playlist":
+                    player.showPlaylist();
+                break;
+                case "library":
+                    player.showFilesystem();
+                break;
+            };
+        }
+    });
 
+    //Ugly workaround for annoying header and footer animation size change
     $("input").focus(function (event) {
         //Fix jqm-css-bugs here
         $("#settings div[data-role=header]").removeClass("slidedown");

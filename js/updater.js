@@ -40,7 +40,7 @@ Updater.prototype.updateDetails = function() {
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Basic " + btoa(plData.username + ":" + plData.password));
         },
-        timeout: 5000,
+        timeout: 3000,
         success: function (requestData, status, jqXHR) {
             $(requestData).find('root').each(function () {
                 //Set variables for the position slider
@@ -50,8 +50,7 @@ Updater.prototype.updateDetails = function() {
                     $("#volume").text(Math.round(Number($(this).text()) / 5.12) * 2 + "%"); //Get current volume, devide it and round it
 
                     if ($(this).text() !== "0") { //If the player isn't muted
-                        plData = returnNamespace(); //Have to get namespace before I can set it
-                        plData.currentVolume = $(this).text();
+                        player.mute.currentVolume = $(this).text();
                     }
                 });
 
