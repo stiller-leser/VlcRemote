@@ -449,7 +449,7 @@ Player.prototype.showPlaylist = function (ids, pos) {
         if (i + pos < ids.length) {
             var id = ids[i + pos][0];
             var name = ids[i + pos][1];
-            var li = '<li class="item">' + name + "</li>";
+            var li = '<li class="item ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child">' + name + "</li>";
             $(li).hammer().bind("tap", { id: id }, function (event) { //bind the id of the file to the object, to be able
                 player.sendCommand('command=pl_play&id=' + event.data.id); 	//to play it
             }).bind("hold", { id: id }, function (event) {
@@ -475,7 +475,7 @@ Player.prototype.showPlaylist = function (ids, pos) {
     } else {
         this.showPlaylist.pos += plData.loadThreashold;
     }
-    $(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
+    //$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
 };
 
 /*
@@ -545,7 +545,7 @@ Player.prototype.showFilesystem = function (fs, pos) {
                 plData = returnNamespace(); //get my plData-namespace
 
                 if (dataType === "dir") { //If dir
-                    var li = '<li class="item">' + name + "</li>";
+                    var li = '<li class="item ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child">' + name + "</li>";
                     $(li).hammer().bind("tap", { uri: uri }, function (event) {
                         player.loadFiles(event.data.uri);
                     }).bind("hold", { uri: uri }, function (event) { //bind taphold event
@@ -572,7 +572,7 @@ Player.prototype.showFilesystem = function (fs, pos) {
 
                     }).appendTo("#filelist");
                 } else if (dataType === "file" && plData.allowedTypes.indexOf(fileType) > -1) { //Make sure the file displayed is supported
-                    var li = '<li class="item">' + $(this).attr('name') + "</li>";
+                    var li = '<li class="item ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child">' + name + "</li>";
                     $(li).hammer().bind("tap", { uri: uri }, function (event) {
                         var file = rawurlencode(event.data.uri);
                         var command = 'in_enqueue&input=' + file; //add current file to playlist
@@ -582,12 +582,12 @@ Player.prototype.showFilesystem = function (fs, pos) {
             }
         }
     } else { //If the folder is empty, provide a way back for the user
-        var li = '<li class="item">..</li>';
+        var li = '<li class="item ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child">..</li>';
             $(li).hammer().bind("tap", function (event) {
                 player.loadFiles(plData.lastDir);
             }).appendTo("#filelist");
     }
-    $(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
+    //$(".item").addClass("ui-li ui-li-static ui-btn-up-a ui-first-child ui-last-child");
     //Necessary to make sure the list elements look are styled in the jqm-styles
     $("#libraryLoadingPopup").css("display", "none");
 
