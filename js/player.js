@@ -154,7 +154,6 @@ Player.prototype.clearPlaylist = function(){
 * Function which is used to send commands
 */
 Player.prototype.sendCommand = function(params, append) {
-	console.log(params)
 	$.ajax({
 		url: 'http://' + plData.ip + ":" + plData.port + '/requests/status.xml',
 		data: params,
@@ -192,7 +191,6 @@ checkConnection = function () {
             dataType: "xml",
             timeout: 3000,
             success: function (requestData, status, jqXHR) {
-                console.log("Success: " + requestData);
                 if ($(requestData).find("root").length > 0) {
                     checkFolder(); //I'm connected, now go and check the folder	
                 } else {
@@ -204,10 +202,6 @@ checkConnection = function () {
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("hi");
-                console.log(jqXHR.status);
-                console.log(textStatus);
-                console.log(errorThrown);
                 if (errorThrown === "timeout") {
                     $("#settings #settingsPopup").css("display", "none");
                     $("#player #playerPopup").css("display", "none");
@@ -239,7 +233,6 @@ connectionError = function () {
 * Check the folder
 */
 checkFolder = function () {
-    console.log("cf");
 
     $.ajax({
         url: 'http://' + plData.ip + ":" + plData.port + '/requests/browse.xml',
@@ -437,7 +430,6 @@ Player.prototype.loadPlaylist = function () {
 * Function displays the playlist depending on user position
 */
 Player.prototype.showPlaylist = function (ids, pos) {
-    console.log(this.showPlaylist.pos);
     if (typeof ids === "undefined") {
         var ids = plData.playlist;
     }
@@ -551,7 +543,7 @@ Player.prototype.showFilesystem = function (fs, pos) {
                     }).bind("hold", { uri: uri }, function (event) { //bind taphold event
                         var uri = event.data.uri;
                         $("#itemPopup").css("display", "block"); //show popup
-                        $("#playallLocation").text(uri.replace("file://","")); //set headline to current file-uri (in the right format, using formatted uri)
+                        $("#playallLocation").text(decodeURIComponent(uri.replace("file://",""))); //set headline to current file-uri (in the right format, using formatted uri)
 
                         //Configure the play all button, append it and add class for design
                         $(".playAll").remove();
@@ -560,6 +552,7 @@ Player.prototype.showFilesystem = function (fs, pos) {
                             event.preventDefault();
                             player.playAll(event.data.uri); //if user wants to play all, call playAll and send uri
                             player.sendCommand({ 'command': 'pl_play' }); //After all items are loaded in the playlist, play one of them
+                            $("#libraryAddTitleMessage").show().delay(1000).fadeOut();
                         }).appendTo("#itemPopup");
 
                         //Configure the setHome button, append it and add class for design
@@ -568,6 +561,7 @@ Player.prototype.showFilesystem = function (fs, pos) {
                         $(button).bind("click", { uri: uri }, function () {
                             event.preventDefault();
                             player.setHome(event.data.uri); //if user wants to set the marked folder as home, call function and set home
+                            $("#librarySetHomeMessage").show().delay(1000).fadeOut();
                         }).appendTo("#itemPopup");
 
                     }).appendTo("#filelist");
@@ -576,7 +570,8 @@ Player.prototype.showFilesystem = function (fs, pos) {
                     $(li).hammer().bind("tap", { uri: uri }, function (event) {
                         var file = rawurlencode(event.data.uri);
                         var command = 'in_enqueue&input=' + file; //add current file to playlist
-                        player.sendCommand('command=' + command); //and play
+                        player.sendCommand('command=' + command);
+                        $("#libraryAddTitleMessage").show().delay(1000).fadeOut();
                     }).appendTo("#filelist");
                 }
             }

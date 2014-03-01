@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.vlcremote" version="1.0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>VlcRemote</name>
+    <description>
+        This is a basic remote for the Video Lan Client, short VLC. You can do all the basic things with it, not much more.
+    </description>
+    <author email="kajmossi@yahoo.de" href="https://github.com/stiller-leser">
+        stiller-leser
+    </author>
+    <gap:platform name="android" />
+    <gap:platform name="webos" />
+    <gap:platform name="winphone" />
+
+    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <preference name="phonegap-version" value="3.1.0" /> 
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" />
+    <preference name="orientation" value="portrait" />
+    
+    <preference name="webviewbounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="UIWebViewBounce" value="false" />
+
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-installLocation" value="auto" />
+
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.Notification" />
+    </feature>
+
+    <config-file target="config.xml" parent="/*">
+    <feature name="BasicAuth">
+        <param name="wp-package" value="BasicAuth"/>
+    </feature>
+    </config-file>
+  
+  <icon src="icons/icon.png" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/android/icon.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="icons/winphone/icon.png" gap:platform="winphone" />
+    <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
+    <gap:splash src="icons/winphone/splashscreen.png" gap:platform="winphone" width="480" height="800" />
+    <access origin="http://127.0.0.1*" />
+    <access origin="http://192.*.*.*" />
+</widget>

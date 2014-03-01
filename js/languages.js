@@ -49,7 +49,9 @@ var german = {
 	"playAll" : "Alle zur Wiedergabe hinzufügen",
 	"setHome": "Markierten Ordner als Startpunkt setzen",
 	"lpHeadline": "Lade Dateien",
-    "lpMessage": "Bitte warten",
+	"lpMessage": "Bitte warten",
+	"libraryAddTitleMessage": "Titel wurden zur Wiedergabe hinzugefügt",
+    "librarySetHomeMessage": "Ordner wurde als Startpunkt gesetzt",
 
 	//Strings on the settings-site
 
@@ -139,6 +141,8 @@ Languages.prototype.setLanguage = function(){
 	$("#setHome").text(plLang["setHomefolder"]);
 	$("#lpHeadline").text(plLang["lpHeadline"]);
 	$("#lpMessage").text(plLang["lpMessage"]);
+	$("#libraryAddTitleMessage").text(plLang["libraryAddTitleMessage"]);
+	$("#librarySetHomeMessage").text(plLang["librarySetHomeMessage"]);
 
 	//Strings on the settings-site
 
