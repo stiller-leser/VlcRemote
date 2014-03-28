@@ -6,6 +6,7 @@ This is an Javascript based app for controlling the VLC Media Player via its web
 Changelog
 ---------
 
+
 V 1.0.0
 *******
 - Initial release
