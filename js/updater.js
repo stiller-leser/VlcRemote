@@ -57,48 +57,54 @@ Updater.prototype.updateDetails = function() {
                 //Highlight or disable controls-left
                 $(this).find('repeat').each(function () {
                     if ($(this).text() === "true") {
-                        $("#repeat").removeClass("repeat").addClass("re-active");
+                        $("#repeat").addClass("fa-active");
                     } else {
-                        $("#repeat").removeClass("re-active").addClass("repeat");
+                        $("#repeat").removeClass("fa-active");
                     }
                 });
                 $(this).find('loop').each(function () {
                     if ($(this).text() === "true") {
-                        $("#repeat-all").removeClass("repeat-all").addClass("re-all-active");
+                        $("#repeat-all").addClass("fa-active");
                     } else {
-                        $("#repeat-all").removeClass("re-all-active").addClass("repeat-all");
+                        $("#repeat-all").removeClass("fa-active");
                     }
                 });
                 $(this).find('random').each(function () {
                     if ($(this).text() === "true") {
-                        $("#random").removeClass("random").addClass("ra-active");
+                        $("#random").addClass("fa-active");
                     } else {
-                        $("#random").removeClass("ra-active").addClass("random");
+                        $("#random").removeClass("fa-active");
                     }
                 });
-
+                $(this).find('fullscreen').each(function () {
+                    if ($(this).text() === "true") {
+                        $("#fullscreen").addClass("fa-active");
+                    } else {
+                        $("#fullscreen").removeClass("fa-active");
+                    }
+                });
                 $(this).find('state').each(function () {
                     plData = returnNamespace();
                     var state = $(this).text();
                     plData.state = state;
 
                     if (state === "playing") {
-                        if ($(".playpause").attr("class").indexOf("play") !== -1) {
-                            $(".playpause").removeClass("play").addClass("pause");
+                        if ($(".playpause").attr("class").indexOf("fa-play") !== -1) {
+                            $(".playpause").removeClass("fa-play").addClass("fa-pause");
                         } else {
-                            $(".playpause").addClass("pause");
+                            $(".playpause").addClass("fa-pause");
                         }
                     } else if (state === "paused") {
-                        if ($(".playpause").attr("class").indexOf("pause") !== -1) {
-                            $(".playpause").removeClass("pause").addClass("play");
+                        if ($(".playpause").attr("class").indexOf("fa-pause") !== -1) {
+                            $(".playpause").removeClass("fa-pause").addClass("fa-play");
                         } else {
                             $(".playpause").addClass("play");
                         }
                     } else { //Player got stopped
-                        if ($(".playpause").attr("class").indexOf("pause") !== -1) {
-                            $(".playpause").removeClass("pause").addClass("play");
+                        if ($(".playpause").attr("class").indexOf("fa-pause") !== -1) {
+                            $(".playpause").removeClass("fa-pause").addClass("fa-play");
                         } else {
-                            $(".playpause").addClass("play");
+                            $(".playpause").addClass("fa-play");
                         }
                         $("#positionSlider").val(0).slider("refresh"); //Make sure the slider gets set back
                     }
@@ -133,11 +139,20 @@ Updater.prototype.updateDetails = function() {
                 
                 //Update album art
                 plData = returnNamespace();
-                $("#cover").css({
-                    "background" : "url(http://"+plData.ip+":"+plData.port+"/art)",
-                    "background-repeat" : "no-repeat",
-                    "background-position" : "center",
-                    "background-size" : "90%" 
+                $.ajax({
+                    url: 'http://' + plData.ip + ":" + plData.port + '/art',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa(plData.username + ":" + plData.password));
+                    },
+                    timeout: 3000,
+                    cache: true,
+                    processData: false,
+                    success: function (requestData, status, jqXHR) {
+                        $("#cover").attr("src", requestData);
+                    },
+                    error: function (jqXHR, status, error) {
+                        console.log(error);
+                    }
                 });
 
                 //Update album details

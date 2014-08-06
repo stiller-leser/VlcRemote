@@ -25,9 +25,31 @@ section[data-role="page"]{
     position: fixed !important;
 }
 
+.centered{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.fa{
+    color: white !important;
+    text-decoration: none;
+    text-align: center;
+}
+
+.fa-active{
+    color: green !important;
+    text-decoration: none;
+    text-align: center;
+}
+
 div[data-role="header"]{
     text-align: center;
-    height: 11%;
+    overflow: auto;
+    min-height: 8%;
     z-index: 998;
 }
 
@@ -47,6 +69,11 @@ div[data-role="content"]:not(#player){
 
 #player{
     -ms-touch-action: none;
+}
+
+.dots{
+    padding-top: 2%;
+    clear: both;
 }
 
 .dot{
@@ -136,11 +163,16 @@ a.wp8-styled-button{
     border: 2px solid white !important;
     border-radius: 0;
     text-decoration: none !important;
-    text-align: center;
     color: white !important;
     height: 6%;
-    padding-top: 3%;
-    margin-top: 5%;
+    margin: 5%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 span.ui-btn-inner{
@@ -148,40 +180,40 @@ span.ui-btn-inner{
     border: 0px !important;
 }
 
-div[data-role="header"] a[data-role="cus-button"]{
-    background-size: 90% !important;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    
-    display: inline-block !important;
-    min-height: 67% !important;
-    min-width: 8% !important;
-    
-    border: 0px !important;
-    border-radius: 0 !important;
-    text-decoration: none;
-    box-shadow: none;
+div[data-role="header"] i[data-role="cus-button"]{
+    float: left;
+    width: 8%;
 }
 
-a.home{
-    background-image: url(../images/home.png);
+div[data-role="header"] h1{
+    margin: 0 !important;
+    margin-top: 2% !important;
+    width: 84% !important;
+    float: left;
 }
 
-a#options{
-    background-image: url(../images/options.png);
+div[data-role="header"] h1:first-child{
+    margin: 0 !important;
+    margin-top: 2% !important;
+    width: 100% !important;
+    float: left;
 }
 
-a#faqButton{
-    background-image: url(../images/faq.png);
+#options {
+    float: right;
 }
 
-#playlist #options{
-    margin-left: 85%;
+#faqAnchor{
+    float: right;
+}
+
+#controls-left a.fa, #controls-right a.fa{
+    display: block;
+    padding: 20% 0;
 }
 
 #controls-left{
     display: block;
-    margin-top: 9%;
     float: left;
     width: 15%;
 }
@@ -190,62 +222,11 @@ a#faqButton{
     margin-top: 10px;
 }
 
-#controls-left a[data-role="cus-button"]{
-    position: relative;
-    background-size: 95% !important;
-    background-repeat: no-repeat;
-    background-color: transparent;
-
-    display: block !important;
-    height: 40px;
-    width: 40px;
-
-    left: 0;
-    right: 0;
-    margin: auto;
-
-    border: 0px !important;
-    border-radius: 0 !important;
-    outline: none !important;
-    text-decoration: none;
-}
-
-a.repeat{
-    background-image: url(../images/repeat-once.png);
-    background-size: 100% !important;
-}
-
-a.re-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/repeat-once-active.png);
-    background-size: 100% !important;
-}
-
-a.repeat-all{
-    background-image: url(../images/repeat-all.png);
-    background-size: 100% !important;    
-}
-
-a.re-all-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/repeat-all-active.png);
-    background-size: 100% !important;    
-}
-
-a.random{
-    background-image: url(../images/shuffle.png);
-    background-size: 100% !important;
-}
-
-a.ra-active{ /*Otherwise indexOf will make trouble*/
-    background-image: url(../images/shuffle-active.png);
-    background-size: 100% !important;
-}
-
 #cover{
     height: 160px;
     width: 160px;
 
     margin: auto;
-    margin-top: 5%;
     margin-left: 7%;
     margin-right: 7%;
     float: left;
@@ -257,29 +238,8 @@ a.ra-active{ /*Otherwise indexOf will make trouble*/
 
 #controls-right{
     display: block;
-    margin-top: 11%;
     float: left;
     width: 15%;
-}
-
-div#controls-right a[data-role="cus-button"]{
-    position: relative;
-    background-size: 90% !important;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    
-    display: block !important;
-    height: 40px;
-    width: 40px;
-
-    left: 0;
-    right: 0;
-    margin: auto;
-    
-    border: 0;
-    border-radius: 0 !important;
-
-    text-decoration: none;
 }
 
 p#volume{
@@ -293,19 +253,17 @@ p#volume{
     user-select: none;
 }
 
-a#volume-down{
-    background-image: url(../images/volume-down.png);    
-}
-
-a#volume-up{
-    background-image: url(../images/volume-up.png);    
+#controls-bottom{
+    display: block;
+    clear: both;
+    width: 100%;
 }
 
 #position{
     position: relative;
+    width: 100%;
     display: block;
     clear: both;
-    margin-top: 200px;
 }
 
 #position .ui-slider{
@@ -360,10 +318,6 @@ div.ui-btn{
     border-radius: 0;
 }
 
-#settings #faqButton{
-    margin-left: 85%;
-}
-
 #faq{
     background-color: black;
     box-shadow: inset 0px 2px 4px 2px;
@@ -389,55 +343,24 @@ div.ui-btn{
     display: inline;
 }
 
-#faq .icon{
-    height: 30px;
-    width: 30px;
+#faq li{
+    padding: 2%;
 }
 
 div[data-role="footer"]{
     text-align: center;
-    height: 10%;
-    padding: 0;
+    overflow: auto;
+    min-height: 8%;
+    padding: 2;
     z-index: 998;
 }
 
-div[data-role="footer"] a[data-role="cus-button"]:not(:last-child){
+div[data-role="footer"] i[data-role="cus-button"]:not(:last-child){
     margin-right: 10% !important;    
 }
 
-div[data-role="footer"] a[data-role="cus-button"]{
-    background-size: 90% !important;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    
+div[data-role="footer"] i[data-role="cus-button"]{
     display: inline-block !important;
     height: 60%;
     width: 10%;
-    margin-top: 2% !important;
-    
-    border: 0;
-    border-radius: 0 !important;
-    outline: none !important;
-    text-decoration: none;
-    box-shadow: none;
-}
-
-a.previous{
-    background-image: url(../images/previous.png);    
-}
-
-a.play{
-    background-image: url(../images/play.png);
-}
-
-a.pause{
-    background-image: url(../images/pause.png);
-}
-
-a.stop{
-    background-image: url(../images/stop.png);
-}
-
-a.forward{
-    background-image: url(../images/forward.png);    
 }

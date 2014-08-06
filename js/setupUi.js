@@ -59,7 +59,6 @@ function setupUi(){
 
     //Added to prevent footer hiding during focus of input
     $("[data-role=footer]").fixedtoolbar({ hideDuringFocus: "input, select" });
-
 };
 
 function setupButtonUi(){
@@ -75,17 +74,17 @@ function setupButtonUi(){
     $("body").on("click", ".playpause", function(){
         console.log("plData.state" + plData.state);
         if(plData.state === "playing"){
-    		$(this).removeClass("pause").addClass("play");
+    		$(this).removeClass("fa-pause").addClass("fa-play");
     		player.pause();
     	} else {
-    		$(this).removeClass("play").addClass("pause");
+    		$(this).removeClass("fa-play").addClass("fa-pause");
     		player.play();
     	}
     });
 
     $("body").on("click", ".stop", function(event){
     	event.preventDefault();
-        $(".pause").removeClass("pause").addClass("play");
+        $(".stop").removeClass("fa-pause").addClass("fa-play");
     	player.stop();
     });
 
@@ -113,6 +112,11 @@ function setupButtonUi(){
     $("body").on("click", "#random", function(event){
         event.preventDefault();
         player.random();
+    });
+
+    $("body").on("click", "#fullscreen", function(event){
+        event.preventDefault();
+        player.fullscreen();
     });
 
     $("body").on("click", "#volume-up", function(event){

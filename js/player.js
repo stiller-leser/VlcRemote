@@ -117,6 +117,10 @@ Player.prototype.random = function(){
 	this.sendCommand({'command':'pl_random'});
 };
 
+Player.prototype.fullscreen = function(){
+    this.sendCommand({'command':'fullscreen'});
+};
+
 Player.prototype.volume = function(value){
 	var current = $("#volume").text();
 	current = current.substring(0, current.length -1);
