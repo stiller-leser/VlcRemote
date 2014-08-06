@@ -148,7 +148,12 @@ Updater.prototype.updateDetails = function() {
                     cache: true,
                     processData: false,
                     success: function (requestData, status, jqXHR) {
-                        $("#cover").attr("src", requestData);
+                        $("#cover").css({
+                            "background-image":"url(http://"+plData.ip+":"+plData.port+"/art)",
+                            "background-repeat":"no-repeat",
+                            "background-position":"center",
+                            "background-size":"100%"
+                        });
                     },
                     error: function (jqXHR, status, error) {
                         console.log(error);
