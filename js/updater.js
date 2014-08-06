@@ -6,7 +6,9 @@ var upData = {
     interval: '',
     started: false,
     lastTitle: '',
-    lastFilename: ''
+    lastFilename: '',
+    lastVideoLength: 0,
+    firstStart: true
 }
 
 Updater.prototype.getState = function () {
@@ -134,11 +136,44 @@ Updater.prototype.updateDetails = function() {
             var updaterData = getUpdaterData();
             var title = $(requestData).find("info[name=title]").text();
             var filename = $(requestData).find("info[name=filename]").text();
+            var videoLength = $(requestData).find("length").text();
 
-            if(title !== updaterData.lastTitle | filename !== updaterData.lastFilename){ //If title is different or the filename changed
-                
+            if(title !== updaterData.lastTitle || filename !== updaterData.lastFilename || updaterData.firstStart || videoLength != updaterData.lastVideoLength){ //If title is different or the filename changed
+
+                updaterData.firstStart = false;
+                var numberOfSubtitleOptions = 0;
+                var numberOfAudiotrackOptions = 0;
+
+                $(".ui-select").hide();
+                $("#subtitle").html("");
+                $("#audiotrack").html("");
+
+                $(requestData).find("category").each(function(){
+                    var dis = this;
+                    if($(this).html().indexOf("Subtitles") > -1){
+                        console.log($(dis).find("info").length)
+                        if($(dis).find("info").length>2){
+                            var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
+                            var subtitleOptions = "<option value='"+streamNumber+"'>"+numberOfSubtitleOptions+"</option>"
+                            numberOfSubtitleOptions++;
+                            $("#subtitle").append(subtitleOptions);
+                            $("#subtitleDummy").hide();
+                            $(".ui-select:last").css({"display":"inline-block"});   
+                        }                 
+                    }
+                    if($(this).html().indexOf("Audio") > -1){
+                        var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
+                        var audiotrackOptions = "<option value='"+streamNumber+"'>"+numberOfAudiotrackOptions+"</option>"
+                        numberOfAudiotrackOptions++;
+                        $("#audiotrack").append(audiotrackOptions);
+                        $("#audiotrackDummy").hide();
+                        $(".ui-select:first").css({"display":"inline-block"});                                                   
+                    }
+                });
+
                 //Update album art
                 plData = returnNamespace();
+                $("#cover").css("background-image","");
                 $.ajax({
                     url: 'http://' + plData.ip + ":" + plData.port + '/art',
                     beforeSend: function (xhr) {
@@ -195,6 +230,7 @@ Updater.prototype.updateDetails = function() {
                 }
                 updaterData.lastTitle = title;
                 updaterData.lastFilename = filename;
+                updaterData.lastVideoLength = videoLength;
             }
         },
         error: function (jqXHR, status, error) {

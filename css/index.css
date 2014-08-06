@@ -259,6 +259,16 @@ p#volume{
     width: 100%;
 }
 
+#fullscreen{
+    margin: 0 5%;
+}
+
+#controls-bottom .ui-select{
+    display: none;
+    width: 30% !important;
+    border: 0;
+}
+
 #position{
     position: relative;
     width: 100%;

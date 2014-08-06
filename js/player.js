@@ -117,8 +117,16 @@ Player.prototype.random = function(){
 	this.sendCommand({'command':'pl_random'});
 };
 
+Player.prototype.changeAudiotrack = function(value){
+    this.sendCommand('command=audio_track&val='+value);
+};
+
 Player.prototype.fullscreen = function(){
     this.sendCommand({'command':'fullscreen'});
+};
+
+Player.prototype.changeSubtitle = function(value){
+    this.sendCommand('command=subtitle_track&val='+value);
 };
 
 Player.prototype.volume = function(value){

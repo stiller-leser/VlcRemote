@@ -114,9 +114,19 @@ function setupButtonUi(){
         player.random();
     });
 
+    $("body").on("change", "#audiotrack", function(event){
+        event.preventDefault();
+        player.changeAudiotrack($("#audiotrack").val());
+    });
+
     $("body").on("click", "#fullscreen", function(event){
         event.preventDefault();
         player.fullscreen();
+    });
+
+    $("body").on("change", "#subtitle", function(event){
+        event.preventDefault();
+        player.changeSubtitle($("#subtitle").val());
     });
 
     $("body").on("click", "#volume-up", function(event){
