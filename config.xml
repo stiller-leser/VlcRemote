@@ -1,55 +1,27 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="com.vlcremote" version="1.0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>VlcRemote</name>
-    <description>
-        This is a basic remote for the Video Lan Client, short VLC. You can do all the basic things with it, not much more.
-    </description>
-    <author email="kajmossi@yahoo.de" href="https://github.com/stiller-leser">
-        stiller-leser
-    </author>
-    <gap:platform name="android" />
-    <gap:platform name="webos" />
-    <gap:platform name="winphone" />
-
-    <feature name="http://api.phonegap.com/1.0/device" />
-    <feature name="http://api.phonegap.com/1.0/notification" />
-    <feature name="http://api.phonegap.com/1.0/network" />
-    <preference name="phonegap-version" value="3.1.0" /> 
-    <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="true" />
-    <preference name="orientation" value="portrait" />
-    
-    <preference name="webviewbounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="UIWebViewBounce" value="false" />
-
-    <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="auto-hide-splash-screen" value="true" />
-    <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-installLocation" value="auto" />
-
-    <feature name="Notification">
-        <param name="android-package" value="org.apache.cordova.Notification" />
-    </feature>
-
-    <config-file target="config.xml" parent="/*">
-    <feature name="BasicAuth">
-        <param name="wp-package" value="BasicAuth"/>
-    </feature>
-    </config-file>
-  
-  <icon src="icons/icon.png" />
-    <icon src="icons/android/icon.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons/android/icon.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons/android/icon.png" gap:platform="android" gap:density="hdpi" />
-    <icon src="icons/android/icon.png" gap:platform="android" gap:density="xhdpi" />
-    <icon src="icons/winphone/icon.png" gap:platform="winphone" />
-    <icon src="icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" />
-    <gap:splash src="icons/winphone/splashscreen.png" gap:platform="winphone" width="480" height="800" />
-    <access origin="http://127.0.0.1*" />
-    <access origin="http://192.*.*.*" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.VlcRemote" version="1.5.0.0" xmlns="http://www.w3.org/ns/widgets">
+  <name>VlcRemote</name>
+  <description>
+    A blank project that uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.
+  </description>
+  <author href="http://cordova.io" email="dev@cordova.apache.org">
+    Apache Cordova Team
+  </author>
+  <content src="index.html" />
+  <access origin="*" />
+  <preference name="SplashScreen" value="screen" />
+  <preference name="Orientation" value="portrait" />
+  <preference name="Fullscreen" value="true" />
+  <preference name="webviewbounce" value="false" />
+  <preference name="DisallowOverscroll" value="true" />
+  <platform name="wp8">
+    <icon src="img/logo.png" width="99" height="99" />
+    <!-- tile image -->
+    <icon src="img/logo.png" width="159" height="159" />
+  </platform>
+  <preference name="UIWebViewBounce" value="false" />
+  <vs:features>
+    <vs:feature>org.apache.cordova.network-information@0.2.10</vs:feature>
+  </vs:features>
+  <vs:platformSpecificValues />
 </widget>

@@ -190,10 +190,10 @@ checkConnection = function () {
     $("#settings #settingsPopup").css("display", "block");
     //test user settings
 
-    if (navigator.userAgent.match(/Windows Phone/) != null) {
+    /*if (navigator.userAgent.match(/Windows Phone/) != null) {
         var url = "http://" + plData.ip + ":" + plData.port + "/requests/status.xml";
         cordova.exec(checkFolder, connectionError, "BasicAuth", "get", [plData.ip, plData.port, plData.username, plData.password]);
-    } else {
+    } else {*/
         $.ajax({
             url: 'http://' + plData.ip + ":" + plData.port + '/requests/status.xml',
             beforeSend: function (xhr) {
@@ -230,7 +230,7 @@ checkConnection = function () {
                 $(".ui-btn-active").removeClass("ui-btn-active"); //Remove the active-state of the button
             }
         });
-    }
+    //}
 };
 
 connectionError = function () {

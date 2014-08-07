@@ -32,7 +32,9 @@ var german = {
 	"album" : "Album",
 	"year" : "Jahr",
 	"ppHeadline" : "Verbindet mit VLC",
-	"ppMessage" : "Bitte warten",
+	"ppMessage": "Bitte warten",
+	"subtitleDummy": "Untertitel",
+    "audiotrackDummy": "Tonspur",
 
 	//Strings on the playlist-site
 
@@ -124,6 +126,8 @@ Languages.prototype.setLanguage = function(){
 	$("#yearHeadline").text(plLang["year"]);
 	$("#ppHeadline").text(plLang["ppHeadline"]);
 	$("#ppMessage").text(plLang["ppMessage"]);
+	$("#subtitleDummy").text(plLang["subtitleDummy"]);
+	$("#audiotrackDummy").text(plLang["audiotrackDummy"]);
 
 	//Strings on the playlist-site
 

@@ -67,9 +67,9 @@ div[data-role="content"]:not(#player){
     margin-bottom: 20%;
 }
 
-#player{
+/*#player{
     -ms-touch-action: none;
-}
+}*/
 
 .dots{
     padding-top: 2%;
