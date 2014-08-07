@@ -141,12 +141,15 @@ Updater.prototype.updateDetails = function() {
             if(title !== updaterData.lastTitle || filename !== updaterData.lastFilename || updaterData.firstStart || videoLength != updaterData.lastVideoLength){ //If title is different or the filename changed
 
                 updaterData.firstStart = false;
-                var numberOfSubtitleOptions = 0;
-                var numberOfAudiotrackOptions = 0;
 
                 $(".ui-select").hide();
                 $("#subtitle").html("");
                 $("#audiotrack").html("");
+
+                var subtitleOptions = "";
+                var numberOfSubtitleOptions = 0;
+                var audiotrackOptions = "";
+                var numberOfAudiotrackOptions = 0;
 
                 $(requestData).find("category").each(function(){
                     var dis = this;
@@ -155,19 +158,23 @@ Updater.prototype.updateDetails = function() {
                         if($(dis).find("info").length>2){
                             var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
                             var subtitleOptions = "<option value='"+streamNumber+"'>"+numberOfSubtitleOptions+"</option>"
-                            numberOfSubtitleOptions++;
-                            $("#subtitle").append(subtitleOptions);
-                            $("#subtitleDummy").hide();
-                            $(".ui-select:last").css({"display":"inline-block"});   
+                            numberOfSubtitleOptions++;   
                         }                 
                     }
                     if($(this).html().indexOf("Audio") > -1){
                         var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
                         var audiotrackOptions = "<option value='"+streamNumber+"'>"+numberOfAudiotrackOptions+"</option>"
-                        numberOfAudiotrackOptions++;
+                        numberOfAudiotrackOptions++;                                                   
+                    }
+                    if(numberOfSubtitleOptions > 1){
+                        $("#subtitle").append(subtitleOptions);
+                        $("#subtitleDummy").hide();
+                        $(".ui-select:last").css({"display":"inline-block"});
+                    }
+                    if(numberOfAudiotrackOptions > 1){
                         $("#audiotrack").append(audiotrackOptions);
                         $("#audiotrackDummy").hide();
-                        $(".ui-select:first").css({"display":"inline-block"});                                                   
+                        $(".ui-select:first").css({"display":"inline-block"});
                     }
                 });
 
