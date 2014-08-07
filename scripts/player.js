@@ -511,6 +511,7 @@ Player.prototype.loadFiles = function (dir) {
 	            //show new playlist
 	            player.showFilesystem(fs, 0);
 	        }
+            console.log(fs.length)
 	        $("#libraryLoadingPopup").css("display", "none");
 	    },
 	    error: function (jqXHR, status, error) {
@@ -522,7 +523,6 @@ Player.prototype.loadFiles = function (dir) {
 	        $("#libraryLoadingPopup").css("display", "none");
 	    }
 	});
-	plData.lastDir = dir; //If last dir is not empty and the request was successful
 };
 
 /*

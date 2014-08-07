@@ -257,6 +257,7 @@ p#volume{
     display: block;
     clear: both;
     width: 100%;
+    padding-top: 2%;
 }
 
 #fullscreen{

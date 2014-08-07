@@ -138,11 +138,11 @@ Updater.prototype.updateDetails = function() {
             var filename = $(requestData).find("info[name=filename]").text();
             var videoLength = $(requestData).find("length").text();
 
-            if(title !== updaterData.lastTitle || filename !== updaterData.lastFilename || updaterData.firstStart || videoLength != updaterData.lastVideoLength){ //If title is different or the filename changed
-
+            if(title !== updaterData.lastTitle || filename !== updaterData.lastFilename || updaterData.firstStart === true || videoLength !== updaterData.lastVideoLength){ //If title is different or the filename changed
+                
                 updaterData.firstStart = false;
-
-                $(".ui-select").hide();
+                
+                $(".ui-select").css({"display":"none"});
                 $("#subtitle").html("");
                 $("#audiotrack").html("");
 
@@ -150,33 +150,32 @@ Updater.prototype.updateDetails = function() {
                 var numberOfSubtitleOptions = 0;
                 var audiotrackOptions = "";
                 var numberOfAudiotrackOptions = 0;
+                var categories = $(requestData).find("category");
+                for(var i = 0; i < categories.length; i++) {
+                    var el = categories[i];
 
-                $(requestData).find("category").each(function(){
-                    var dis = this;
-                    if($(this).html().indexOf("Subtitles") > -1){
-                        console.log($(dis).find("info").length)
-                        if($(dis).find("info").length>2){
-                            var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
-                            var subtitleOptions = "<option value='"+streamNumber+"'>"+numberOfSubtitleOptions+"</option>"
-                            numberOfSubtitleOptions++;   
-                        }                 
+                    if ($(el).text().indexOf("Subtitles") > -1) {                        
+                        var streamNumber = $(el).attr("name").replace(/^\D+/g, '');
+                        subtitleOptions += "<option value='"+streamNumber+"'>"+numberOfSubtitleOptions+"</option>"
+                        numberOfSubtitleOptions++;   
                     }
-                    if($(this).html().indexOf("Audio") > -1){
-                        var streamNumber = $(dis).attr("name").replace(/^\D+/g, '');
-                        var audiotrackOptions = "<option value='"+streamNumber+"'>"+numberOfAudiotrackOptions+"</option>"
+                    if($(el).text().indexOf("Audio") > -1){
+                        var streamNumber = $(el).attr("name").replace(/^\D+/g, '');
+                        audiotrackOptions += "<option value='"+streamNumber+"'>"+numberOfAudiotrackOptions+"</option>"
                         numberOfAudiotrackOptions++;                                                   
                     }
-                    if(numberOfSubtitleOptions > 1){
-                        $("#subtitle").append(subtitleOptions);
-                        $("#subtitleDummy").hide();
-                        $(".ui-select:last").css({"display":"inline-block"});
-                    }
-                    if(numberOfAudiotrackOptions > 1){
-                        $("#audiotrack").append(audiotrackOptions);
-                        $("#audiotrackDummy").hide();
-                        $(".ui-select:first").css({"display":"inline-block"});
-                    }
-                });
+                };
+
+                if (numberOfSubtitleOptions > 1) {
+                    $("#subtitle").append(subtitleOptions);
+                    $("#subtitleDummy").hide();
+                    $(".ui-select:last").css({ "display": "inline-block" });
+                }
+                if (numberOfAudiotrackOptions > 1) {
+                    $("#audiotrack").append(audiotrackOptions);
+                    $("#audiotrackDummy").hide();
+                    $(".ui-select:first").css({ "display": "inline-block" });
+                }
 
                 //Update album art
                 plData = returnNamespace();
