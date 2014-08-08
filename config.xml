@@ -14,11 +14,6 @@
   <preference name="Fullscreen" value="true" />
   <preference name="webviewbounce" value="false" />
   <preference name="DisallowOverscroll" value="true" />
-  <platform name="wp8">
-    <icon src="img/logo.png" width="99" height="99" />
-    <!-- tile image -->
-    <icon src="img/logo.png" width="159" height="159" />
-  </platform>
   <preference name="UIWebViewBounce" value="false" />
   <vs:features>
     <vs:feature>org.apache.cordova.network-information@0.2.10</vs:feature>

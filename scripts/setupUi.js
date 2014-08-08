@@ -1,4 +1,4 @@
-function setupUi(){
+function setupUi() {
 
 	/*
     * Configure swipe events for the menu

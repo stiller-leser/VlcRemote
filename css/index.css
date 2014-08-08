@@ -61,15 +61,12 @@ div[data-role="header"] h1{
 
 div[data-role="content"]{
     font-size: 100% !important;
+    overflow: auto;
 }
 
 div[data-role="content"]:not(#player){
     margin-bottom: 20%;
 }
-
-/*#player{
-    -ms-touch-action: none;
-}*/
 
 .dots{
     padding-top: 2%;
@@ -100,6 +97,8 @@ div[data-role="content"]:not(#player){
     top: 0;
     bottom: 0;
     margin: auto;
+
+    -ms-touch-action: none;
 
     display: none;
     text-align: center;

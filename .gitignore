@@ -3,7 +3,6 @@ phonegap.js
 cordova.js
 bld/
 bin/
-res/
 *.jsproj
 *.jsproj.user
 merges/
