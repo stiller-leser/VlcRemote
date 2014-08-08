@@ -10,7 +10,7 @@ Changelog
 V 1.0.0
 *******
 - Initial release
-- Currently published in the Windows Phone Store
+- Depricated
 
 V 1.0.1
 *******
@@ -18,4 +18,12 @@ V 1.0.1
 - Added album cover to player
 - Introduced lazy loading to make the app "faster"
 - Removed buggy landscape mode
-- Currently in testing stage
+- Currently published in the Windows Phone Store
+
+V 1.5.0
+*******
+- Added abillity to switch to fullscreen
+- Added dropdown for audiotrack and subtitle options
+- User can now jump chapter if playlist only has one entry
+- Moved codebase to Multi-Device Hybrid app of Windows
+- Will be published for Windows Phone 8.1

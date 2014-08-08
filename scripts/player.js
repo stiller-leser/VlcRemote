@@ -41,6 +41,7 @@ var plData = {
 	connected: false,
 	foundDir: false,
     cfCaller: '',
+    currentTitle: 0,
     playlist: [],
 	allowedTypes: new Array("3ga", "a52", "aac", "ac3", "ape", "awb", "dts", "flac", "it",
 							"m4a", "m4p", "mka", "mlp", "mod", "mp1", "mp2", "mp3",
@@ -98,11 +99,21 @@ Player.prototype.pause = function(){
 };
 
 Player.prototype.previous = function(){
-	this.sendCommand({'command':'pl_previous'});
+    if(plData.playlist.length>1){
+        this.sendCommand({'command':'pl_previous'});
+    } else {
+        plData.currentTitle--;
+        this.sendCommand('command=title&val='+plData.currentTitle);
+    }
 };
 
 Player.prototype.forward = function(){
-	this.sendCommand({'command':'pl_next'});
+    if(plData.playlist.length>1){
+	   this.sendCommand({'command':'pl_next'});
+    } else {
+        plData.currentTitle++;
+        this.sendCommand('command=title&val='+plData.currentTitle);
+    }
 };
 
 Player.prototype.repeat = function(){
