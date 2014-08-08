@@ -522,7 +522,9 @@ Player.prototype.loadFiles = function (dir) {
 	            //show new playlist
 	            player.showFilesystem(fs, 0);
 	        }
-            console.log(fs.length)
+            if(fs.length > 1){
+                plData.lastDir = dir;
+            }
 	        $("#libraryLoadingPopup").css("display", "none");
 	    },
 	    error: function (jqXHR, status, error) {
