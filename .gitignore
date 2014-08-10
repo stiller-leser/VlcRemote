@@ -1,8 +1,0 @@
-cordova_plugins.js
-phonegap.js
-cordova.js
-bld/
-bin/
-*.jsproj
-*.jsproj.user
-merges/

@@ -64,6 +64,10 @@ div[data-role="content"]{
     overflow: auto;
 }
 
+#player{
+    -ms-touch-action: none;
+}
+
 div[data-role="content"]:not(#player){
     margin-bottom: 20%;
 }

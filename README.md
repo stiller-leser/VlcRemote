@@ -25,5 +25,4 @@ V 1.5.0
 - Added abillity to switch to fullscreen
 - Added dropdown for audiotrack and subtitle options
 - User can now jump chapter if playlist only has one entry
-- Moved codebase to Multi-Device Hybrid app of Windows
-- Will be published for Windows Phone 8.1
+

@@ -145,6 +145,7 @@ Updater.prototype.updateDetails = function() {
                 $(".ui-select").css({"display":"none"});
                 $("#subtitle").html("");
                 $("#audiotrack").html("");
+                $("#cover").css({"background-image":"none"})
 
                 var subtitleOptions = "";
                 var numberOfSubtitleOptions = 0;
